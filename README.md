@@ -286,4 +286,4 @@ Inheriting `DelegateActivity` allows you to group Activities as a reusable unit.
 
 ## Author
 
-[aratomo-arazon](https://github.com/aratomo-arazon)
+[Tomoharu Araki (aratomo-arazon)](https://github.com/aratomo-arazon)
