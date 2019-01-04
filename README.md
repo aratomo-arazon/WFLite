@@ -280,6 +280,10 @@ Inheriting `DelegateActivity` allows you to group Activities as a reusable unit.
 - [Greeting](https://github.com/aratomo-arazon/WFLite/tree/master/examples/WFLite.Greeting)
 - [Stopwatch](https://github.com/aratomo-arazon/WFLite/tree/master/examples/WFLite.Stopwatch)
 
+## License
+
+[MIT](https://github.com/aratomo-arazon/WFLite/blob/master/LICENSE)
+
 ## Author
 
 [aratomo-arazon](https://github.com/aratomo-arazon)
