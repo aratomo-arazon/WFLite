@@ -179,10 +179,10 @@ Control Activity expresses the control syntax by using the composite structure. 
 `SequenceActivity` executes multiple Activities in turn.
 <pre><code>new SequenceActivity()
 {
-    Activities = new List\<IActivity>()    // Required
+    Activities = new List<</>IActivity>()    // Required
     {
-        \<Activity>,
-        \<Activity>,
+        <</>Activity>,
+        <</>Activity>,
         ...
     }
 };
@@ -190,10 +190,10 @@ Control Activity expresses the control syntax by using the composite structure. 
 `ParallelActivity` performs multiple Activities in parallel.
 <pre><code>new ParallelActivity()
 {
-    Activities = new List\<IActivity>()    // Required
+    Activities = new List<</>IActivity>()    // Required
     {
-        \<Activity>,
-        \<Activity>,
+        <</>Activity>,
+        <</>Activity>,
         ...
     }
 };
@@ -201,46 +201,46 @@ Control Activity expresses the control syntax by using the composite structure. 
 `IfActivity` implements if-then-else syntax.
 <pre><code>new IfActivity()
 {
-    Condition = \<Condition>,    // Required
-    Then = \<Activity>,
-    Else = \<Activity>
+    Condition = <</>Condition>,    // Required
+    Then = <</>Activity>,
+    Else = <</>Activity>
 };
 </code></pre>
 `SwitchActivity` implements switch-case syntax.
 <pre><code>new SwitchActivity()
 {
-    Value = \<Variable>,                            // Required
-    Cases = new Dictionary\<object, IActivity>()    // Required
+    Value = <</>Variable>,                            // Required
+    Cases = new Dictionary<</>object, IActivity>()    // Required
     {
-        { \<value>, \<Activity> },
-        { \<value>, \<Activity> }
+        { <</>value>, <</>Activity> },
+        { <</>value>, <</>Activity> }
         ... 
     },
-    Default = \<Activity>
+    Default = <</>Activity>
 };
 </code></pre>
 `WhileActivity` implements while-loop syntax.
 <pre><code>new WhileActivity()
 {
-    Condition = \<Condition>,    // Required
-    Activity = \<Activity>       // Required
+    Condition = <</>Condition>,    // Required
+    Activity = <</>Activity>       // Required
 };
 </code></pre>
 `ForEachActivity` implements foreach-loop syntax.
 <pre><code>new ForEachActivity()
 {
-    Collection = \<Variable>,    // Required (List or Dictionary)
-    Key = \<Variable>,           // Required (if Collection is Dictionary)
-    Value = \<Variable>,         // Required
-    Activity = \<Activity>       // Required
+    Collection = <</>Variable>,    // Required (List or Dictionary)
+    Key = <</>Variable>,           // Required (if Collection is Dictionary)
+    Value = <</>Variable>,         // Required
+    Activity = <</>Activity>       // Required
 };
 </code></pre>
 `TryCatchActivity` implements try-catch-finally syntax.
 <pre><code>new TryCatchActivity()
 {
-    Try = \<Activity>,    // Required
-    Catch = \<Activity>,
-    Finally = \<Activity>
+    Try = <</>Activity>,    // Required
+    Catch = <</>Activity>,
+    Finally = <</>Activity>
 };
 </code></pre>
 `ThrowActivity` implements throw-exception syntax.
@@ -249,7 +249,7 @@ Control Activity expresses the control syntax by using the composite structure. 
 `DelegateActivity` simply delegates processing to an Activity.
 <pre><code>new DelegateActivity()
 {
-    Activity = \<Activity>
+    Activity = <</>Activity>
 };
 </code></pre>
 
