@@ -1,7 +1,7 @@
 ﻿/*
  * SyncActivity.cs
  *
- * Copyright (c) 2019 Tomoharu Araki
+ * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
@@ -30,7 +30,7 @@ namespace WFLite.Activities
         {
             await Task.CompletedTask;
 
-            var result = Func();
+            var result = run();
 
             if (result)
             {
@@ -50,6 +50,16 @@ namespace WFLite.Activities
         protected override void reset()
         {
             Status = ActivityStatus.Created;
+        }
+
+        protected virtual bool run()
+        {
+            if (Func == null)
+            {
+                return false;
+            }
+
+            return Func();
         }
     }
 }

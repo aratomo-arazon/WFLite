@@ -1,7 +1,7 @@
 ﻿/*
  * IVariable.cs
  *
- * Copyright (c) 2019 Tomoharu Araki
+ * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
@@ -12,6 +12,8 @@ namespace WFLite.Interfaces
     public interface IVariable
     {
         object GetValue();
+
+        TValue GetValue<TValue>();
 
         void SetValue(object value);
     }

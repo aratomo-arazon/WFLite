@@ -1,7 +1,7 @@
 ﻿/*
  * Variable.cs
  *
- * Copyright (c) 2019 Tomoharu Araki
+ * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
@@ -29,6 +29,11 @@ namespace WFLite.Bases
             {
                 return Converter.Convert(getValue());
             }
+        }
+
+        public TValue GetValue<TValue>()
+        {
+            return (TValue)GetValue();
         }
 
         public void SetValue(object value)

@@ -1,7 +1,7 @@
 ﻿/*
  * WhileActivity.cs
  *
- * Copyright (c) 2019 Tomoharu Araki
+ * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
@@ -37,32 +37,33 @@ namespace WFLite.Activities
 
         protected override async Task start()
         {
-            if (!Condition.Check())
+            if (Condition.Check())
+            {
+                _current = Activity;
+
+                do
+                {
+                    _current.Reset();
+
+                    var task = _current.Start();
+
+                    Status = _current.Status;
+
+                    await task;
+
+                    if (_current.Status.IsStopped())
+                    {
+                        break;
+                    }
+                }
+                while (Condition.Check());
+
+                Status = _current.Status;
+            }
+            else
             {
                 Status = ActivityStatus.Completed;
-
-                return;
             }
-
-            _current = Activity;
-
-            while (Condition.Check())
-            {
-                _current.Reset();
-
-                var task = _current.Start();
-                
-                Status = _current.Status;
-
-                await task;
-
-                if (_current.Status.IsStopped())
-                {
-                    break;
-                }
-            }
-
-            Status = _current.Status;
         }
 
         protected override void stop()

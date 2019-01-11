@@ -1,7 +1,7 @@
 ﻿/*
  * AsyncActivity.cs
  *
- * Copyright (c) 2019 Tomoharu Araki
+ * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
@@ -40,7 +40,7 @@ namespace WFLite.Activities
 
                 try
                 {
-                    var result = await Func(cancellationToken);
+                    var result = await run(cancellationToken);
 
                     if (result && Status.IsExecuting())
                     {
@@ -65,15 +65,15 @@ namespace WFLite.Activities
             if (Status.IsCreated())
             {
                 Status = ActivityStatus.Stopped;
-
-                return;
             }
-
-            Status = ActivityStatus.Stopping;
-
-            if (_cancellationTokenSource != null)
+            else
             {
-                _cancellationTokenSource.Cancel();
+                Status = ActivityStatus.Stopping;
+
+                if (_cancellationTokenSource != null)
+                {
+                    _cancellationTokenSource.Cancel();
+                }
             }
         }
 
@@ -82,6 +82,16 @@ namespace WFLite.Activities
             _cancellationTokenSource = null;
 
             Status = ActivityStatus.Created;
+        }
+
+        protected virtual Task<bool> run(CancellationToken cancellationToken)
+        {
+            if (Func == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            return Func(cancellationToken);
         }
     }
 }

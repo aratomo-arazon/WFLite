@@ -1,7 +1,7 @@
 ﻿/*
  * AnyVariable.cs
  *
- * Copyright (c) 2019 Tomoharu Araki
+ * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
@@ -36,22 +36,12 @@ namespace WFLite.Variables
         {
             private get
             {
-                return (TValue)base.Value;
+                return (TValue)base.getValue();
             }
             set
             {
-                base.Value = value;
+                base.setValue(value);
             }
-        }
-
-        protected override object getValue()
-        {
-            return base.Value;
-        }
-
-        protected override void setValue(object value)
-        {
-            base.Value = value;
         }
     }
 }
