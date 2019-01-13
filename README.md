@@ -1,6 +1,6 @@
 WFLite
 =====
-WFLite is a light-weight workflow library.
+WFLite is a lightweight workflow library.
 
 ## Why workflow?
 
@@ -156,7 +156,7 @@ You can create custom asynchronous Activities by inheriting the `AsyncActivity` 
 {
     public IVariable SrcFilePath { private get; set; }
     public IVariable DstFilePath { private get; set; }
-    protected sealed override async Task<bool> run(CancellationToken cancellationToken)
+    protected sealed override async Task<</>bool> run(CancellationToken cancellationToken)
     {
         var srcFilePath = Convert.ToString(SrcFilePath.GetValue());
         var dstFilePath = Convert.ToString(DstFilePath.GetValue());
@@ -280,4 +280,4 @@ Inheriting `DelegateActivity` allows you to group Activities as a reusable unit.
 
 ## Author
 
-[Tomoharu Araki (aratomo-arazon)](https://github.com/aratomo-arazon)
+[aratomo-arazon](https://github.com/aratomo-arazon)
