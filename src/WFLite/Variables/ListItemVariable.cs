@@ -28,14 +28,14 @@ namespace WFLite.Variables
             set;
         }
 
-        protected override object getValue()
+        protected sealed override object getValue()
         {
             var list = List.GetValue() as IList<object>;
             var index = Convert.ToInt32(Index.GetValue());
             return list[index];
         }
 
-        protected override void setValue(object value)
+        protected sealed override void setValue(object value)
         {
             var list = List.GetValue() as IList<object>;
             var index = Convert.ToInt32(Index.GetValue());

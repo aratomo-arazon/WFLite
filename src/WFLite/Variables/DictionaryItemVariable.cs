@@ -28,14 +28,14 @@ namespace WFLite.Variables
             set;
         }
 
-        protected override object getValue()
+        protected sealed override object getValue()
         {
             var dictionary = Dictionary.GetValue() as IDictionary<string, object>;
             var key = Convert.ToString(Key.GetValue());
             return dictionary[key];
         }
 
-        protected override void setValue(object value)
+        protected sealed override void setValue(object value)
         {
             var dictionary = Dictionary.GetValue() as IDictionary<string, object>;
             var key = Convert.ToString(Key.GetValue());

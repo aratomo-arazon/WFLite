@@ -33,7 +33,7 @@ namespace WFLite.Converters
             { typeof(DateTime), (value) => System.Convert.ToDateTime(value) }
         };
 
-        protected override object convert(object value)
+        protected sealed override object convert(object value)
         {
             var type = typeof(TValue);
 

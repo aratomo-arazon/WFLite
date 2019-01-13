@@ -31,11 +31,11 @@ namespace WFLite.Activities
             set;
         }
 
-        protected override void initialize()
+        protected sealed override void initialize()
         {
         }
 
-        protected override async Task start()
+        protected sealed override async Task start()
         {
             Elapsed.SetValue(0);
 
@@ -58,7 +58,7 @@ namespace WFLite.Activities
             Elapsed.SetValue(stopwatch.ElapsedMilliseconds);
         }
 
-        protected override void stop()
+        protected sealed override void stop()
         {
             if (_current != null)
             {
@@ -79,7 +79,7 @@ namespace WFLite.Activities
             }
         }
 
-        protected override void reset()
+        protected sealed override void reset()
         {
             if (_current != null)
             {

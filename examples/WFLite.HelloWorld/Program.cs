@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WFLite.Activities;
+using WFLite.Activities.Console;
 using WFLite.Enums;
+using WFLite.Variables;
 
 namespace WFLite.Stopwatch
 {
@@ -10,14 +12,9 @@ namespace WFLite.Stopwatch
     {
         static async Task Main(string[] args)
         {
-            var activity = new SyncActivity()
+            var activity = new ConsoleWriteLineActivity()
             {
-                Func = () =>
-                {
-                    Console.WriteLine("Hello World!");
-
-                    return true;
-                }
+                Value = new AnyVariable() { Value = "Hello World!" }
             };
 
             await activity.Start();

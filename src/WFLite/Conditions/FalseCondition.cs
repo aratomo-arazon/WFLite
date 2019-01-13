@@ -30,7 +30,7 @@ namespace WFLite.Conditions
             }
         }
 
-        protected override bool check()
+        protected sealed override bool check()
         {
             return !Convert.ToBoolean(Value.GetValue());
         }

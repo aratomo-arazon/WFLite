@@ -22,7 +22,7 @@ namespace WFLite.Variables
             set;
         }
 
-        protected override object getValue()
+        protected sealed override object getValue()
         {
             var value = Collection.GetValue();
 
@@ -40,7 +40,7 @@ namespace WFLite.Variables
             }
         }
 
-        protected override void setValue(object value)
+        protected sealed override void setValue(object value)
         {
             throw new NotSupportedException();
         }

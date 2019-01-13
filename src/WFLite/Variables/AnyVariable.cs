@@ -19,12 +19,12 @@ namespace WFLite.Variables
             set;
         }
 
-        protected override object getValue()
+        protected sealed override object getValue()
         {
             return Value;
         }
 
-        protected override void setValue(object value)
+        protected sealed override void setValue(object value)
         {
             Value = value;
         }

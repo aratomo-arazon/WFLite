@@ -26,11 +26,11 @@ namespace WFLite.Activities
             set;
         }
 
-        protected override void initialize()
+        protected sealed override void initialize()
         {
         }
 
-        protected override async Task start()
+        protected sealed override async Task start()
         {
             Status = ActivityStatus.Executing;
 
@@ -60,7 +60,7 @@ namespace WFLite.Activities
             _cancellationTokenSource = null;
         }
 
-        protected override void stop()
+        protected sealed override void stop()
         {
             if (Status.IsCreated())
             {
@@ -77,7 +77,7 @@ namespace WFLite.Activities
             }
         }
 
-        protected override void reset()
+        protected sealed override void reset()
         {
             _cancellationTokenSource = null;
 

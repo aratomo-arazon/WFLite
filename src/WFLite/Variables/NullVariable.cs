@@ -13,12 +13,12 @@ namespace WFLite.Variables
 {
     public class NullVariable : Variable
     {
-        protected override object getValue()
+        protected sealed override object getValue()
         {
             return null;
         }
 
-        protected override void setValue(object value)
+        protected sealed override void setValue(object value)
         {
         }
     }

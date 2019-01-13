@@ -26,7 +26,7 @@ namespace WFLite.Converters
             set;
         }
 
-        protected override object convert(object value)
+        protected sealed override object convert(object value)
         {
             if (Dictionary.ContainsKey(value))
             {

@@ -141,15 +141,12 @@ You can create custom synchronous Activities by inheriting the `SyncActivity` cl
 {
     public IVariable SrcFilePath { private get; set; }
     public IVariable DstFilePath { private get; set; }
-    public FileCopyActivity()
+    protected sealed override bool run()
     {
-        Func = () =>
-        {
-            var srcFilePath = Convert.ToString(SrcFilePath.GetValue());
-            var dstFilePath = Convert.ToString(DstFilePath.GetValue());
-            File.Copy(srcFilePath, dstFilePath);
-            return true;
-        }
+        var srcFilePath = Convert.ToString(SrcFilePath.GetValue());
+        var dstFilePath = Convert.ToString(DstFilePath.GetValue());
+        File.Copy(srcFilePath, dstFilePath);
+        return true;
     }
 }
 </code></pre>
@@ -159,16 +156,13 @@ You can create custom asynchronous Activities by inheriting the `AsyncActivity` 
 {
     public IVariable SrcFilePath { private get; set; }
     public IVariable DstFilePath { private get; set; }
-    public FileCopyActivity()
+    protected sealed override async Task<bool> run(CancellationToken cancellationToken)
     {
-        Func = async (cancellationToken) =>
-        {
-            var srcFilePath = Convert.ToString(SrcFilePath.GetValue());
-            var dstFilePath = Convert.ToString(DstFilePath.GetValue());
-            var bytes = await File.ReadAllBytesAsync(srcFilePath, cancellationToken);
-            await File.WriteAllBytesAsync(dstFilePath, bytes, cancellationToken);
-            return true;
-        }
+        var srcFilePath = Convert.ToString(SrcFilePath.GetValue());
+        var dstFilePath = Convert.ToString(DstFilePath.GetValue());
+        var bytes = await File.ReadAllBytesAsync(srcFilePath, cancellationToken);
+        await File.WriteAllBytesAsync(dstFilePath, bytes, cancellationToken);
+        return true;
     }
 }
 </code></pre>
@@ -263,7 +257,7 @@ Inheriting `DelegateActivity` allows you to group Activities as a reusable unit.
             Condition = new FileExistsCondition(filePath),
             Then = new SequenceActivity()
             {
-                Activities = new List\<IActivity>()
+                Activities = new List<</>IActivity>()
                 {
                     new FileReadActivity(filePath, content),
                     new FileDeleteActivity(filePath)

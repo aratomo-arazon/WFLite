@@ -19,19 +19,19 @@ namespace WFLite.Activities
         {
         }
 
-        protected override async Task start()
+        protected sealed override async Task start()
         {
             await Task.CompletedTask;
 
             Status = ActivityStatus.Stopped;
         }
 
-        protected override void stop()
+        protected sealed override void stop()
         {
             Status = ActivityStatus.Stopped;
         }
 
-        protected override void reset()
+        protected sealed override void reset()
         {
             Status = ActivityStatus.Created;
         }

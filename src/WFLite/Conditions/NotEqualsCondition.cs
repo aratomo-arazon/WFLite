@@ -26,7 +26,7 @@ namespace WFLite.Conditions
             set;
         }
 
-        protected override bool check()
+        protected sealed override bool check()
         {
             return !Value1.GetValue().Equals(Value2.GetValue());
         }

@@ -40,7 +40,7 @@ namespace WFLite.Activities
             set;
         }
 
-        protected override void initialize()
+        protected sealed override void initialize()
         {
             if (Catch == null)
             {
@@ -53,7 +53,7 @@ namespace WFLite.Activities
             }
         }
 
-        protected override async Task start()
+        protected sealed override async Task start()
         {
             _activities.Add(Try);
             _activities.Add(Finally);
@@ -71,7 +71,7 @@ namespace WFLite.Activities
             await start(Finally);
         }
 
-        protected override void stop()
+        protected sealed override void stop()
         {
             if (_current != null)
             {
@@ -85,7 +85,7 @@ namespace WFLite.Activities
             }
         }
 
-        protected override void reset()
+        protected sealed override void reset()
         {
             if (!_activities.Contains(Try))
             {

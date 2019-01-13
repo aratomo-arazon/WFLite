@@ -25,8 +25,10 @@ namespace WFLite.Greeting.Converters
             {
                 return "Good evening!";
             }
-
-            return "zzz...";
+            else
+            {
+                return "zzz...";
+            }
         }
     }
 }

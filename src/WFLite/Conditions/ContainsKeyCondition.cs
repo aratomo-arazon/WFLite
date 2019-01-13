@@ -28,7 +28,7 @@ namespace WFLite.Conditions
             set;
         }
 
-        protected override bool check()
+        protected sealed override bool check()
         {
             var dictionary = Dictionary.GetValue() as IDictionary<string, object>;
 

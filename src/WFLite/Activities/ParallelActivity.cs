@@ -27,11 +27,11 @@ namespace WFLite.Activities
             set;
         }
 
-        protected override void initialize()
+        protected sealed override void initialize()
         {
         }
 
-        protected override async Task start()
+        protected sealed override async Task start()
         {
             _activities.AddRange(Activities);
 
@@ -46,7 +46,7 @@ namespace WFLite.Activities
             Status = _activities.GetStatus();
         }
 
-        protected override void stop()
+        protected sealed override void stop()
         {
             if (_activities.Any())
             {

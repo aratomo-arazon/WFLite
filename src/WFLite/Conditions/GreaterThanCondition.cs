@@ -27,7 +27,7 @@ namespace WFLite.Conditions
             set;
         }
 
-        protected override bool check()
+        protected sealed override bool check()
         {
             var value1 = Value1.GetValue() as IComparable;
             var value2 = Value2.GetValue() as IComparable;

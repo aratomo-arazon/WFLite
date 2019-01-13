@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using WFLite.Activities;
-using WFLite.Stopwatch.Activities;
+using WFLite.Activities.Console;
 using WFLite.Variables;
 
 namespace WFLite.Stopwatch
@@ -22,7 +22,7 @@ namespace WFLite.Stopwatch
                     },
                     Elapsed = elapsed
                 },
-                Finally = new WriteLineActivity()
+                Finally = new ConsoleWriteLineActivity()
                 {
                     Value = elapsed
                 }

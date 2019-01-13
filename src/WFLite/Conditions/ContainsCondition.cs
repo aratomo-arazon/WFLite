@@ -27,7 +27,7 @@ namespace WFLite.Conditions
             set;
         }
 
-        protected override bool check()
+        protected sealed override bool check()
         {
             var list = List.GetValue() as IList<object>;
 

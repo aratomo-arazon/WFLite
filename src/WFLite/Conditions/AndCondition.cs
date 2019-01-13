@@ -22,7 +22,7 @@ namespace WFLite.Conditions
             set;
         }
 
-        protected override bool check()
+        protected sealed override bool check()
         {
             return Conditions.All(c => c.Check());
         }
