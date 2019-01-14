@@ -5,11 +5,14 @@
     <LangVersion>latest</LangVersion>
     <Authors>aratomo-arazon</Authors>
     <Company />
-    <Description>WFLite is a light-weight workflow library.</Description>
+    <Description>WFLite is a lightweight workflow library.</Description>
     <Copyright>Copyright (c) 2019 aratomo-arazon</Copyright>
     <PackageProjectUrl>https://github.com/aratomo-arazon/WFLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aratomo-arazon/WFLite</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/aratomo-arazon/WFLite/blob/master/LICENSE</PackageLicenseUrl>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
