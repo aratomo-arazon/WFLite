@@ -28,6 +28,16 @@ namespace WFLite.Conditions
             set;
         }
 
+        public ContainsKeyCondition()
+        {
+        }
+
+        public ContainsKeyCondition(IVariable dictionary, IVariable key)
+        {
+            Dictionary = dictionary;
+            Key = key;
+        }
+
         protected sealed override bool check()
         {
             var dictionary = Dictionary.GetValue() as IDictionary<string, object>;

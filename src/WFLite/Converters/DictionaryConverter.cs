@@ -26,6 +26,16 @@ namespace WFLite.Converters
             set;
         }
 
+        public DictionaryConverter()
+        {
+        }
+
+        public DictionaryConverter(IDictionary<object, object> dictionary, object def)
+        {
+            Dictionary = dictionary;
+            Default = def;
+        }
+
         protected sealed override object convert(object value)
         {
             if (Dictionary.ContainsKey(value))

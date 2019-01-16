@@ -31,6 +31,16 @@ namespace WFLite.Activities
             set;
         }
 
+        public WhileActivity()
+        {
+        }
+
+        public WhileActivity(ICondition condition, IActivity activity)
+        {
+            Condition = condition;
+            Activity = activity;
+        }
+
         protected sealed override void initialize()
         {
         }

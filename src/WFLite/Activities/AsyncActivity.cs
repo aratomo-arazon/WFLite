@@ -26,7 +26,16 @@ namespace WFLite.Activities
             set;
         }
 
-        protected sealed override void initialize()
+        public AsyncActivity()
+        {
+        }
+
+        public AsyncActivity(Func<CancellationToken, Task<bool>> func)
+        {
+            Func = func;
+        }
+
+        protected override void initialize()
         {
         }
 

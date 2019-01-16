@@ -31,6 +31,16 @@ namespace WFLite.Activities
             set;
         }
 
+        public StopwatchActivity()
+        {
+        }
+
+        public StopwatchActivity(IActivity activity, IVariable elapsed)
+        {
+            Activity = activity;
+            Elapsed = elapsed;
+        }
+
         protected sealed override void initialize()
         {
         }

@@ -47,6 +47,18 @@ namespace WFLite.Activities
             set;
         }
 
+        public ForEachActivity()
+        {
+        }
+
+        public ForEachActivity(IVariable collection, IVariable value, IActivity activity, IVariable key = null)
+        {
+            Collection = collection;
+            Value = value;
+            Activity = activity;
+            Key = key;
+        }
+
         protected sealed override void initialize()
         {
             if (Key == null)

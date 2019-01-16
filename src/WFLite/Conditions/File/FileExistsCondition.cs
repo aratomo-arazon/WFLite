@@ -20,6 +20,15 @@ namespace WFLite.Conditions.File
             set;
         }
 
+        public FileExistsCondition()
+        {
+        }
+
+        public FileExistsCondition(IVariable path)
+        {
+            Path = path;
+        }
+
         protected sealed override bool check()
         {
             var path = Path.GetValue<string>();

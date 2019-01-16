@@ -26,6 +26,16 @@ namespace WFLite.Conditions
             set;
         }
 
+        public NotEqualsCondition()
+        {
+        }
+
+        public NotEqualsCondition(IVariable value1, IVariable value2)
+        {
+            Value1 = value1;
+            Value2 = value2;
+        }
+
         protected sealed override bool check()
         {
             return !Value1.GetValue().Equals(Value2.GetValue());

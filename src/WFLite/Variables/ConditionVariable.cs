@@ -1,5 +1,5 @@
 ﻿/*
- * DelegateCondition.cs
+ * ConditionVariable.cs
  *
  * Copyright (c) 2019 aratomo-arazon
  *
@@ -7,12 +7,13 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using System;
 using WFLite.Bases;
 using WFLite.Interfaces;
 
-namespace WFLite.Conditions
+namespace WFLite.Variables
 {
-    public class DelegateCondition : Condition
+    public class ConditionVariable : Variable
     {
         public ICondition Condition
         {
@@ -20,18 +21,23 @@ namespace WFLite.Conditions
             set;
         }
 
-        public DelegateCondition()
+        public ConditionVariable()
         {
         }
 
-        public DelegateCondition(ICondition condition)
+        public ConditionVariable(ICondition condition)
         {
             Condition = condition;
         }
 
-        protected sealed override bool check()
+        protected sealed override object getValue()
         {
             return Condition.Check();
+        }
+
+        protected sealed override void setValue(object value)
+        {
+            throw new NotSupportedException();
         }
     }
 }

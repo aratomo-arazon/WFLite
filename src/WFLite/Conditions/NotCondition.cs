@@ -20,6 +20,15 @@ namespace WFLite.Conditions
             set;
         }
 
+        public NotCondition()
+        {
+        }
+
+        public NotCondition(ICondition condition)
+        {
+            Condition = condition;
+        }
+
         protected sealed override bool check()
         {
             return !Condition.Check();

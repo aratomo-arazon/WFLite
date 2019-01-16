@@ -19,6 +19,15 @@ namespace WFLite.Variables
             set;
         }
 
+        public AnyVariable()
+        {
+        }
+
+        public AnyVariable(object value)
+        {
+            Value = value;
+        }
+
         protected sealed override object getValue()
         {
             return Value;
@@ -42,6 +51,15 @@ namespace WFLite.Variables
             {
                 base.setValue(value);
             }
+        }
+
+        public AnyVariable()
+        {
+        }
+
+        public AnyVariable(TValue value)
+        {
+            Value = value;
         }
     }
 }

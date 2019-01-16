@@ -19,6 +19,15 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileDeleteActivity()
+        {
+        }
+
+        public FileDeleteActivity(IVariable path)
+        {
+            Path = path;
+        }
+
         protected sealed override bool run()
         {
             var path = Path.GetValue<string>();

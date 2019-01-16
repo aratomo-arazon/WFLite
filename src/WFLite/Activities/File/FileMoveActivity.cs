@@ -25,6 +25,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileMoveActivity()
+        {
+        }
+
+        public FileMoveActivity(IVariable sourceFileName, IVariable destFileName)
+        {
+            SourceFileName = sourceFileName;
+            DestFileName = destFileName;
+        }
+
         protected sealed override bool run()
         {
             var sourceFileName = SourceFileName.GetValue<string>();

@@ -20,6 +20,15 @@ namespace WFLite.Conditions.Directory
             set;
         }
 
+        public DirectoryExistsCondition()
+        {
+        }
+
+        public DirectoryExistsCondition(IVariable path)
+        {
+            Path = path;
+        }
+
         protected sealed override bool check()
         {
             var path = Path.GetValue<string>();

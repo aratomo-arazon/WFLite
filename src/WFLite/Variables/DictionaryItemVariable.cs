@@ -28,6 +28,16 @@ namespace WFLite.Variables
             set;
         }
 
+        public DictionaryItemVariable()
+        {
+        }
+
+        public DictionaryItemVariable(IVariable dictionary, IVariable key)
+        {
+            Dictionary = dictionary;
+            Key = key;
+        }
+
         protected sealed override object getValue()
         {
             var dictionary = Dictionary.GetValue() as IDictionary<string, object>;

@@ -1,5 +1,5 @@
 ﻿/*
- * ConsoleWriteLineActivity.cs
+ * ConsoleReadActivity.cs
  *
  * Copyright (c) 2019 aratomo-arazon
  *
@@ -11,7 +11,7 @@ using WFLite.Interfaces;
 
 namespace WFLite.Activities.Console
 {
-    public class ConsoleWriteLineActivity : SyncActivity
+    public class ConsoleReadActivity : SyncActivity
     {
         public IVariable Value
         {
@@ -19,18 +19,23 @@ namespace WFLite.Activities.Console
             set;
         }
 
-        public ConsoleWriteLineActivity()
+        public ConsoleReadActivity()
         {
         }
 
-        public ConsoleWriteLineActivity(IVariable value)
+        public ConsoleReadActivity(IVariable value = null)
         {
             Value = value;
         }
 
         protected sealed override bool run()
         {
-            System.Console.WriteLine(Value.GetValue());
+            var value = System.Console.Read();
+
+            if (Value != null)
+            {
+                Value.SetValue(value);
+            }
 
             return true;
         }

@@ -25,6 +25,15 @@ namespace WFLite.Activities.Directory
             set;
         }
 
+        public DirectoryMoveActivity()
+        {
+        }
+
+        public DirectoryMoveActivity(IVariable sourceDirName, IVariable destDirName)
+        {
+            SourceDirName = sourceDirName;
+            DestDirName = destDirName;
+        }
 
         protected sealed override bool run()
         {

@@ -14,7 +14,7 @@ namespace WFLite.Stopwatch
         {
             var activity = new ConsoleWriteLineActivity()
             {
-                Value = new AnyVariable() { Value = "Hello World!" }
+                Value = new AnyVariable("Hello World!")
             };
 
             await activity.Start();

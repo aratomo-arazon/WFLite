@@ -27,6 +27,15 @@ namespace WFLite.Activities
             set;
         }
 
+        public DelayActivity()
+        {
+        }
+
+        public DelayActivity(IVariable duration)
+        {
+            Duration = duration;
+        }
+
         protected sealed override void initialize()
         {
         }

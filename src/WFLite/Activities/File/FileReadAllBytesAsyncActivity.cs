@@ -27,6 +27,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileReadAllBytesAsyncActivity()
+        {
+        }
+
+        public FileReadAllBytesAsyncActivity(IVariable path, IVariable bytes)
+        {
+            Path = path;
+            Bytes = bytes;
+        }
+
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
             var path = Path.GetValue<string>();

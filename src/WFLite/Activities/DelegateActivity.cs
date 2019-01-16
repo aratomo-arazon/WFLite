@@ -24,6 +24,15 @@ namespace WFLite.Activities
             set;
         }
 
+        public DelegateActivity()
+        {
+        }
+
+        public DelegateActivity(IActivity activity)
+        {
+            Activity = activity;
+        }
+
         protected sealed override void initialize()
         {
         }

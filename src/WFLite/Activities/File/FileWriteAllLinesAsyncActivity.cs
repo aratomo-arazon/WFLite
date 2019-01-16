@@ -27,6 +27,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileWriteAllLinesAsyncActivity()
+        {
+        }
+
+        public FileWriteAllLinesAsyncActivity(IVariable path, IVariable contents)
+        {
+            Path = path;
+            Contents = contents;
+        }
+
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
             var path = Path.GetValue<string>();

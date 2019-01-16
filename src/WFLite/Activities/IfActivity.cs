@@ -36,6 +36,17 @@ namespace WFLite.Activities
             set;
         }
 
+        public IfActivity()
+        {
+        }
+
+        public IfActivity(ICondition condition, IActivity then = null, IActivity _else = null)
+        {
+            Condition = condition;
+            Then = then;
+            Else = _else;
+        }
+
         protected sealed override void initialize()
         {
             if (Then == null)

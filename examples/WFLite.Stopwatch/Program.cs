@@ -16,10 +16,7 @@ namespace WFLite.Stopwatch
             {
                 Try = new StopwatchActivity()
                 {
-                    Activity = new DelayActivity()
-                    {
-                        Duration = new AnyVariable() { Value = 10000 }
-                    },
+                    Activity = new DelayActivity(new AnyVariable(10000)),
                     Elapsed = elapsed
                 },
                 Finally = new ConsoleWriteLineActivity()

@@ -26,7 +26,17 @@ namespace WFLite.Conditions
         {
             if (Value == null)
             {
-                Value = new AnyVariable() { Value = true };
+                Value = new AnyVariable(true);
+            }
+        }
+
+        public FalseCondition(IVariable value)
+        {
+            Value = value;
+            
+            if (Value == null)
+            {
+                Value = new AnyVariable(true);
             }
         }
 

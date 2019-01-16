@@ -22,7 +22,16 @@ namespace WFLite.Activities
             set;
         }
 
-        protected sealed override void initialize()
+        public SyncActivity()
+        {
+        }
+
+        public SyncActivity(Func<bool> func)
+        {
+            Func = func;
+        }
+
+        protected override void initialize()
         {
         }
 

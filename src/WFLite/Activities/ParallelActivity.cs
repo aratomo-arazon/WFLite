@@ -27,6 +27,20 @@ namespace WFLite.Activities
             set;
         }
 
+        public ParallelActivity()
+        {
+        }
+
+        public ParallelActivity(IEnumerable<IActivity> activities)
+        {
+            Activities = activities;
+        }
+
+        public ParallelActivity(params IActivity[] activities)
+        {
+            Activities = activities;
+        }
+
         protected sealed override void initialize()
         {
         }

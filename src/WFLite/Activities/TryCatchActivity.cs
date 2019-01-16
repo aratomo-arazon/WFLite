@@ -40,6 +40,17 @@ namespace WFLite.Activities
             set;
         }
 
+        public TryCatchActivity()
+        {
+        }
+
+        public TryCatchActivity(IActivity _try, IActivity _catch = null, IActivity _finally = null)
+        {
+            Try = _try;
+            Catch = _catch;
+            Finally = _finally;
+        }
+
         protected sealed override void initialize()
         {
             if (Catch == null)

@@ -31,6 +31,17 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileCopyActivity()
+        {
+        }
+
+        public FileCopyActivity(IVariable sourceFileName, IVariable destFileName, ICondition overwrite = null)
+        {
+            SourceFileName = sourceFileName;
+            DestFileName = destFileName;
+            Overwrite = overwrite;
+        }
+
         protected sealed override bool run()
         {
             var sourceFileName = SourceFileName.GetValue<string>();

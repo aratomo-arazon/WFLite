@@ -20,6 +20,15 @@ namespace WFLite.Conditions
             set;
         }
 
+        public NotNullCondition()
+        {
+        }
+
+        public NotNullCondition(IVariable value)
+        {
+            Value = value;
+        }
+
         protected sealed override bool check()
         {
             return Value.GetValue() != null;

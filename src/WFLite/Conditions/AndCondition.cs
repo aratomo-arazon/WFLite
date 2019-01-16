@@ -22,6 +22,20 @@ namespace WFLite.Conditions
             set;
         }
 
+        public AndCondition()
+        {
+        }
+
+        public AndCondition(IEnumerable<ICondition> conditions)
+        {
+            Conditions = conditions;
+        }
+
+        public AndCondition(params ICondition[] conditions)
+        {
+            Conditions = conditions;
+        }
+
         protected sealed override bool check()
         {
             return Conditions.All(c => c.Check());

@@ -25,6 +25,16 @@ namespace WFLite.Activities.Directory
             set;
         }
 
+        public DirectoryDeleteActivity()
+        {
+        }
+
+        public DirectoryDeleteActivity(IVariable path, ICondition recursive = null)
+        {
+            Path = path;
+            Recursive = recursive;
+        }
+
         protected sealed override bool run()
         {
             var path = Path.GetValue<string>();

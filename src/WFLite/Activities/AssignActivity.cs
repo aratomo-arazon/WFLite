@@ -28,6 +28,16 @@ namespace WFLite.Activities
             set;
         }
 
+        public AssignActivity()
+        {
+        }
+
+        public AssignActivity(IVariable to, IVariable value)
+        {
+            To = to;
+            Value = value;
+        }
+
         protected sealed override void initialize()
         {
         }

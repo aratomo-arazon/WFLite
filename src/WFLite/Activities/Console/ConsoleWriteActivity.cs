@@ -1,38 +1,35 @@
 ﻿/*
- * DirectoryCreateActivity.cs
+ * ConsoleWriteActivity.cs
  *
  * Copyright (c) 2019 aratomo-arazon
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
  */
-
 using WFLite.Interfaces;
 
-namespace WFLite.Activities.Directory
+namespace WFLite.Activities.Console
 {
-    public class DirectoryCreateActivity : SyncActivity
+    public class ConsoleWriteActivity : SyncActivity
     {
-        public IVariable Path
+        public IVariable Value
         {
             private get;
             set;
         }
 
-        public DirectoryCreateActivity()
+        public ConsoleWriteActivity()
         {
         }
 
-        public DirectoryCreateActivity(IVariable path)
+        public ConsoleWriteActivity(IVariable value)
         {
-            Path = path;
+            Value = value;
         }
 
         protected sealed override bool run()
         {
-            var path = Path.GetValue<string>();
-
-            System.IO.Directory.CreateDirectory(path);
+            System.Console.Write(Value.GetValue());
 
             return true;
         }

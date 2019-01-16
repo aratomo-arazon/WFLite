@@ -22,6 +22,15 @@ namespace WFLite.Variables
             set;
         }
 
+        public CountVariable()
+        {
+        }
+
+        public CountVariable(IVariable collection)
+        {
+            Collection = collection;
+        }
+
         protected sealed override object getValue()
         {
             var value = Collection.GetValue();

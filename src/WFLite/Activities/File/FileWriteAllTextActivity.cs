@@ -32,6 +32,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileWriteAllTextActivity()
+        {
+        }
+
+        public FileWriteAllTextActivity(IVariable path, IVariable contents, IVariable encoding = null)
+        {
+            Path = path;
+            Contents = contents;
+            Encoding = encoding;
+        }
 
         protected sealed override bool run()
         {

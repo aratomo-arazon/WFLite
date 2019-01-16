@@ -28,6 +28,20 @@ namespace WFLite.Activities
             set;
         }
 
+        public SequenceActivity()
+        {
+        }
+
+        public SequenceActivity(IEnumerable<IActivity> activities)
+        {
+            Activities = activities;
+        }
+
+        public SequenceActivity(params IActivity[] activities)
+        {
+            Activities = activities;
+        }
+
         protected sealed override void initialize()
         {
         }

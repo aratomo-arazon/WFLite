@@ -25,6 +25,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileReadAllLinesActivity()
+        {
+        }
+
+        public FileReadAllLinesActivity(IVariable path, IVariable contents)
+        {
+            Path = path;
+            Contents = contents;
+        }
+
         protected sealed override bool run()
         {
             var path = Path.GetValue<string>();

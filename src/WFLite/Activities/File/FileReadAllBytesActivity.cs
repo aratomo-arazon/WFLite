@@ -25,6 +25,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileReadAllBytesActivity()
+        {
+        }
+
+        public FileReadAllBytesActivity(IVariable path, IVariable bytes)
+        {
+            Path = path;
+            Bytes = bytes;
+        }
+
         protected sealed override bool run()
         {
             var path = Path.GetValue<string>();

@@ -34,6 +34,16 @@ namespace WFLite.Activities.File
             set;
         }
 
+        public FileWriteAllTextAsyncActivity()
+        {
+        }
+
+        public FileWriteAllTextAsyncActivity(IVariable path, IVariable contents, IVariable encoding = null)
+        {
+            Path = path;
+            Contents = contents;
+            Encoding = encoding;
+        }
 
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {

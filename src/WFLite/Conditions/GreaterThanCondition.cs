@@ -27,6 +27,16 @@ namespace WFLite.Conditions
             set;
         }
 
+        public GreaterThanCondition()
+        {
+        }
+
+        public GreaterThanCondition(IVariable value1, IVariable value2)
+        {
+            Value1 = value1;
+            Value2 = value2;
+        }
+
         protected sealed override bool check()
         {
             var value1 = Value1.GetValue() as IComparable;

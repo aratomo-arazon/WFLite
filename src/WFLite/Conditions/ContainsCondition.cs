@@ -27,6 +27,16 @@ namespace WFLite.Conditions
             set;
         }
 
+        public ContainsCondition()
+        {
+        }
+
+        public ContainsCondition(IVariable list, IVariable value)
+        {
+            List = list;
+            Value = value;
+        }
+
         protected sealed override bool check()
         {
             var list = List.GetValue() as IList<object>;

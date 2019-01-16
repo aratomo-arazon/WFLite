@@ -1,5 +1,5 @@
 ﻿/*
- * ConsoleWriteLineActivity.cs
+ * ConsoleReadKeyActivity.cs
  *
  * Copyright (c) 2019 aratomo-arazon
  *
@@ -11,26 +11,31 @@ using WFLite.Interfaces;
 
 namespace WFLite.Activities.Console
 {
-    public class ConsoleWriteLineActivity : SyncActivity
+    public class ConsoleReadKeyActivity : SyncActivity
     {
-        public IVariable Value
+        public IVariable KeyInfo
         {
             private get;
             set;
         }
 
-        public ConsoleWriteLineActivity()
+        public ConsoleReadKeyActivity()
         {
         }
 
-        public ConsoleWriteLineActivity(IVariable value)
+        public ConsoleReadKeyActivity(IVariable keyInfo)
         {
-            Value = value;
+            KeyInfo = keyInfo;
         }
 
         protected sealed override bool run()
         {
-            System.Console.WriteLine(Value.GetValue());
+            var keyInfo = System.Console.ReadKey();
+
+            if (KeyInfo != null)
+            {
+                KeyInfo.SetValue(keyInfo);
+            }
 
             return true;
         }

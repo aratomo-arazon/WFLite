@@ -28,6 +28,16 @@ namespace WFLite.Variables
             set;
         }
 
+        public ListItemVariable()
+        {
+        }
+
+        public ListItemVariable(IVariable list, IVariable index)
+        {
+            List = list;
+            Index = index;
+        }
+
         protected sealed override object getValue()
         {
             var list = List.GetValue() as IList<object>;
