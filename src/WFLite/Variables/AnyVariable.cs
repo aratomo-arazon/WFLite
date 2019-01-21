@@ -15,7 +15,7 @@ namespace WFLite.Variables
     {
         public object Value
         {
-            protected get;
+            private get;
             set;
         }
 
@@ -45,7 +45,7 @@ namespace WFLite.Variables
         {
             private get
             {
-                return (TValue)base.getValue();
+                return (TValue)getValue();
             }
             set
             {
