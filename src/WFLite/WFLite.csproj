@@ -11,8 +11,8 @@
     <RepositoryUrl>https://github.com/aratomo-arazon/WFLite</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/aratomo-arazon/WFLite/blob/master/LICENSE</PackageLicenseUrl>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
 </Project>
