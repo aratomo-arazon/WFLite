@@ -8,6 +8,7 @@
  */
 
 using WFLite.Bases;
+using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
@@ -23,7 +24,8 @@ namespace WFLite.Variables
         {
         }
 
-        public AnyVariable(object value)
+        public AnyVariable(object value, IConverter converter = null)
+            : base(converter)
         {
             Value = value;
         }
@@ -57,9 +59,11 @@ namespace WFLite.Variables
         {
         }
 
-        public AnyVariable(TValue value)
+        public AnyVariable(TValue value, IConverter converter = null)
+            : base(value, converter)
         {
             Value = value;
+            Converter = converter;
         }
     }
 }

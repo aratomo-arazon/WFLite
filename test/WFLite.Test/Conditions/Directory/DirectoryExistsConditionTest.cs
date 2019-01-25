@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using WFLite.Conditions.Directory;
+using WFLite.Conditions.IO;
 using WFLite.Variables;
 
 namespace WFLite.Test.Conditions.Directory

@@ -31,7 +31,7 @@ namespace WFLite.Conditions
 
         protected sealed override bool check()
         {
-            return Value.GetValue() == null;
+            return Value.GetValue() is null;
         }
     }
 }

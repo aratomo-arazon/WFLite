@@ -25,7 +25,8 @@ namespace WFLite.Variables
         {
         }
 
-        public ConditionVariable(ICondition condition)
+        public ConditionVariable(ICondition condition, IConverter converter = null)
+            : base(converter)
         {
             Condition = condition;
         }

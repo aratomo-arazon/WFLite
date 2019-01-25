@@ -26,14 +26,10 @@ namespace WFLite.Converters
             set;
         }
 
-        public DictionaryConverter()
-        {
-        }
-
-        public DictionaryConverter(IDictionary<object, object> dictionary, object def)
+        public DictionaryConverter(IDictionary<object, object> dictionary = null, object default_ = null)
         {
             Dictionary = dictionary;
-            Default = def;
+            Default = default_;
         }
 
         protected sealed override object convert(object value)

@@ -40,11 +40,11 @@ namespace WFLite.Activities
         {
         }
 
-        public IfActivity(ICondition condition, IActivity then = null, IActivity _else = null)
+        public IfActivity(ICondition condition, IActivity then = null, IActivity else_ = null)
         {
             Condition = condition;
             Then = then;
-            Else = _else;
+            Else = else_;
         }
 
         protected sealed override void initialize()

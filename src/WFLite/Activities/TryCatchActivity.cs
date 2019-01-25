@@ -44,11 +44,11 @@ namespace WFLite.Activities
         {
         }
 
-        public TryCatchActivity(IActivity _try, IActivity _catch = null, IActivity _finally = null)
+        public TryCatchActivity(IActivity try_, IActivity catch_ = null, IActivity finally_ = null)
         {
-            Try = _try;
-            Catch = _catch;
-            Finally = _finally;
+            Try = try_;
+            Catch = catch_;
+            Finally = finally_;
         }
 
         protected sealed override void initialize()

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using WFLite.Conditions.File;
+using WFLite.Conditions.IO;
 using WFLite.Variables;
 
 namespace WFLite.Test.Conditions.File

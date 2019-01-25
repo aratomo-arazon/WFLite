@@ -240,6 +240,20 @@ Control Activity expresses the control syntax by using the composite structure. 
 `ThrowActivity` implements throw-exception syntax.
 <pre><code>new ThrowActivity();
 </code></pre>
+`UsingActivity` implements using syntax.
+<pre><code>new UsingActivity()
+{
+    Disposable = <</>Variable>,    // Must be DisposableVariable
+    Activity = <</>Activity>
+};
+</code></pre>
+`LockActivity` implements lock syntax.
+<pre><code>new LockActivity()
+{
+    Lock = <</>Variable>,          // Must be LockVariable
+    Activity = <</>Activity>
+};
+</code></pre>
 `DelegateActivity` simply delegates processing to an Activity.
 <pre><code>new DelegateActivity()
 {

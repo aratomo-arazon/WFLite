@@ -24,24 +24,20 @@ namespace WFLite.Conditions
 
         public TrueCondition()
         {
-            if (Value == null)
-            {
-                Value = new AnyVariable(true);
-            }
         }
 
         public TrueCondition(IVariable value)
         {
             Value = value;
-
-            if (Value == null)
-            {
-                Value = new AnyVariable(true);
-            }
         }
 
         protected sealed override bool check()
         {
+            if (Value == null)
+            {
+                return true;
+            }
+
             return Convert.ToBoolean(Value.GetValue());
         }
     }

@@ -26,7 +26,8 @@ namespace WFLite.Variables
         {
         }
 
-        public CountVariable(IVariable collection)
+        public CountVariable(IVariable collection, IConverter converter = null)
+            : base(converter)
         {
             Collection = collection;
         }

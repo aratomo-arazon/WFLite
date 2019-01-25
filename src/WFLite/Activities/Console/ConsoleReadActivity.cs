@@ -23,7 +23,7 @@ namespace WFLite.Activities.Console
         {
         }
 
-        public ConsoleReadActivity(IVariable value = null)
+        public ConsoleReadActivity(IVariable value)
         {
             Value = value;
         }

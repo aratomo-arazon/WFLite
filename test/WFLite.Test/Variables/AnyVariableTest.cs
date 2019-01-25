@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using WFLite.Converters;
+using WFLite.Enums;
 using WFLite.Variables;
 
 namespace WFLite.Test.Variables
@@ -50,7 +51,7 @@ namespace WFLite.Test.Variables
         }
 
         [TestMethod]
-        public void Test___Method_GetValue___Generic()
+        public void Test___Method_GetValue___Generic_Class()
         {
             var testee = new AnyVariable<int>()
             {
@@ -61,7 +62,40 @@ namespace WFLite.Test.Variables
         }
 
         [TestMethod]
-        public void Test___Method_SetValue___Generic()
+        public void Test___Method_GetValue___Generic_Method___int_to_string()
+        {
+            var testee = new AnyVariable()
+            {
+                Value = 10
+            };
+
+            Assert.AreEqual("10", testee.GetValue<string>());
+        }
+
+        [TestMethod]
+        public void Test___Method_GetValue___Generic_Method___enum_to_string()
+        {
+            var testee = new AnyVariable()
+            {
+                Value = ActivityStatus.Created
+            };
+
+            Assert.AreEqual("Created", testee.GetValue<string>());
+        }
+
+        [TestMethod]
+        public void Test___Method_GetValue___Generic_Method___enum_to_int()
+        {
+            var testee = new AnyVariable()
+            {
+                Value = ActivityStatus.Created
+            };
+
+            Assert.AreEqual(0, testee.GetValue<int>());
+        }
+
+        [TestMethod]
+        public void Test___Method_SetValue___Generic_Class()
         {
             var testee = new AnyVariable<int>()
             {

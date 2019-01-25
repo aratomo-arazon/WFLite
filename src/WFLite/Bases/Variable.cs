@@ -7,6 +7,7 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using WFLite.Converters;
 using WFLite.Interfaces;
 
 namespace WFLite.Bases
@@ -17,6 +18,15 @@ namespace WFLite.Bases
         {
             private get;
             set;
+        }
+
+        public Variable()
+        {
+        }
+
+        public Variable(IConverter converter = null)
+        {
+            Converter = converter;
         }
 
         public object GetValue()
@@ -33,7 +43,9 @@ namespace WFLite.Bases
 
         public TValue GetValue<TValue>()
         {
-            return (TValue)GetValue();
+            var castConverter = new CastConverter<TValue>();
+
+            return (TValue)castConverter.Convert(GetValue());
         }
 
         public void SetValue(object value)

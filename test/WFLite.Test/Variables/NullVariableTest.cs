@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using WFLite.Variables;
 
 namespace WFLite.Test.Variables
@@ -19,8 +20,7 @@ namespace WFLite.Test.Variables
         {
             var testee = new NullVariable();
 
-            testee.SetValue(10);
-            Assert.IsNull(testee.GetValue());
+            Assert.ThrowsException<NotSupportedException>(() => testee.SetValue(10));
         }
     }
 }

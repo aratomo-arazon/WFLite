@@ -8,10 +8,19 @@
  */
 
 using System.Collections.Generic;
+using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
     public class ListVariable : AnyVariable<IList<object>>
     {
+        public ListVariable()
+        {
+        }
+
+        public ListVariable(IList<object> value, IConverter converter = null)
+            : base(value, converter)
+        {
+        }
     }
 }

@@ -32,7 +32,8 @@ namespace WFLite.Variables
         {
         }
 
-        public DictionaryItemVariable(IVariable dictionary, IVariable key)
+        public DictionaryItemVariable(IVariable dictionary, IVariable key, IConverter converter = null)
+            : base(converter)
         {
             Dictionary = dictionary;
             Key = key;

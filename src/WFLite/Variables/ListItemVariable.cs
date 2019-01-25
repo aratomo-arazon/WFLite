@@ -32,7 +32,8 @@ namespace WFLite.Variables
         {
         }
 
-        public ListItemVariable(IVariable list, IVariable index)
+        public ListItemVariable(IVariable list, IVariable index, IConverter converter = null)
+            : base(converter)
         {
             List = list;
             Index = index;
