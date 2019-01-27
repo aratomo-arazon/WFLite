@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WFLite.Activities;
 using WFLite.Activities.Console;
+using WFLite.Activities.Diagnostics;
 using WFLite.Variables;
 
 namespace WFLite.Stopwatch

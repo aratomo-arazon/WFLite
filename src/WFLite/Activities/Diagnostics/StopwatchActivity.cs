@@ -13,7 +13,7 @@ using WFLite.Bases;
 using WFLite.Enums;
 using WFLite.Interfaces;
 
-namespace WFLite.Activities
+namespace WFLite.Activities.Diagnostics
 {
     public class StopwatchActivity : Activity
     {
@@ -55,15 +55,21 @@ namespace WFLite.Activities
 
             stopwatch.Start();
 
-            var task = _current.Start();
+            try
+            {
 
-            Status = _current.Status;
+                var task = _current.Start();
 
-            await task;
+                Status = _current.Status;
 
-            Status = _current.Status;
+                await task;
 
-            stopwatch.Stop();
+                Status = _current.Status;
+            }
+            finally
+            {
+                stopwatch.Stop();
+            }
 
             Elapsed.SetValue(stopwatch.ElapsedMilliseconds);
         }

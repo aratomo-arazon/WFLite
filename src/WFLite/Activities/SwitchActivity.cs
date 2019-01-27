@@ -42,11 +42,11 @@ namespace WFLite.Activities
         {
         }
 
-        public SwitchActivity(IVariable value, IDictionary<object, IActivity> cases, IActivity _default = null)
+        public SwitchActivity(IVariable value, IDictionary<object, IActivity> cases, IActivity default_ = null)
         {
             Value = value;
             Cases = cases;
-            Default = _default;
+            Default = default_;
         }
 
         protected sealed override void initialize()

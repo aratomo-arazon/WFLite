@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using WFLite.Activities;
+using WFLite.Activities.Diagnostics;
 using WFLite.Enums;
 using WFLite.Interfaces;
 using WFLite.Variables;

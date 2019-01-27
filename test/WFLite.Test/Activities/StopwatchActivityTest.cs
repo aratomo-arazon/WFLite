@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using WFLite.Activities;
+using WFLite.Activities.Diagnostics;
 using WFLite.Enums;
 using WFLite.Variables;
 
