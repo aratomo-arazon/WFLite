@@ -47,8 +47,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileCopyActivity()
             {
-                SourceFileName = new AnyVariable() { Value = sourceFilePath },
-                DestFileName = new AnyVariable() { Value = destFilePath },
+                SourceFileName = new AnyVariable<string>() { Value = sourceFilePath },
+                DestFileName = new AnyVariable<string>() { Value = destFilePath },
                 Overwrite = new FalseCondition()
             };
 
@@ -71,8 +71,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileCopyActivity()
             {
-                SourceFileName = new AnyVariable() { Value = sourceFilePath },
-                DestFileName = new AnyVariable() { Value = destFilePath },
+                SourceFileName = new AnyVariable<string>() { Value = sourceFilePath },
+                DestFileName = new AnyVariable<string>() { Value = destFilePath },
                 Overwrite = new TrueCondition()
             };
 

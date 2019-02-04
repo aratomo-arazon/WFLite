@@ -40,19 +40,19 @@ namespace WFLite.Test.Activities.IO
 
             File.WriteAllLines(path, new string[] { "bar", "baz" });
 
-            var contents = new AnyVariable();
+            var contents = new AnyVariable<string[]>();
 
             var testee = new FileReadAllLinesActivity()
             {
-                Path = new AnyVariable() { Value = path },
+                Path = new AnyVariable<string>() { Value = path },
                 Contents = contents
             };
 
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual("bar", contents.GetValue<string[]>()[0]);
-            Assert.AreEqual("baz", contents.GetValue<string[]>()[1]);
+            Assert.AreEqual("bar", contents.GetValue()[0]);
+            Assert.AreEqual("baz", contents.GetValue()[1]);
         }
     }
 }

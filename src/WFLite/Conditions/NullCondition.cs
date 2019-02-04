@@ -14,7 +14,7 @@ namespace WFLite.Conditions
 {
     public class NullCondition : Condition
     {
-        public IVariable Value
+        public IOutVariable Value
         {
             private get;
             set;
@@ -24,14 +24,14 @@ namespace WFLite.Conditions
         {
         }
 
-        public NullCondition(IVariable value)
+        public NullCondition(IOutVariable value)
         {
             Value = value;
         }
 
         protected sealed override bool check()
         {
-            return Value.GetValue() is null;
+            return Value.GetValueAsObject() is null;
         }
     }
 }

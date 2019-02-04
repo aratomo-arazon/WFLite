@@ -14,51 +14,51 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Start___Status_Created()
         {
-            var variable1 = new AnyVariable();
-            var variable2 = new AnyVariable();
+            var variable1 = new AnyVariable<int>();
+            var variable2 = new AnyVariable<int>();
 
             var testee = new SequenceActivity()
             {
                 Activities = new List<IActivity>()
                 {
-                    new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 10 } },
-                    new AssignActivity() { To = variable2, Value = new AnyVariable() { Value = 20 } }
+                    new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 10 } },
+                    new AssignActivity() { To = variable2, Value = new AnyVariable<int>() { Value = 20 } }
                 }
             };
 
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual(10, variable1.GetValue());
-            Assert.AreEqual(20, variable2.GetValue());
+            Assert.AreEqual(10, variable1.GetValueAsObject());
+            Assert.AreEqual(20, variable2.GetValueAsObject());
         }
 
         [TestMethod]
         public void Test___Method_Stop___Status_Created()
         {
-            var variable1 = new AnyVariable();
-            var variable2 = new AnyVariable();
+            var variable1 = new AnyVariable<int>();
+            var variable2 = new AnyVariable<int>();
 
             var testee = new SequenceActivity()
             {
                 Activities = new List<IActivity>()
                 {
-                    new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 10 } },
-                    new AssignActivity() { To = variable2, Value = new AnyVariable() { Value = 20 } }
+                    new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 10 } },
+                    new AssignActivity() { To = variable2, Value = new AnyVariable<int>() { Value = 20 } }
                 }
             };
 
             testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
-            Assert.IsNull(variable1.GetValue());
-            Assert.IsNull(variable2.GetValue());
+            Assert.IsNull(variable1.GetValueAsObject());
+            Assert.IsNull(variable2.GetValueAsObject());
         }
 
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing()
         {
-            var duration = new AnyVariable() { Value = 1000 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new SequenceActivity()
             {
@@ -83,23 +83,23 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Reset___Status_Completed()
         {
-            var variable1 = new AnyVariable();
-            var variable2 = new AnyVariable();
+            var variable1 = new AnyVariable<int>();
+            var variable2 = new AnyVariable<int>();
 
             var testee = new SequenceActivity()
             {
                 Activities = new List<IActivity>()
                 {
-                    new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 10 } },
-                    new AssignActivity() { To = variable2, Value = new AnyVariable() { Value = 20 } }
+                    new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 10 } },
+                    new AssignActivity() { To = variable2, Value = new AnyVariable<int>() { Value = 20 } }
                 }
             };
 
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual(10, variable1.GetValue());
-            Assert.AreEqual(20, variable2.GetValue());
+            Assert.AreEqual(10, variable1.GetValueAsObject());
+            Assert.AreEqual(20, variable2.GetValueAsObject());
 
             testee.Reset();
 
@@ -109,23 +109,23 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Reset___Status_Stopped()
         {
-            var variable1 = new AnyVariable();
-            var variable2 = new AnyVariable();
+            var variable1 = new AnyVariable<int>();
+            var variable2 = new AnyVariable<int>();
 
             var testee = new SequenceActivity()
             {
                 Activities = new List<IActivity>()
                 {
-                    new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 10 } },
-                    new AssignActivity() { To = variable2, Value = new AnyVariable() { Value = 20 } }
+                    new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 10 } },
+                    new AssignActivity() { To = variable2, Value = new AnyVariable<int>() { Value = 20 } }
                 }
             };
 
             testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
-            Assert.IsNull(variable1.GetValue());
-            Assert.IsNull(variable2.GetValue());
+            Assert.IsNull(variable1.GetValueAsObject());
+            Assert.IsNull(variable2.GetValueAsObject());
 
             testee.Reset();
 

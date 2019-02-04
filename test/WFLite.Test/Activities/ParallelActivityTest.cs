@@ -14,7 +14,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Start____Status_Created()
         {
-            var duration = new AnyVariable() { Value = 1000 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new ParallelActivity()
             {
@@ -33,7 +33,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Stop___Status_Created()
         {
-            var duration = new AnyVariable() { Value = 1000 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new ParallelActivity()
             {
@@ -52,7 +52,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing()
         {
-            var duration = new AnyVariable() { Value = 1000 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new ParallelActivity()
             {
@@ -77,7 +77,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Reset___Status_Completed()
         {
-            var duration = new AnyVariable() { Value = 1000 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new ParallelActivity()
             {
@@ -100,7 +100,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Reset___Status_Stopped()
         {
-            var duration = new AnyVariable() { Value = 1000 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new ParallelActivity()
             {

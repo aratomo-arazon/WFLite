@@ -16,13 +16,13 @@ namespace WFLite.Activities.IO
 {
     public class FileWriteAllBytesAsyncActivity : AsyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
         }
 
-        public IVariable Bytes
+        public IOutVariable<byte[]> Bytes
         {
             private get;
             set;
@@ -32,7 +32,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileWriteAllBytesAsyncActivity(IVariable path, IVariable bytes)
+        public FileWriteAllBytesAsyncActivity(IOutVariable<string> path, IOutVariable<byte[]> bytes)
         {
             Path = path;
             Bytes = bytes;
@@ -40,8 +40,8 @@ namespace WFLite.Activities.IO
 
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
-            var path = Path.GetValue<string>();
-            var bytes = Bytes.GetValue<byte[]>();
+            var path = Path.GetValue();
+            var bytes = Bytes.GetValue();
 
             await File.WriteAllBytesAsync(path, bytes, cancellationToken);
 

@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
@@ -19,7 +20,7 @@ namespace WFLite.Activities
     {
         public IActivity _current;
 
-        public IVariable LockObject
+        public IOutVariable<SemaphoreSlim> LockObject
         {
             private get;
             set;
@@ -35,8 +36,9 @@ namespace WFLite.Activities
         {
         }
 
-        public LockActivity(IVariable lockObject, IActivity activity)
+        public LockActivity(IOutVariable<SemaphoreSlim> lockObject, IActivity activity)
         {
+            LockObject = lockObject;
             Activity = activity;
         }
 
@@ -46,7 +48,7 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            var lockObject = LockObject.GetValue<SemaphoreSlim>();
+            var lockObject = LockObject.GetValue();
 
             await lockObject.WaitAsync().ConfigureAwait(false);
 

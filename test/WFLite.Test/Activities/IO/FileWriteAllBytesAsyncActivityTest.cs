@@ -43,8 +43,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileWriteAllBytesAsyncActivity()
             {
-                Path = new AnyVariable() { Value = path },
-                Bytes = new AnyVariable() { Value = Encoding.UTF8.GetBytes("bar") }
+                Path = new AnyVariable<string>() { Value = path },
+                Bytes = new AnyVariable<byte[]>() { Value = Encoding.UTF8.GetBytes("bar") }
             };
 
             await testee.Start();

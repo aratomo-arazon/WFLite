@@ -14,13 +14,13 @@ namespace WFLite.Activities.IO
 {
     public class DirectoryMoveActivity : SyncActivity
     {
-        public IVariable SourceDirName
+        public IOutVariable<string> SourceDirName
         {
             private get;
             set;
         }
 
-        public IVariable DestDirName
+        public IOutVariable<string> DestDirName
         {
             private get;
             set;
@@ -30,7 +30,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public DirectoryMoveActivity(IVariable sourceDirName, IVariable destDirName)
+        public DirectoryMoveActivity(IOutVariable<string> sourceDirName, IOutVariable<string> destDirName)
         {
             SourceDirName = sourceDirName;
             DestDirName = destDirName;
@@ -38,8 +38,8 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var sourceDirName = SourceDirName.GetValue<string>();
-            var destDirName = DestDirName.GetValue<string>();
+            var sourceDirName = SourceDirName.GetValue();
+            var destDirName = DestDirName.GetValue();
 
             Directory.Move(sourceDirName, destDirName);
 

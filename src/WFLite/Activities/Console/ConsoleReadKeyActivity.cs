@@ -7,13 +7,14 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using System;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.Console
 {
     public class ConsoleReadKeyActivity : SyncActivity
     {
-        public IVariable KeyInfo
+        public IInVariable<ConsoleKeyInfo> KeyInfo
         {
             private get;
             set;
@@ -23,7 +24,7 @@ namespace WFLite.Activities.Console
         {
         }
 
-        public ConsoleReadKeyActivity(IVariable keyInfo)
+        public ConsoleReadKeyActivity(IInVariable<ConsoleKeyInfo> keyInfo)
         {
             KeyInfo = keyInfo;
         }

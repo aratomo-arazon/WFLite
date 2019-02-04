@@ -25,7 +25,7 @@ namespace WFLite.Activities.Diagnostics
             set;
         }
 
-        public IVariable Elapsed
+        public IInVariable<long> Elapsed
         {
             private get;
             set;
@@ -35,7 +35,7 @@ namespace WFLite.Activities.Diagnostics
         {
         }
 
-        public StopwatchActivity(IActivity activity, IVariable elapsed)
+        public StopwatchActivity(IActivity activity, IInVariable<long> elapsed)
         {
             Activity = activity;
             Elapsed = elapsed;
@@ -47,7 +47,7 @@ namespace WFLite.Activities.Diagnostics
 
         protected sealed override async Task start()
         {
-            Elapsed.SetValue(0);
+            Elapsed.SetValue(0L);
 
             _current = Activity;
 

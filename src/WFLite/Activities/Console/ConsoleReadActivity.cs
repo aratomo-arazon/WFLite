@@ -13,7 +13,7 @@ namespace WFLite.Activities.Console
 {
     public class ConsoleReadActivity : SyncActivity
     {
-        public IVariable Value
+        public IInVariable<int> Value
         {
             private get;
             set;
@@ -23,7 +23,7 @@ namespace WFLite.Activities.Console
         {
         }
 
-        public ConsoleReadActivity(IVariable value)
+        public ConsoleReadActivity(IInVariable<int> value)
         {
             Value = value;
         }

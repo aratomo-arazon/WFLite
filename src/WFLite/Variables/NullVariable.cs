@@ -7,27 +7,23 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-using System;
 using WFLite.Bases;
-using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
-    public class NullVariable : Variable
+    public class NullVariable : OutVariable
     {
-        public NullVariable(IConverter converter = null)
-            : base(converter)       
-        {
-        }
-
         protected sealed override object getValue()
         {
             return null;
         }
+    }
 
-        protected sealed override void setValue(object value)
+    public class NullVariable<TValue> : OutVariable<TValue>
+    {
+        protected sealed override object getValue()
         {
-            throw new NotSupportedException();
+            return null;
         }
     }
 }

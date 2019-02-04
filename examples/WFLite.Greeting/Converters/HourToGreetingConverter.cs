@@ -7,12 +7,10 @@ using WFLite.Converters;
 
 namespace WFLite.Greeting.Converters
 {
-    public class HourToGreetingConverter : Bases.Converter
+    public class HourToGreetingConverter : Bases.Converter<int, string>
     {
-        protected override object convert(object value)
+        protected override string convert(int hour)
         {
-            var hour = System.Convert.ToInt32(value);
-
             if (hour >= 6 && hour < 12)
             {
                 return "Good morning!";

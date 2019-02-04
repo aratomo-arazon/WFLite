@@ -41,18 +41,18 @@ namespace WFLite.Test.Activities.IO
 
             File.WriteAllBytes(path, Encoding.UTF8.GetBytes("bar"));
 
-            var bytes = new AnyVariable();
+            var bytes = new AnyVariable<byte[]>();
 
             var testee = new FileReadAllBytesAsyncActivity()
             {
-                Path = new AnyVariable() { Value = path },
+                Path = new AnyVariable<string>() { Value = path },
                 Bytes = bytes
             };
 
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual("bar", Encoding.UTF8.GetString(bytes.GetValue<byte[]>()));
+            Assert.AreEqual("bar", Encoding.UTF8.GetString(bytes.GetValue()));
         }
     }
 }

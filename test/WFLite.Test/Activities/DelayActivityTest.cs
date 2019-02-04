@@ -15,7 +15,7 @@ namespace WFLite.Test.Activities
         {
             var testee = new DelayActivity()
             {
-                Duration = new AnyVariable() { Value = 1000 }
+                Duration = new AnyVariable<int>() { Value = 1000 }
             };
 
             await testee.Start();
@@ -28,7 +28,7 @@ namespace WFLite.Test.Activities
         {
             var testee = new DelayActivity()
             {
-                Duration = new AnyVariable() { Value = 1000 }
+                Duration = new AnyVariable<int>() { Value = 1000 }
             };
 
             testee.Stop();
@@ -41,7 +41,7 @@ namespace WFLite.Test.Activities
         {
             var testee = new DelayActivity()
             {
-                Duration = new AnyVariable() { Value = 10000 }
+                Duration = new AnyVariable<int>() { Value = 10000 }
             };
 
             var task = testee.Start();
@@ -62,7 +62,7 @@ namespace WFLite.Test.Activities
         {
             var testee = new DelayActivity()
             {
-                Duration = new AnyVariable() { Value = 1000 }
+                Duration = new AnyVariable<int>() { Value = 1000 }
             };
 
             await testee.Start();
@@ -79,7 +79,7 @@ namespace WFLite.Test.Activities
         {
             var testee = new DelayActivity()
             {
-                Duration = new AnyVariable() { Value = 1000 }
+                Duration = new AnyVariable<int>() { Value = 1000 }
             };
 
             testee.Stop();

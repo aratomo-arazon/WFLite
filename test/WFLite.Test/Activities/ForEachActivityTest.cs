@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,16 +14,16 @@ namespace WFLite.Test.Activities
     public class ForEachActivityTest
     {
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Collection_List___not_Empty()
+        public async Task Test___Method_Start___Status_Created___not_Empty()
         {
-            var value = new AnyVariable();
-            var to = new AnyVariable();
+            var value = new AnyVariable<string>();
+            var to = new AnyVariable<string>();
 
             var testee = new ForEachActivity()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
-                    Value = new List<object>()
+                    Value = new List<string>()
                     {
                         "foo",
                         "bar",
@@ -40,18 +41,18 @@ namespace WFLite.Test.Activities
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual("baz", to.GetValue());
+            Assert.AreEqual("baz", to.GetValueAsObject());
         }
 
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Collection_List___Empty()
+        public async Task Test___Method_Start___Status_Created___Empty()
         {
-            var value = new AnyVariable();
-            var to = new AnyVariable() { Value = 0 };
+            var value = new AnyVariable<object>();
+            var to = new AnyVariable<int>() { Value = 0 };
 
             var testee = new ForEachActivity()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
                     Value = new List<object>()
                 },
@@ -66,105 +67,18 @@ namespace WFLite.Test.Activities
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual(0, to.GetValue());
-        }
-
-        [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Collection_Dictionary_not_Empty()
-        {
-            var key = new AnyVariable();
-            var value = new AnyVariable();
-            var to1 = new AnyVariable();
-            var to2 = new AnyVariable();
-
-            var testee = new ForEachActivity()
-            {
-                Collection = new DictionaryVariable()
-                {
-                    Value = new Dictionary<string, object>()
-                    {
-                        { "foo", 1 },
-                        { "bar", 2 },
-                        { "baz", 3 }
-                    }
-                },
-                Key = key,
-                Value = value,
-                Activity = new SequenceActivity()
-                {
-                    Activities = new List<IActivity>()
-                    {
-                        new AssignActivity()
-                        {
-                            To = to1,
-                            Value = key
-                        },
-                        new AssignActivity()
-                        {
-                            To = to2,
-                            Value = value
-                        }
-                    }
-                }
-            };
-
-            await testee.Start();
-
-            Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual("baz", to1.GetValue());
-            Assert.AreEqual(3, to2.GetValue());
-        }
-
-        [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Collection_Dictionary_Empty()
-        {
-            var key = new AnyVariable();
-            var value = new AnyVariable();
-            var to1 = new AnyVariable();
-            var to2 = new AnyVariable();
-
-            var testee = new ForEachActivity()
-            {
-                Collection = new DictionaryVariable()
-                {
-                    Value = new Dictionary<string, object>()
-                },
-                Key = key,
-                Value = value,
-                Activity = new SequenceActivity()
-                {
-                    Activities = new List<IActivity>()
-                    {
-                        new AssignActivity()
-                        {
-                            To = to1,
-                            Value = key
-                        },
-                        new AssignActivity()
-                        {
-                            To = to2,
-                            Value = value
-                        }
-                    }
-                }
-            };
-
-            await testee.Start();
-
-            Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.IsNull(to1.GetValue());
-            Assert.IsNull(to2.GetValue());
+            Assert.AreEqual(0, to.GetValueAsObject());
         }
 
         [TestMethod]
         public void Test___Method_Stop___Status_Created()
         {
-            var value = new AnyVariable();
-            var to = new AnyVariable();
+            var value = new AnyVariable<string>();
+            var to = new AnyVariable<string>();
 
             var testee = new ForEachActivity()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
                     Value = new List<object>()
                     {
@@ -184,17 +98,17 @@ namespace WFLite.Test.Activities
             testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
-            Assert.IsNull(to.GetValue());
+            Assert.IsNull(to.GetValueAsObject());
         }
 
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing()
         {
-            var value = new AnyVariable();
+            var value = new AnyVariable<int>();
 
             var testee = new ForEachActivity()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
                     Value = new List<object>()
                     {
@@ -226,12 +140,12 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Reset___Status_Completed()
         {
-            var value = new AnyVariable();
-            var to = new AnyVariable();
+            var value = new AnyVariable<string>();
+            var to = new AnyVariable<string>();
 
             var testee = new ForEachActivity()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
                     Value = new List<object>()
                     {
@@ -251,7 +165,7 @@ namespace WFLite.Test.Activities
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual("baz", to.GetValue());
+            Assert.AreEqual("baz", to.GetValueAsObject());
 
             testee.Reset();
 
@@ -261,14 +175,14 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Reset___Status_Stopped()
         {
-            var value = new AnyVariable();
-            var to = new AnyVariable();
+            var value = new AnyVariable<string>();
+            var to = new AnyVariable<string>();
 
             var testee = new ForEachActivity()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
-                    Value = new List<object>()
+                    Value = new List<string>()
                     {
                         "foo",
                         "bar",
@@ -286,7 +200,7 @@ namespace WFLite.Test.Activities
             testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
-            Assert.IsNull(to.GetValue());
+            Assert.IsNull(to.GetValueAsObject());
 
             testee.Reset();
 

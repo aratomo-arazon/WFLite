@@ -13,7 +13,7 @@ using WFLite.Bases;
 
 namespace WFLite.Converters
 {
-    public class CastConverter<TValue> : Converter
+    public class CastConverter<TValue> : Converter<TValue>
     {
         private static readonly Dictionary<Type, Func<object, object>> _funcs = new Dictionary<Type, Func<object, object>>()
         {
@@ -33,13 +33,13 @@ namespace WFLite.Converters
             { typeof(DateTime), (value) => System.Convert.ToDateTime(value) }
         };
 
-        protected sealed override object convert(object value)
+        protected sealed override TValue convert(object value)
         {
             var type = typeof(TValue);
 
             if (_funcs.ContainsKey(type))
             {
-                return _funcs[type](value);
+                return (TValue)_funcs[type](value);
             }
 
             return (TValue)value; 

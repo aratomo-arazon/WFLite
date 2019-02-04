@@ -41,17 +41,17 @@ namespace WFLite.Test.Activities.IO
             
             File.WriteAllText(path, "bar");
 
-            var contents = new AnyVariable();
+            var contents = new AnyVariable<string>();
 
             var testee = new FileReadAllTextActivity()
             {
-                Path = new AnyVariable() { Value = path },
+                Path = new AnyVariable<string>() { Value = path },
                 Contents = contents
             };
 
             await testee.Start();
 
-            Assert.AreEqual("bar", contents.GetValue<string>());
+            Assert.AreEqual("bar", contents.GetValue());
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
         }
 
@@ -62,18 +62,18 @@ namespace WFLite.Test.Activities.IO
 
             File.WriteAllText(path, "bar");
 
-            var contents = new AnyVariable();
+            var contents = new AnyVariable<string>();
 
             var testee = new FileReadAllTextActivity()
             {
-                Path = new AnyVariable() { Value = path },
+                Path = new AnyVariable<string>() { Value = path },
                 Contents = contents,
-                Encoding = new AnyVariable() { Value = Encoding.UTF8 }
+                Encoding = new AnyVariable<Encoding>() { Value = Encoding.UTF8 }
             };
 
             await testee.Start();
 
-            Assert.AreEqual("bar", contents.GetValue<string>());
+            Assert.AreEqual("bar", contents.GetValue());
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
         }
     }

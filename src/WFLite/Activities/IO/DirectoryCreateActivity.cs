@@ -14,7 +14,7 @@ namespace WFLite.Activities.IO
 {
     public class DirectoryCreateActivity : SyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
@@ -24,14 +24,14 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public DirectoryCreateActivity(IVariable path)
+        public DirectoryCreateActivity(IOutVariable<string> path)
         {
             Path = path;
         }
 
         protected sealed override bool run()
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             Directory.CreateDirectory(path);
 

@@ -21,7 +21,7 @@ namespace WFLite.Activities
     {
         private CancellationTokenSource _cancellationTokenSource;
 
-        public IVariable Duration
+        public IOutVariable<int> Duration
         {
             private get;
             set;
@@ -31,7 +31,7 @@ namespace WFLite.Activities
         {
         }
 
-        public DelayActivity(IVariable duration)
+        public DelayActivity(IOutVariable<int> duration)
         {
             Duration = duration;
         }
@@ -44,7 +44,7 @@ namespace WFLite.Activities
         {
             Status = ActivityStatus.Executing;
 
-            var duration = Convert.ToInt32(Duration.GetValue());
+            var duration = Duration.GetValue();
 
             using (_cancellationTokenSource = new CancellationTokenSource())
             {

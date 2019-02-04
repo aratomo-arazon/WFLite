@@ -14,13 +14,13 @@ namespace WFLite.Activities.IO
 {
     public class FileMoveActivity : SyncActivity
     {
-        public IVariable SourceFileName
+        public IOutVariable<string> SourceFileName
         {
             private get;
             set;
         }
 
-        public IVariable DestFileName
+        public IOutVariable<string> DestFileName
         {
             private get;
             set;
@@ -30,7 +30,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileMoveActivity(IVariable sourceFileName, IVariable destFileName)
+        public FileMoveActivity(IOutVariable<string> sourceFileName, IOutVariable<string> destFileName)
         {
             SourceFileName = sourceFileName;
             DestFileName = destFileName;
@@ -38,8 +38,8 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var sourceFileName = SourceFileName.GetValue<string>();
-            var destFileName = DestFileName.GetValue<string>();
+            var sourceFileName = SourceFileName.GetValue();
+            var destFileName = DestFileName.GetValue();
 
             File.Move(sourceFileName, destFileName);
 

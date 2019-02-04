@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using WFLite.Variables;
 
@@ -9,11 +10,11 @@ namespace WFLite.Test.Variables
     public class CountVariableTest
     {
         [TestMethod]
-        public void Test___Method_GetValue___Collection_List()
+        public void Test___Method_GetValue()
         {
             var testee = new CountVariable()
             {
-                Collection = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
                     Value = new List<object>()
                     {
@@ -24,34 +25,27 @@ namespace WFLite.Test.Variables
                 }
             };
 
-            Assert.AreEqual(3, testee.GetValue());
+            Assert.AreEqual(3, testee.GetValueAsObject());
         }
 
         [TestMethod]
-        public void Test___Method_GetValue___Collection_Dictionary()
+        public void Test___Method_GetValue___Generic()
         {
-            var testee = new CountVariable()
+            var testee = new CountVariable<string>()
             {
-                Collection = new DictionaryVariable()
+                Enumerable = new AnyVariable<IEnumerable<string>>()
                 {
-                    Value = new Dictionary<string, object>()
+                    Value = new List<string>()
                     {
-                        { "foo", 1 },
-                        { "bar", 2 },
-                        { "baz", 3 }
+                        "foo",
+                        "bar",
+                        "baz"
                     }
                 }
             };
 
-            Assert.AreEqual(3, testee.GetValue());
+            Assert.AreEqual(3, testee.GetValueAsObject());
         }
 
-        [TestMethod]
-        public void Test___Method_SetValue()
-        {
-            var testee = new CountVariable();
-
-            Assert.ThrowsException<NotSupportedException>(() => testee.SetValue(3));
-        }
     }
 }

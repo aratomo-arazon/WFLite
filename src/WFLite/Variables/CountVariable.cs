@@ -7,16 +7,17 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
-    public class CountVariable : Variable
-    {
-        public IVariable Collection
+    public class CountVariable : OutVariable<int>
+    { 
+        public IOutVariable<IEnumerable> Enumerable
         {
             private get;
             set;
@@ -26,33 +27,50 @@ namespace WFLite.Variables
         {
         }
 
-        public CountVariable(IVariable collection, IConverter converter = null)
-            : base(converter)
+        public CountVariable(IOutVariable<IEnumerable> collection)
         {
-            Collection = collection;
+            Enumerable = collection;
         }
 
         protected sealed override object getValue()
         {
-            var value = Collection.GetValue();
+            var value = Enumerable.GetValue();
 
-            if (value is IList<object>)
+            var count = 0;
+            var enumerator = value.GetEnumerator();
+            checked
             {
-                return (value as IList<object>).Count;
+                while (enumerator.MoveNext())
+                {
+                    count++;
+                }
             }
-            else if (value is IDictionary<string, object>)
-            {
-                return (value as IDictionary<string, object>).Count;
-            }
-            else
-            {
-                return 0;
-            }
+            return count;
+        }
+    }
+
+    public class CountVariable<TValue> : OutVariable<int>
+    {
+        public IOutVariable<IEnumerable<TValue>> Enumerable
+        {
+            private get;
+            set;
         }
 
-        protected sealed override void setValue(object value)
+        public CountVariable()
         {
-            throw new NotSupportedException();
+        }
+
+        public CountVariable(IOutVariable<IEnumerable<TValue>> enumerable)
+        {
+            Enumerable = enumerable;
+        }
+
+        protected sealed override object getValue()
+        {
+            var value = Enumerable.GetValue();
+
+            return value.Count();
         }
     }
 }

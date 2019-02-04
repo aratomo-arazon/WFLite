@@ -1,5 +1,5 @@
 ﻿/*
- * IVariable.cs
+ * IOutVariable.cs
  *
  * Copyright (c) 2019 aratomo-arazon
  *
@@ -9,12 +9,16 @@
 
 namespace WFLite.Interfaces
 {
-    public interface IVariable
+    public interface IOutVariable
     {
-        object GetValue();
+        object GetValueAsObject();
 
         TValue GetValue<TValue>();
+    }
 
-        void SetValue(object value);
+    public interface IOutVariable<out TValue> : IOutVariable
+    {
+        TValue GetValue();
     }
 }
+

@@ -17,7 +17,7 @@ namespace WFLite.Test.Activities
             {
                 Activity = new DelayActivity()
                 {
-                    Duration = new AnyVariable() { Value = 1000 }
+                    Duration = new AnyVariable<int>() { Value = 1000 }
                 }
             };
 
@@ -33,7 +33,7 @@ namespace WFLite.Test.Activities
             {
                 Activity = new DelayActivity()
                 {
-                    Duration = new AnyVariable() { Value = 1000 }
+                    Duration = new AnyVariable<int>() { Value = 1000 }
                 }
             };
 
@@ -49,7 +49,7 @@ namespace WFLite.Test.Activities
             {
                 Activity = new DelayActivity()
                 {
-                    Duration = new AnyVariable() { Value = 5000 }
+                    Duration = new AnyVariable<int>() { Value = 5000 }
                 }
             };
 
@@ -73,7 +73,7 @@ namespace WFLite.Test.Activities
             {
                 Activity = new DelayActivity()
                 {
-                    Duration = new AnyVariable() { Value = 1000 }
+                    Duration = new AnyVariable<int>() { Value = 1000 }
                 }
             };
 
@@ -93,7 +93,7 @@ namespace WFLite.Test.Activities
             {
                 Activity = new DelayActivity()
                 {
-                    Duration = new AnyVariable() { Value = 1000 }
+                    Duration = new AnyVariable<int>() { Value = 1000 }
                 }
             };
 

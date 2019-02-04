@@ -15,19 +15,19 @@ namespace WFLite.Activities.IO
 {
     public class FileReadAllTextActivity : SyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
         }
 
-        public IVariable Contents
+        public IInVariable<string> Contents
         {
             private get;
             set;
         }
 
-        public IVariable Encoding
+        public IOutVariable<Encoding> Encoding
         {
             private get;
             set;
@@ -37,7 +37,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileReadAllTextActivity(IVariable path, IVariable contents, IVariable encoding = null)
+        public FileReadAllTextActivity(IOutVariable<string> path, IInVariable<string> contents, IOutVariable<Encoding> encoding = null)
         {
             Path = path;
             Contents = contents;
@@ -46,7 +46,7 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             if (Encoding == null)
             {
@@ -54,7 +54,7 @@ namespace WFLite.Activities.IO
             }
             else
             {
-                var encoding = Encoding.GetValue<Encoding>();
+                var encoding = Encoding.GetValue();
 
                 Contents.SetValue(File.ReadAllText(path, encoding));
             }

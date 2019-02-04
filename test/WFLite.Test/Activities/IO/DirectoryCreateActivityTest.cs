@@ -40,7 +40,7 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new DirectoryCreateActivity()
             {
-                Path = new AnyVariable() { Value = path }
+                Path = new AnyVariable<string>() { Value = path }
             };
 
             await testee.Start();

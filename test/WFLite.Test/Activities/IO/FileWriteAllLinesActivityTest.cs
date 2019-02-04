@@ -40,8 +40,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileWriteAllLinesActivity()
             {
-                Path = new AnyVariable() { Value = path },
-                Contents = new AnyVariable() { Value = new string[] { "bar", "baz" } }
+                Path = new AnyVariable<string>() { Value = path },
+                Contents = new AnyVariable<string[]>() { Value = new string[] { "bar", "baz" } }
             };
 
             await testee.Start();

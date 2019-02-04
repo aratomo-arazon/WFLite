@@ -43,8 +43,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileWriteAllTextActivity()
             {
-                Path = new AnyVariable() { Value = path },
-                Contents = new AnyVariable() { Value = "bar" }
+                Path = new AnyVariable<string>() { Value = path },
+                Contents = new AnyVariable<string>() { Value = "bar" }
             };
 
             await testee.Start();
@@ -60,9 +60,9 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileWriteAllTextActivity()
             {
-                Path = new AnyVariable() { Value = path },
-                Contents = new AnyVariable() { Value = "bar" },
-                Encoding = new AnyVariable() { Value = Encoding.UTF8 }
+                Path = new AnyVariable<string>() { Value = path },
+                Contents = new AnyVariable<string>() { Value = "bar" },
+                Encoding = new AnyVariable<Encoding>() { Value = Encoding.UTF8 }
             };
 
             await testee.Start();

@@ -14,13 +14,13 @@ namespace WFLite.Conditions
 {
     public class NotEqualsCondition : Condition
     {
-        public IVariable Value1
+        public IOutVariable Value1
         {
             private get;
             set;
         }
 
-        public IVariable Value2
+        public IOutVariable Value2
         {
             private get;
             set;
@@ -30,7 +30,7 @@ namespace WFLite.Conditions
         {
         }
 
-        public NotEqualsCondition(IVariable value1, IVariable value2)
+        public NotEqualsCondition(IOutVariable value1, IOutVariable value2)
         {
             Value1 = value1;
             Value2 = value2;
@@ -38,7 +38,37 @@ namespace WFLite.Conditions
 
         protected sealed override bool check()
         {
-            return !Value1.GetValue().Equals(Value2.GetValue());
+            return !Value1.GetValueAsObject().Equals(Value2.GetValueAsObject());
+        }
+    }
+
+    public class NotEqualsCondition<TValue> : Condition
+    {
+        public IOutVariable<TValue> Value1
+        {
+            private get;
+            set;
+        }
+
+        public IOutVariable<TValue> Value2
+        {
+            private get;
+            set;
+        }
+
+        public NotEqualsCondition()
+        {
+        }
+
+        public NotEqualsCondition(IOutVariable<TValue> value1, IOutVariable<TValue> value2)
+        {
+            Value1 = value1;
+            Value2 = value2;
+        }
+
+        protected sealed override bool check()
+        {
+            return !Value1.GetValueAsObject().Equals(Value2.GetValueAsObject());
         }
     }
 }

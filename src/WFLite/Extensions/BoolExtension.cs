@@ -17,7 +17,7 @@ namespace WFLite.Extensions
     {
         public static ICondition ToCondition(this bool result)
         {
-            return new TrueCondition(new AnyVariable(result));
+            return new TrueCondition(new AnyVariable<bool>(result));
         }
     }
 }

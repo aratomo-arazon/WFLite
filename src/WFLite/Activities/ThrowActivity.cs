@@ -7,9 +7,11 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using System;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {

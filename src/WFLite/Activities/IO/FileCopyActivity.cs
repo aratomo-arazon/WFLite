@@ -14,13 +14,13 @@ namespace WFLite.Activities.IO
 {
     public class FileCopyActivity : SyncActivity
     {
-        public IVariable SourceFileName
+        public IOutVariable<string> SourceFileName
         {
             private get;
             set;
         }
 
-        public IVariable DestFileName
+        public IOutVariable<string> DestFileName
         {
             private get;
             set;
@@ -36,7 +36,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileCopyActivity(IVariable sourceFileName, IVariable destFileName, ICondition overwrite = null)
+        public FileCopyActivity(IOutVariable<string> sourceFileName, IOutVariable<string> destFileName, ICondition overwrite = null)
         {
             SourceFileName = sourceFileName;
             DestFileName = destFileName;
@@ -45,8 +45,8 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var sourceFileName = SourceFileName.GetValue<string>();
-            var destFileName = DestFileName.GetValue<string>();
+            var sourceFileName = SourceFileName.GetValue();
+            var destFileName = DestFileName.GetValue();
 
             if (Overwrite == null)
             {

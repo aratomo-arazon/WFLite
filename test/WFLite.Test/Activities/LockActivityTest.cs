@@ -17,7 +17,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Start()
         {
-            var elapsed = new AnyVariable();
+            var elapsed = new AnyVariable<long>();
             var lockObject = new LockVariable();
 
             var testee = new StopwatchActivity()
@@ -32,7 +32,7 @@ namespace WFLite.Test.Activities
                             LockObject = lockObject,
                             Activity = new DelayActivity()
                             {
-                                Duration = new AnyVariable(1000)
+                                Duration = new AnyVariable<int>(1000)
                             }
                         },
                         new LockActivity()
@@ -40,7 +40,7 @@ namespace WFLite.Test.Activities
                             LockObject = lockObject,
                             Activity = new DelayActivity()
                             {
-                                Duration = new AnyVariable(1000)
+                                Duration = new AnyVariable<int>(1000)
                             }
                         }
                     }
@@ -50,7 +50,7 @@ namespace WFLite.Test.Activities
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.IsTrue(2000 <= elapsed.GetValue<long>());
+            Assert.IsTrue(2000 <= elapsed.GetValue());
         }
     }
 }

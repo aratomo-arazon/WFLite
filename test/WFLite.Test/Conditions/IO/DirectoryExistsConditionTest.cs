@@ -2,48 +2,50 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using WFLite.Conditions.IO;
 using WFLite.Variables;
 
-namespace WFLite.Test.Conditions.File
+namespace WFLite.Test.Conditions.IO
 {
     [TestClass]
-    public class FileExistsConditionTest
+    public class DirectoryExistsConditionTest
     {
         [TestInitialize]
         public void Initialize()
         {
             var path = Path.Combine(Path.GetTempPath(), GetType().Name);
 
-            if (System.IO.Directory.Exists(path))
+            if(Directory.Exists(path))
             {
-                System.IO.Directory.Delete(path, true);
+                Directory.Delete(path, true);
             }
-            System.IO.Directory.CreateDirectory(path);
+            Directory.CreateDirectory(path);
         }
+
 
         [TestCleanup]
         public void Cleanup()
         {
             var path = Path.Combine(Path.GetTempPath(), GetType().Name);
 
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
-                System.IO.Directory.Delete(path, true);
+                Directory.Delete(path, true);
             }
         }
 
         [TestMethod]
         public void Test___Method_Check___True()
         {
-            var path = Path.Combine(Path.GetTempPath(), GetType().Name, "foo.txt");
+            var path = Path.Combine(Path.GetTempPath(), GetType().Name, "foo");
 
-            System.IO.File.WriteAllText(path, "bar");
+            Directory.CreateDirectory(path);
 
-            var testee = new FileExistsCondition()
+            var testee = new DirectoryExistsCondition()
             {
-                Path = new AnyVariable() { Value = path }
+                Path = new AnyVariable<string>() { Value = path }
             };
 
             Assert.IsTrue(testee.Check());
@@ -52,11 +54,11 @@ namespace WFLite.Test.Conditions.File
         [TestMethod]
         public void Test___Method_Check___False()
         {
-            var path = Path.Combine(Path.GetTempPath(), GetType().Name, "foo.txt");
+            var path = Path.Combine(Path.GetTempPath(), GetType().Name, "foo");
 
-            var testee = new FileExistsCondition()
+            var testee = new DirectoryExistsCondition()
             {
-                Path = new AnyVariable() { Value = path }
+                Path = new AnyVariable<string>() { Value = path }
             };
 
             Assert.IsFalse(testee.Check());

@@ -23,7 +23,7 @@ namespace WFLite.Test.Conditions
         {
             var testee = new NullCondition()
             {
-                Value = new AnyVariable() { Value = 10 }
+                Value = new AnyVariable<int>() { Value = 10 }
             };
 
             Assert.IsFalse(testee.Check());

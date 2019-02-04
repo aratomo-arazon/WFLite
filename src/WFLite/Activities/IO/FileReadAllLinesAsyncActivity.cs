@@ -16,13 +16,13 @@ namespace WFLite.Activities.IO
 {
     public class FileReadAllLinesAsyncActivity : AsyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
         }
 
-        public IVariable Contents
+        public IInVariable<string[]> Contents
         {
             private get;
             set;
@@ -32,7 +32,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileReadAllLinesAsyncActivity(IVariable path, IVariable contents)
+        public FileReadAllLinesAsyncActivity(IOutVariable<string> path, IInVariable<string[]> contents)
         {
             Path = path;
             Contents = contents;
@@ -40,7 +40,7 @@ namespace WFLite.Activities.IO
 
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             Contents.SetValue(await File.ReadAllLinesAsync(path, cancellationToken));
 

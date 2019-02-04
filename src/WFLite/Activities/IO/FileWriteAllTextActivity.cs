@@ -15,19 +15,19 @@ namespace WFLite.Activities.IO
 {
     public class FileWriteAllTextActivity : SyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
         }
 
-        public IVariable Contents
+        public IOutVariable<string> Contents
         {
             private get;
             set;
         }
         
-        public IVariable Encoding
+        public IOutVariable<Encoding> Encoding
         {
             private get;
             set;
@@ -37,7 +37,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileWriteAllTextActivity(IVariable path, IVariable contents, IVariable encoding = null)
+        public FileWriteAllTextActivity(IOutVariable<string> path, IOutVariable<string> contents, IOutVariable<Encoding> encoding = null)
         {
             Path = path;
             Contents = contents;
@@ -46,8 +46,8 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var path = Path.GetValue<string>();
-            var contents = Contents.GetValue<string>();
+            var path = Path.GetValue();
+            var contents = Contents.GetValue();
 
             if (Encoding == null)
             {
@@ -55,7 +55,7 @@ namespace WFLite.Activities.IO
             }
             else
             {
-                var encoding = Encoding.GetValue<Encoding>();
+                var encoding = Encoding.GetValue();
 
                 File.WriteAllText(path, contents, encoding);
             }

@@ -43,7 +43,7 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new DirectoryDeleteActivity()
             {
-                Path = new AnyVariable() { Value = path },
+                Path = new AnyVariable<string>() { Value = path },
                 Recursive = new FalseCondition()
             };
 
@@ -66,7 +66,7 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new DirectoryDeleteActivity()
             {
-                Path = new AnyVariable() { Value = path },
+                Path = new AnyVariable<string>() { Value = path },
                 Recursive = new TrueCondition()
             };
 

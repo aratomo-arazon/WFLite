@@ -17,19 +17,19 @@ namespace WFLite.Activities.IO
 {
     public class FileWriteAllTextAsyncActivity : AsyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
         }
 
-        public IVariable Contents
+        public IOutVariable<string> Contents
         {
             private get;
             set;
         }
         
-        public IVariable Encoding
+        public IOutVariable<Encoding> Encoding
         {
             private get;
             set;
@@ -39,7 +39,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileWriteAllTextAsyncActivity(IVariable path, IVariable contents, IVariable encoding = null)
+        public FileWriteAllTextAsyncActivity(IOutVariable<string> path, IOutVariable<string> contents, IOutVariable<Encoding> encoding = null)
         {
             Path = path;
             Contents = contents;
@@ -48,8 +48,8 @@ namespace WFLite.Activities.IO
 
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
-            var path = Path.GetValue<string>();
-            var contents = Contents.GetValue<string>();
+            var path = Path.GetValue();
+            var contents = Contents.GetValue();
 
             if (Encoding == null)
             {
@@ -57,7 +57,7 @@ namespace WFLite.Activities.IO
             }
             else
             {
-                var encoding = Encoding.GetValue<Encoding>();
+                var encoding = Encoding.GetValue();
 
                 await File.WriteAllTextAsync(path, contents, encoding, cancellationToken);
             }

@@ -13,33 +13,33 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Start___Status_Created()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var variable2 = new AnyVariable() { Value = 10 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var variable2 = new AnyVariable<int>() { Value = 10 };
 
             var testee = new TryCatchActivity()
             {
-                Try = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 20 } },
-                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 30 } },
+                Try = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 20 } },
+                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 30 } },
                 Finally = new AssignActivity() { To = variable2, Value = variable1 }
             };
 
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual(20, variable1.GetValue());
-            Assert.AreEqual(20, variable2.GetValue());
+            Assert.AreEqual(20, variable1.GetValueAsObject());
+            Assert.AreEqual(20, variable2.GetValueAsObject());
         }
 
         [TestMethod]
         public void Test___Method_Stop___Status_Created()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var variable2 = new AnyVariable() { Value = 10 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var variable2 = new AnyVariable<int>() { Value = 10 };
 
             var testee = new TryCatchActivity()
             {
-                Try = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 20 } },
-                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 30 } },
+                Try = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 20 } },
+                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 30 } },
                 Finally = new AssignActivity() { To = variable2, Value = variable1 }
             };
 
@@ -51,14 +51,14 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing___Try()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var variable2 = new AnyVariable() { Value = 10 };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var variable2 = new AnyVariable<int>() { Value = 10 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new TryCatchActivity()
             {
                 Try = new DelayActivity() { Duration = duration },
-                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 30 } },
+                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 30 } },
                 Finally = new AssignActivity() { To = variable2, Value = variable1 }
             };
 
@@ -72,16 +72,16 @@ namespace WFLite.Test.Activities
             }
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual(30, variable1.GetValue());
-            Assert.AreEqual(30, variable2.GetValue());
+            Assert.AreEqual(30, variable1.GetValueAsObject());
+            Assert.AreEqual(30, variable2.GetValueAsObject());
         }
 
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing___Catch()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var variable2 = new AnyVariable() { Value = 10 };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var variable2 = new AnyVariable<int>() { Value = 10 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new TryCatchActivity()
             {
@@ -97,19 +97,19 @@ namespace WFLite.Test.Activities
             await task;
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
-            Assert.AreEqual(0, variable1.GetValue());
-            Assert.AreEqual(0, variable2.GetValue());
+            Assert.AreEqual(0, variable1.GetValueAsObject());
+            Assert.AreEqual(0, variable2.GetValueAsObject());
         }
 
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing___Finally()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new TryCatchActivity()
             {
-                Try = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 20 } },
+                Try = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 20 } },
                 Catch = new NullActivity(),
                 Finally = new DelayActivity() { Duration = duration }
             };
@@ -123,27 +123,27 @@ namespace WFLite.Test.Activities
             await task;
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
-            Assert.AreEqual(20, variable1.GetValue());
+            Assert.AreEqual(20, variable1.GetValueAsObject());
         }
 
         [TestMethod]
         public async Task Test___Method_Reset___Status_Completed()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var variable2 = new AnyVariable() { Value = 10 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var variable2 = new AnyVariable<int>() { Value = 10 };
 
             var testee = new TryCatchActivity()
             {
-                Try = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 20 } },
-                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 30 } },
+                Try = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 20 } },
+                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 30 } },
                 Finally = new AssignActivity() { To = variable2, Value = variable1 }
             };
 
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual(20, variable1.GetValue());
-            Assert.AreEqual(20, variable2.GetValue());
+            Assert.AreEqual(20, variable1.GetValueAsObject());
+            Assert.AreEqual(20, variable2.GetValueAsObject());
 
             testee.Reset();
 
@@ -153,13 +153,13 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Reset___Status_Stopped()
         {
-            var variable1 = new AnyVariable() { Value = 0 };
-            var variable2 = new AnyVariable() { Value = 10 };
+            var variable1 = new AnyVariable<int>() { Value = 0 };
+            var variable2 = new AnyVariable<int>() { Value = 10 };
 
             var testee = new TryCatchActivity()
             {
-                Try = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 20 } },
-                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable() { Value = 30 } },
+                Try = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 20 } },
+                Catch = new AssignActivity() { To = variable1, Value = new AnyVariable<int>() { Value = 30 } },
                 Finally = new AssignActivity() { To = variable2, Value = variable1 }
             };
 

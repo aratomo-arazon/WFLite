@@ -43,8 +43,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new DirectoryMoveActivity()
             {
-                SourceDirName = new AnyVariable() { Value = sourceDirName },
-                DestDirName = new AnyVariable() { Value = destDirName }
+                SourceDirName = new AnyVariable<string>() { Value = sourceDirName },
+                DestDirName = new AnyVariable<string>() { Value = destDirName }
             };
 
             await testee.Start();

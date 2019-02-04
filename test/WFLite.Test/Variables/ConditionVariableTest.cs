@@ -30,7 +30,7 @@ namespace WFLite.Test.Variables
                 Condition = new TrueCondition()
             };
 
-            Assert.IsTrue(testee.GetValue<bool>());
+            Assert.IsTrue(testee.GetValue());
         }
 
         [TestMethod]
@@ -41,18 +41,7 @@ namespace WFLite.Test.Variables
                 Condition = new FalseCondition()
             };
 
-            Assert.IsFalse(testee.GetValue<bool>());
-        }
-
-        [TestMethod]
-        public void Test___Method_SetValue()
-        {
-            var testee = new ConditionVariable()
-            {
-                Condition = new TrueCondition()
-            };
-
-            Assert.ThrowsException<NotSupportedException>(() => testee.SetValue(3));
+            Assert.IsFalse(testee.GetValue());
         }
     }
 }

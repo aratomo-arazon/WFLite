@@ -6,6 +6,7 @@ using WFLite.Stopwatch.Variables;
 using WFLite.Interfaces;
 using WFLite.Greeting.Converters;
 using WFLite.Activities.Console;
+using WFLite.Variables;
 
 namespace WFLite.Stopwatch
 {
@@ -13,9 +14,23 @@ namespace WFLite.Stopwatch
     {
         static async Task Main(string[] args)
         {
-            var activity = new ConsoleWriteLineActivity()
+            var greeting = new AnyVariable<string>();
+
+            var activity = new SequenceActivity()
             {
-                Value = new NowHourVariable() { Converter = new HourToGreetingConverter() }
+                Activities = new List<IActivity>()
+                {
+                    new AssignActivity<string, int>()
+                    {
+                        To = greeting,
+                        Value = new NowHourVariable(),
+                        Converter = new HourToGreetingConverter()
+                    },
+                    new ConsoleWriteLineActivity()
+                    {
+                        Value = greeting
+                    }
+                }
             };
 
             await activity.Start();

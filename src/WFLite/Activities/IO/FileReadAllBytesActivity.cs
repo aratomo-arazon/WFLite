@@ -14,13 +14,13 @@ namespace WFLite.Activities.IO
 {
     public class FileReadAllBytesActivity : SyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
         }
 
-        public IVariable Bytes
+        public IInVariable<byte[]> Bytes
         {
             private get;
             set;
@@ -30,7 +30,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileReadAllBytesActivity(IVariable path, IVariable bytes)
+        public FileReadAllBytesActivity(IOutVariable<string> path, IInVariable<byte[]> bytes)
         {
             Path = path;
             Bytes = bytes;
@@ -38,7 +38,7 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             Bytes.SetValue(File.ReadAllBytes(path));
 

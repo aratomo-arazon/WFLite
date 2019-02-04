@@ -11,13 +11,13 @@ namespace WFLite.Stopwatch
     {
         static async Task Main(string[] args)
         {
-            var elapsed = new AnyVariable();
+            var elapsed = new AnyVariable<long>();
 
             var activity = new TryCatchActivity()
             {
                 Try = new StopwatchActivity()
                 {
-                    Activity = new DelayActivity(new AnyVariable(10000)),
+                    Activity = new DelayActivity(new AnyVariable<int>(10000)),
                     Elapsed = elapsed
                 },
                 Finally = new ConsoleWriteLineActivity()
@@ -27,11 +27,13 @@ namespace WFLite.Stopwatch
             };
 
             // start
+            Console.WriteLine("Press any key to start.");
             Console.ReadKey();
 
             var task = activity.Start();
 
             // stop
+            Console.WriteLine("Press any key to stop.");
             Console.ReadKey();
 
             activity.Stop();

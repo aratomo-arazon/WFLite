@@ -12,7 +12,7 @@ using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
-    public class AnyVariable : Variable
+    public class AnyVariable : InOutVariable
     {
         public object Value
         {
@@ -32,7 +32,7 @@ namespace WFLite.Variables
 
         protected sealed override object getValue()
         {
-            return Value;
+             return Value;
         }
 
         protected sealed override void setValue(object value)
@@ -41,17 +41,15 @@ namespace WFLite.Variables
         }
     }
 
-    public class AnyVariable<TValue> : AnyVariable
+    public class AnyVariable<TValue> : InOutVariable<TValue>
     {
-        public new TValue Value
+        private object _value;
+
+        public TValue Value
         {
-            private get
-            {
-                return (TValue)getValue();
-            }
             set
             {
-                base.setValue(value);
+                _value = value;
             }
         }
 
@@ -59,11 +57,59 @@ namespace WFLite.Variables
         {
         }
 
-        public AnyVariable(TValue value, IConverter converter = null)
-            : base(value, converter)
+        public AnyVariable(TValue value, IConverter<TValue> converter = null)
+            : base(converter)
         {
             Value = value;
-            Converter = converter;
+        }
+
+        public AnyVariable(object value, IConverter<TValue> converter)
+            : base(converter)
+        {
+            _value = value;
+        }
+
+        protected sealed override object getValue()
+        {
+            return _value;
+        }
+
+        protected sealed override void setValue(object value)
+        {
+            _value = value;
+        }
+    }
+
+    public class AnyVariable<TInValue, TOutValue> : InOutVariable<TInValue, TOutValue>
+    {
+        private object _value;
+
+        public TInValue Value
+        {
+            set
+            {
+                _value = value;
+            }
+        }
+
+        public AnyVariable()
+        {
+        }
+
+        public AnyVariable(TInValue value, IConverter<TInValue, TOutValue> converter)
+            : base(converter)
+        {
+            Value = value;
+        }
+
+        protected sealed override object getValue()
+        {
+            return _value;
+        }
+
+        protected sealed override void setValue(object value)
+        {
+            _value = value;
         }
     }
 }

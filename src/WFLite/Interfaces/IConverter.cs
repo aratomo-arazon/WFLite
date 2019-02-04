@@ -11,6 +11,16 @@ namespace WFLite.Interfaces
 {
     public interface IConverter
     {
-        object Convert(object value);
+        object ConvertToObject(object value);
+    }
+
+    public interface IConverter<TValue> : IConverter
+    {
+        TValue Convert(object value);
+    }
+
+    public interface IConverter<TInValue, TOutValue> : IConverter<TOutValue>
+    {
+        TOutValue Convert(TInValue value);
     }
 }

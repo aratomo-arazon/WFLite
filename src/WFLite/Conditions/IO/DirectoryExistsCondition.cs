@@ -15,7 +15,7 @@ namespace WFLite.Conditions.IO
 {
     public class DirectoryExistsCondition : Condition
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
@@ -25,14 +25,14 @@ namespace WFLite.Conditions.IO
         {
         }
 
-        public DirectoryExistsCondition(IVariable path)
+        public DirectoryExistsCondition(IOutVariable<string> path)
         {
             Path = path;
         }
 
         protected sealed override bool check()
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             return Directory.Exists(path);
         }

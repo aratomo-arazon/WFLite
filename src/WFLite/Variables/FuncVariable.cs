@@ -13,7 +13,7 @@ using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
-    public class FuncVariable : Variable
+    public class FuncVariable : OutVariable
     {
         public Func<object> Func
         {
@@ -35,10 +35,38 @@ namespace WFLite.Variables
         {
             return Func?.Invoke();
         }
+    }
 
-        protected sealed override void setValue(object value)
+    public class FuncVariable<TValue> : OutVariable<TValue>
+    {
+        private Func<object> _func;
+
+        public Func<TValue> Func
         {
-            throw new NotSupportedException();
+            set
+            {
+                _func = () => value();
+            }
+        }
+
+        public FuncVariable()
+        {
+        }
+
+        public FuncVariable(Func<TValue> func, IConverter<TValue> converter = null)
+            : base(converter)
+        {
+            Func = func;
+        }
+
+        public FuncVariable(Func<object> func, IConverter<TValue> converter)
+        {
+            _func = func;
+        }
+
+        protected sealed override object getValue()
+        {
+            return _func == null ? default : _func();
         }
     }
 }

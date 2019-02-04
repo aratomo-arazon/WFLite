@@ -16,8 +16,8 @@ namespace WFLite.Test.Variables
             var testee1 = new LockVariable();
             var testee2 = new LockVariable();
 
-            var semaphoreSlim1 = testee1.GetValue<SemaphoreSlim>();
-            var semaphoreSlim2 = testee2.GetValue<SemaphoreSlim>();
+            var semaphoreSlim1 = testee1.GetValue();
+            var semaphoreSlim2 = testee2.GetValue();
 
             Assert.IsNotNull(semaphoreSlim1);
             Assert.IsNotNull(semaphoreSlim2);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
 using System.Collections.Generic;
 using WFLite.Conditions;
 using WFLite.Variables;
@@ -13,9 +14,9 @@ namespace WFLite.Test.Conditions
         {
             var testee = new ContainsCondition()
             {
-                List = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
-                    Value = new List<object>()
+                    Value = new List<string>()
                     {
                         "foo",
                         "bar",
@@ -33,9 +34,9 @@ namespace WFLite.Test.Conditions
         {
             var testee = new ContainsCondition()
             {
-                List = new ListVariable()
+                Enumerable = new AnyVariable<IEnumerable>()
                 {
-                    Value = new List<object>()
+                    Value = new List<string>()
                     {
                         "foo",
                         "bar",
@@ -43,6 +44,46 @@ namespace WFLite.Test.Conditions
                     }
                 },
                 Value = new AnyVariable() { Value = "BAR" }
+            };
+
+            Assert.IsFalse(testee.Check());
+        }
+
+        [TestMethod]
+        public void Test___Method_Check___True___Generic()
+        {
+            var testee = new ContainsCondition<string>()
+            {
+                Enumerable = new AnyVariable<IEnumerable<string>>()
+                {
+                    Value = new List<string>()
+                    {
+                        "foo",
+                        "bar",
+                        "baz"
+                    }
+                },
+                Value = new AnyVariable<string>() { Value = "bar" }
+            };
+
+            Assert.IsTrue(testee.Check());
+        }
+
+        [TestMethod]
+        public void Test___Method_Check___False___Generic()
+        {
+            var testee = new ContainsCondition<string>()
+            {
+                Enumerable = new AnyVariable<IEnumerable<string>>()
+                {
+                    Value = new List<string>()
+                    {
+                        "foo",
+                        "bar",
+                        "baz"
+                    }
+                },
+                Value = new AnyVariable<string>() { Value = "BAR" }
             };
 
             Assert.IsFalse(testee.Check());

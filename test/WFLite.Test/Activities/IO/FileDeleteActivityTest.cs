@@ -45,7 +45,7 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileDeleteActivity()
             {
-                Path = new AnyVariable() { Value = path }
+                Path = new AnyVariable<string>() { Value = path }
             };
 
             await testee.Start();

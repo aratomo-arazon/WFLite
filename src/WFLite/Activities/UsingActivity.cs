@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
@@ -19,7 +20,7 @@ namespace WFLite.Activities
     {
         public IActivity _current;
 
-        public IVariable Disposable
+        public IOutVariable<IDisposable> Disposable
         {
             private get;
             set;
@@ -35,7 +36,7 @@ namespace WFLite.Activities
         {
         }
 
-        public UsingActivity(IVariable disposable, IActivity activity)
+        public UsingActivity(IOutVariable<IDisposable> disposable, IActivity activity)
         {
             Disposable = disposable;
             Activity = activity;
@@ -47,7 +48,7 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            using (var disposable = Disposable.GetValue<IDisposable>())
+            using (var disposable = Disposable.GetValue())
             {
                 _current = Activity;
 

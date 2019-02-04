@@ -14,8 +14,8 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Start___Status_Created___Condition_True()
         {
-            var variable = new AnyVariable() { Value = true };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable = new AnyVariable<bool>() { Value = true };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new WhileActivity()
             {
@@ -39,8 +39,8 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Start___Status_Created___Condition_False()
         {
-            var variable = new AnyVariable() { Value = false };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable = new AnyVariable<bool>() { Value = false };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new WhileActivity()
             {
@@ -56,8 +56,8 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Stop___Status_Created()
         {
-            var variable = new AnyVariable() { Value = true };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable = new AnyVariable<bool>() { Value = true };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new WhileActivity()
             {
@@ -73,8 +73,8 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing()
         {
-            var variable = new AnyVariable() { Value = true };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable = new AnyVariable<bool>() { Value = true };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new WhileActivity()
             {
@@ -98,8 +98,8 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Reset___Status_Completed()
         {
-            var variable = new AnyVariable() { Value = true };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable = new AnyVariable<bool>() { Value = true };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new WhileActivity()
             {
@@ -127,8 +127,8 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Reset___Status_Stopped()
         {
-            var variable = new AnyVariable() { Value = true };
-            var duration = new AnyVariable() { Value = 1000 };
+            var variable = new AnyVariable<bool>() { Value = true };
+            var duration = new AnyVariable<int>() { Value = 1000 };
 
             var testee = new WhileActivity()
             {

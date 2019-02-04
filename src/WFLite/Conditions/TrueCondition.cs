@@ -7,16 +7,14 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-using System;
 using WFLite.Bases;
 using WFLite.Interfaces;
-using WFLite.Variables;
 
 namespace WFLite.Conditions
 {
     public class TrueCondition : Condition
     {
-        public IVariable Value
+        public IOutVariable<bool> Value
         {
             private get;
             set;
@@ -26,7 +24,7 @@ namespace WFLite.Conditions
         {
         }
 
-        public TrueCondition(IVariable value)
+        public TrueCondition(IOutVariable<bool> value)
         {
             Value = value;
         }
@@ -38,7 +36,7 @@ namespace WFLite.Conditions
                 return true;
             }
 
-            return Convert.ToBoolean(Value.GetValue());
+            return Value.GetValue();
         }
     }
 }

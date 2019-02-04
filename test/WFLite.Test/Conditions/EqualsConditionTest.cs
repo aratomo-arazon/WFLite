@@ -30,5 +30,29 @@ namespace WFLite.Test.Conditions
 
             Assert.IsFalse(testee.Check());
         }
+
+        [TestMethod]
+        public void Test___Method_Check___True___Generic()
+        {
+            var testee = new EqualsCondition<int>()
+            {
+                Value1 = new AnyVariable<int>() { Value = 10 },
+                Value2 = new AnyVariable<int>() { Value = 10 }
+            };
+
+            Assert.IsTrue(testee.Check());
+        }
+
+        [TestMethod]
+        public void Test___Method_Check___False___Generic()
+        {
+            var testee = new EqualsCondition<int>()
+            {
+                Value1 = new AnyVariable<int>() { Value = 10 },
+                Value2 = new AnyVariable<int>() { Value = 20 }
+            };
+
+            Assert.IsFalse(testee.Check());
+        }
     }
 }

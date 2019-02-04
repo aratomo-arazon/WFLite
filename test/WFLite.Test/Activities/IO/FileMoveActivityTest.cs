@@ -43,8 +43,8 @@ namespace WFLite.Test.Activities.IO
 
             var testee = new FileMoveActivity()
             {
-                SourceFileName = new AnyVariable() { Value = sourceFileName },
-                DestFileName = new AnyVariable() { Value = destFileName }
+                SourceFileName = new AnyVariable<string>() { Value = sourceFileName },
+                DestFileName = new AnyVariable<string>() { Value = destFileName }
             };
 
             await testee.Start();

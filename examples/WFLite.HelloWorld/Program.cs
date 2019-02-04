@@ -14,54 +14,12 @@ namespace WFLite.Stopwatch
     {
         static async Task Main(string[] args)
         {
-            var message = new AnyVariable();
-
-            var activity = new IfActivity()
+            var activity = new ConsoleWriteLineActivity()
             {
-                Condition = new AndCondition()
-                {
-                    Conditions = new List<ICondition>()
-                    {
-                        new TrueCondition(),
-                        new FalseCondition()
-                    }
-                },
-                Then = new ForEachActivity()
-                {
-                    Collection = new AnyVariable(new List<object>() { "Hello World!", "Hello Ikeda" }),
-                    Value = message,
-                    Activity = new ConsoleWriteLineActivity()
-                    {
-                        Value = message
-                    }
-                },
-                Else = new TryCatchActivity()
-                {
-                    Try = new SequenceActivity()
-                    {
-                        Activities = new List<IActivity>()
-                        {
-                            new ConsoleWriteLineActivity()
-                            {
-                                Value = new AnyVariable("sssss")
-                            },
-                            new ThrowActivity(),
-                            new ConsoleWriteLineActivity()
-                            {
-                                Value = new AnyVariable("sssss")
-                            }
-                        }
-                    },
-                    Catch = new ConsoleWriteLineActivity()
-                    {
-                        Value = new AnyVariable("catch")
-                    }
-                }
+                Value = new AnyVariable<string>() { Value = "Hello World!" }
             };
 
             await activity.Start();
-
-            Console.WriteLine(activity.Status);
 
             Console.ReadKey();
         }

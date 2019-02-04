@@ -12,42 +12,24 @@ namespace WFLite.Test.Variables
         [TestMethod]
         public void Test___Method_GetValue___without_Converter()
         {
-            var testee = new AnyVariable()
+            var testee = new AnyVariable<int>()
             {
                 Value = 10
             };
 
-            Assert.AreEqual(10, testee.GetValue());
-        }
-
-        [TestMethod]
-        public void Test___Method_GetValue___with_Converter()
-        {
-            var testee = new AnyVariable()
-            {
-                Value = "Ten",
-                Converter = new DictionaryConverter()
-                {
-                    Dictionary = new Dictionary<object, object>()
-                    {
-                        { "Ten", 10 }
-                    }
-                }
-            };
-
-            Assert.AreEqual(10, testee.GetValue());
+            Assert.AreEqual(10, testee.GetValueAsObject());
         }
 
         [TestMethod]
         public void Test___Method_SetValue()
         {
-            var testee = new AnyVariable()
+            var testee = new AnyVariable<int>()
             {
                 Value = 10
             };
 
             testee.SetValue(20);
-            Assert.AreEqual(20, testee.GetValue());
+            Assert.AreEqual(20, testee.GetValueAsObject());
         }
 
         [TestMethod]
@@ -58,13 +40,13 @@ namespace WFLite.Test.Variables
                 Value = 10
             };
 
-            Assert.AreEqual(10, testee.GetValue());
+            Assert.AreEqual(10, testee.GetValueAsObject());
         }
 
         [TestMethod]
         public void Test___Method_GetValue___Generic_Method___int_to_string()
         {
-            var testee = new AnyVariable()
+            var testee = new AnyVariable<int>()
             {
                 Value = 10
             };
@@ -75,7 +57,7 @@ namespace WFLite.Test.Variables
         [TestMethod]
         public void Test___Method_GetValue___Generic_Method___enum_to_string()
         {
-            var testee = new AnyVariable()
+            var testee = new AnyVariable<ActivityStatus>()
             {
                 Value = ActivityStatus.Created
             };
@@ -86,7 +68,7 @@ namespace WFLite.Test.Variables
         [TestMethod]
         public void Test___Method_GetValue___Generic_Method___enum_to_int()
         {
-            var testee = new AnyVariable()
+            var testee = new AnyVariable<ActivityStatus>()
             {
                 Value = ActivityStatus.Created
             };
@@ -103,7 +85,7 @@ namespace WFLite.Test.Variables
             };
 
             testee.SetValue(20);
-            Assert.AreEqual(20, testee.GetValue());
+            Assert.AreEqual(20, testee.GetValueAsObject());
         }
     }
 }

@@ -19,7 +19,11 @@ namespace WFLite.Converters
             set;
         }
 
-        public FuncConverter(Func<object, object> func = null)
+        public FuncConverter()
+        {
+        }
+
+        public FuncConverter(Func<object, object> func)
         {
             Func = func;
         }
@@ -27,6 +31,52 @@ namespace WFLite.Converters
         protected sealed override object convert(object value)
         {
             return Func?.Invoke(value);
+        }
+    }
+
+    public class FuncConverter<TValue> : Bases.Converter<TValue>
+    {
+        public Func<object, TValue> Func
+        {
+            private get;
+            set;
+        }
+
+        public FuncConverter()
+        {
+        }
+
+        public FuncConverter(Func<object, TValue> func)
+        {
+            Func = func;
+        }
+
+        protected sealed override TValue convert(object value)
+        {
+            return Func == null ? default : Func(value);
+        }
+    }
+
+    public class FuncConverter<TInValue, TOutValue> : Bases.Converter<TInValue, TOutValue>
+    {
+        public Func<TInValue, TOutValue> Func
+        {
+            private get;
+            set;
+        }
+
+        public FuncConverter()
+        {
+        }
+
+        public FuncConverter(Func<TInValue, TOutValue> func)
+        {
+            Func = func;
+        }
+
+        protected sealed override TOutValue convert(TInValue value)
+        {
+            return Func == null ? default : Func(value);
         }
     }
 }

@@ -6,13 +6,14 @@
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
  */
+
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.Console
 {
     public class ConsoleWriteActivity : SyncActivity
     {
-        public IVariable Value
+        public IOutVariable Value
         {
             private get;
             set;
@@ -22,14 +23,14 @@ namespace WFLite.Activities.Console
         {
         }
 
-        public ConsoleWriteActivity(IVariable value)
+        public ConsoleWriteActivity(IOutVariable value)
         {
             Value = value;
         }
 
         protected sealed override bool run()
         {
-            System.Console.Write(Value.GetValue());
+            System.Console.Write(Value.GetValueAsObject());
 
             return true;
         }

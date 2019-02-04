@@ -7,6 +7,8 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WFLite.Enums;
 

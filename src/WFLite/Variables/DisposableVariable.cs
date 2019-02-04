@@ -8,18 +8,17 @@
  */
 
 using System;
-using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
-    public class DisposableVariable : NewVariable<IDisposable>
+    public class DisposableVariable : FuncVariable<IDisposable>
     {
         public DisposableVariable()
         {
         }
 
-        public DisposableVariable(Func<IDisposable> func, IConverter converter = null)
-            : base(func, converter)
+        public DisposableVariable(Func<IDisposable> func)
+            : base(func)
         {
         }
     }

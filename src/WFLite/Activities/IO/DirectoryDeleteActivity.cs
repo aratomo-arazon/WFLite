@@ -14,7 +14,7 @@ namespace WFLite.Activities.IO
 {
     public class DirectoryDeleteActivity : SyncActivity
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
@@ -30,7 +30,7 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public DirectoryDeleteActivity(IVariable path, ICondition recursive = null)
+        public DirectoryDeleteActivity(IOutVariable<string> path, ICondition recursive = null)
         {
             Path = path;
             Recursive = recursive;
@@ -38,7 +38,7 @@ namespace WFLite.Activities.IO
 
         protected sealed override bool run()
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             if (Recursive == null)
             {

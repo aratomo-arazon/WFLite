@@ -13,7 +13,7 @@ namespace WFLite.Activities.Console
 {
     public class ConsoleWriteLineActivity : SyncActivity
     {
-        public IVariable Value
+        public IOutVariable Value
         {
             private get;
             set;
@@ -23,14 +23,14 @@ namespace WFLite.Activities.Console
         {
         }
 
-        public ConsoleWriteLineActivity(IVariable value)
+        public ConsoleWriteLineActivity(IOutVariable value)
         {
             Value = value;
         }
 
         protected sealed override bool run()
         {
-            System.Console.WriteLine(Value.GetValue());
+            System.Console.WriteLine(Value.GetValueAsObject());
 
             return true;
         }

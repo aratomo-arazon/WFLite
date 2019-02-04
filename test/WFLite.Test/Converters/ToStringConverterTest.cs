@@ -16,7 +16,7 @@ namespace WFLite.Test.Converters
         {
             var testee = new ToStringConverter();
 
-            Assert.AreEqual("20", testee.Convert(20));
+            Assert.AreEqual("20", testee.ConvertToObject(20));
         }
     }
 }

@@ -7,7 +7,7 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
- using WFLite.Interfaces;
+using WFLite.Interfaces;
 
 namespace WFLite.Bases
 {

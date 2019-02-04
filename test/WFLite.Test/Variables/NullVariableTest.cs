@@ -12,15 +12,15 @@ namespace WFLite.Test.Variables
         {
             var testee = new NullVariable();
 
-            Assert.IsNull(testee.GetValue());
+            Assert.IsNull(testee.GetValueAsObject());
         }
 
         [TestMethod]
-        public void Test___Method_SetValue()
+        public void Test___Method_GetValue___Generic()
         {
-            var testee = new NullVariable();
+            var testee = new NullVariable<int>();
 
-            Assert.ThrowsException<NotSupportedException>(() => testee.SetValue(10));
+            Assert.IsNull(testee.GetValueAsObject());
         }
     }
 }

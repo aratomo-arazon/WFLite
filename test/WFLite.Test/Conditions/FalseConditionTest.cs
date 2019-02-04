@@ -18,7 +18,7 @@ namespace WFLite.Test.Conditions
         [TestMethod]
         public void Test___Method_Check___Value_False()
         {
-            var testee = new FalseCondition { Value = new AnyVariable() { Value = false } };
+            var testee = new FalseCondition { Value = new AnyVariable<bool>() { Value = false } };
 
             Assert.IsTrue(testee.Check());
         }
@@ -26,7 +26,7 @@ namespace WFLite.Test.Conditions
         [TestMethod]
         public void Test___Method_Check___Value_True()
         {
-            var testee = new FalseCondition { Value = new AnyVariable() { Value = true } };
+            var testee = new FalseCondition { Value = new AnyVariable<bool>() { Value = true } };
 
             Assert.IsFalse(testee.Check());
         }

@@ -13,7 +13,7 @@ using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
-    public class ConditionVariable : Variable
+    public class ConditionVariable : OutVariable<bool>
     {
         public ICondition Condition
         {
@@ -25,8 +25,7 @@ namespace WFLite.Variables
         {
         }
 
-        public ConditionVariable(ICondition condition, IConverter converter = null)
-            : base(converter)
+        public ConditionVariable(ICondition condition)
         {
             Condition = condition;
         }
@@ -34,11 +33,6 @@ namespace WFLite.Variables
         protected sealed override object getValue()
         {
             return Condition.Check();
-        }
-
-        protected sealed override void setValue(object value)
-        {
-            throw new NotSupportedException();
         }
     }
 }

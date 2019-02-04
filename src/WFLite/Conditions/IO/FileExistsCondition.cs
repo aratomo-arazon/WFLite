@@ -15,7 +15,7 @@ namespace WFLite.Conditions.IO
 {
     public class FileExistsCondition : Condition
     {
-        public IVariable Path
+        public IOutVariable<string> Path
         {
             private get;
             set;
@@ -25,14 +25,14 @@ namespace WFLite.Conditions.IO
         {
         }
 
-        public FileExistsCondition(IVariable path)
+        public FileExistsCondition(IOutVariable<string> path)
         {
             Path = path;
         }
 
         protected sealed override bool check()
         {
-            var path = Path.GetValue<string>();
+            var path = Path.GetValue();
 
             return File.Exists(path);
         }

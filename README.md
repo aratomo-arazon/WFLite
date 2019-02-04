@@ -20,8 +20,8 @@ var v2 = new AnyVariable() { Value = "text" };       // "text"
 var v3 = new AnyVariable() { Value = new Foo() };    // instance of Foo
 var v4 = new NullVariable();                         // null
 </code></pre>
-You can create custom Variables by inheriting the `Variable` class. 
-<pre><code>public class UserCountVariable : Variable
+You can create custom Variables by inheriting the `OutVariable`, `InVariable` or `InOutVariable` class. 
+<pre><code>public class UserCountVariable : OutVariable
 {
     private readonly DbContext _context;
     public UserCountVariable(DbContext context)
@@ -31,10 +31,6 @@ You can create custom Variables by inheriting the `Variable` class.
     protected override object getValue()
     {
         return context.Users.Count;
-    }
-    protected override void setValue(object value)
-    {
-        throw new NotSupportedException();
     }
 }
 </code></pre>

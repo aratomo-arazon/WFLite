@@ -7,15 +7,13 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
- using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
 using WFLite.Extensions;
 using WFLite.Interfaces;
-using WFLite.Variables;
 
 namespace WFLite.Activities
 {
@@ -23,19 +21,13 @@ namespace WFLite.Activities
     {
         private IActivity _current;
 
-        public IVariable Collection
+        public IOutVariable<IEnumerable> Enumerable
         {
             private get;
             set;
         }
 
-        public IVariable Key
-        {
-            private get;
-            set;
-        }
-
-        public IVariable Value
+        public IInVariable Value
         {
             private get;
             set;
@@ -51,41 +43,46 @@ namespace WFLite.Activities
         {
         }
 
-        public ForEachActivity(IVariable collection, IVariable value, IActivity activity, IVariable key = null)
+        public ForEachActivity(IOutVariable<IEnumerable> enumerable, IInVariable value, IActivity activity)
         {
-            Collection = collection;
+            Enumerable = enumerable;
             Value = value;
             Activity = activity;
-            Key = key;
         }
 
         protected sealed override void initialize()
         {
-            if (Key == null)
-            {
-                Key = new NullVariable();
-            }
         }
 
         protected sealed override async Task start()
         {
-            var values = Collection.GetValue();
+            foreach (var value in Enumerable.GetValue())
+            {
+                _current = Activity;
 
-            if (values is IList<object>)
-            {
-                Status = await start(values as IList<object>, value => Value.SetValue(value));
-            }
-            else if (values is IDictionary<string, object>)
-            {
-                Status = await start(values as IDictionary<string, object>, pair =>
+                Value.SetValue(value);
+
+                _current.Reset();
+
+                var task = Activity.Start();
+
+                Status = _current.Status;
+
+                await task;
+
+                if (_current.Status.IsStopped())
                 {
-                    Key.SetValue(pair.Key);
-                    Value.SetValue(pair.Value);
-                });
+                    break;
+                }
+            }
+
+            if (_current == null)
+            {
+                Status = ActivityStatus.Completed;
             }
             else
             {
-                Status = ActivityStatus.Stopped;
+                Status = _current.Status;
             }
         }
 
@@ -113,19 +110,52 @@ namespace WFLite.Activities
 
             Status = Activity.Status;
         }
+    }
 
-        private async Task<ActivityStatus> start<TItem>(IEnumerable<TItem> values, Action<TItem> setAction)
+    public class ForEachActivity<TValue> : Activity
+    {
+        private IActivity _current;
+
+        public IOutVariable<IEnumerable<TValue>> Enumerable
         {
-            if (!values.Any())
-            {
-                return ActivityStatus.Completed;
-            }
+            private get;
+            set;
+        }
 
-            _current = Activity;
+        public IInVariable<TValue> Value
+        {
+            private get;
+            set;
+        }
 
-            foreach (var value in values)
+        public IActivity Activity
+        {
+            private get;
+            set;
+        }
+
+        public ForEachActivity()
+        {
+        }
+
+        public ForEachActivity(IOutVariable<IEnumerable<TValue>> enumerable, IInVariable<TValue> value, IActivity activity)
+        {
+            Enumerable = enumerable;
+            Value = value;
+            Activity = activity;
+        }
+
+        protected sealed override void initialize()
+        {
+        }
+
+        protected sealed override async Task start()
+        {
+            foreach (var value in Enumerable.GetValue())
             {
-                setAction(value);
+                _current = Activity;
+
+                Value.SetValue(value);
 
                 _current.Reset();
 
@@ -141,7 +171,39 @@ namespace WFLite.Activities
                 }
             }
 
-            return _current.Status;
+            if (_current == null)
+            {
+                Status = ActivityStatus.Completed;
+            }
+            else
+            {
+                Status = _current.Status;
+            }
+        }
+
+        protected sealed override void stop()
+        {
+            if (_current != null)
+            {
+                _current.Stop();
+
+                Status = _current.Status;
+            }
+            else
+            {
+                Status = ActivityStatus.Stopped;
+            }
+        }
+
+        protected sealed override void reset()
+        {
+            if (_current != null)
+            {
+                _current.Reset();
+                _current = null;
+            }
+
+            Status = Activity.Status;
         }
     }
 }

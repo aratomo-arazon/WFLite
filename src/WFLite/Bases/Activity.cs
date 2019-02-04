@@ -7,7 +7,8 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
- using System;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WFLite.Enums;
 using WFLite.Extensions;
@@ -23,7 +24,7 @@ namespace WFLite.Bases
         {
             get;
             protected set;
-        }
+        } = ActivityStatus.Created;
 
         public async Task Start()
         {
