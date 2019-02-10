@@ -7,14 +7,11 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-using System.Threading.Tasks;
-using WFLite.Bases;
-using WFLite.Enums;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
-    public class AssignActivity : Activity
+    public class AssignActivity : SyncActivity
     {
         public IInVariable To
         {
@@ -49,7 +46,7 @@ namespace WFLite.Activities
         {
         }
 
-        protected sealed override async Task start()
+        protected sealed override bool run()
         {
             if (Converter == null)
             {
@@ -60,23 +57,11 @@ namespace WFLite.Activities
                 To.SetValue(Converter.ConvertToObject(Value.GetValueAsObject()));
             }
 
-            await Task.CompletedTask;
-
-            Status = ActivityStatus.Completed;
-        }
-
-        protected sealed override void stop()
-        {
-            Status = ActivityStatus.Stopped;
-        }
-
-        protected sealed override void reset()
-        {
-            Status = ActivityStatus.Created;
+            return true;
         }
     }
 
-    public class AssignActivity<TValue> : Activity
+    public class AssignActivity<TValue> : SyncActivity
     {
         public IInVariable<TValue> To
         {
@@ -112,7 +97,7 @@ namespace WFLite.Activities
         {
         }
 
-        protected sealed override async Task start()
+        protected sealed override bool run()
         {
             if (Converter == null)
             {
@@ -123,23 +108,11 @@ namespace WFLite.Activities
                 To.SetValue(Converter.Convert(Value.GetValueAsObject()));
             }
 
-            await Task.CompletedTask;
-
-            Status = ActivityStatus.Completed;
-        }
-
-        protected sealed override void stop()
-        {
-            Status = ActivityStatus.Stopped;
-        }
-
-        protected sealed override void reset()
-        {
-            Status = ActivityStatus.Created;
+            return true;
         }
     }
 
-    public class AssignActivity<TTo, TValue> : Activity
+    public class AssignActivity<TTo, TValue> : SyncActivity
     {
         public IInVariable<TTo> To
         {
@@ -175,7 +148,7 @@ namespace WFLite.Activities
         {
         }
 
-        protected sealed override async Task start()
+        protected sealed override bool run()
         {
             if (Converter == null)
             {
@@ -186,19 +159,7 @@ namespace WFLite.Activities
                 To.SetValue(Converter.Convert(Value.GetValue()));
             }
 
-            await Task.CompletedTask;
-
-            Status = ActivityStatus.Completed;
-        }
-
-        protected sealed override void stop()
-        {
-            Status = ActivityStatus.Stopped;
-        }
-
-        protected sealed override void reset()
-        {
-            Status = ActivityStatus.Created;
+            return true;
         }
     }
 }

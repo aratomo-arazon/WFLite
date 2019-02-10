@@ -16,24 +16,9 @@ using WFLite.Extensions;
 
 namespace WFLite.Activities
 {
-    public class AsyncActivity : Activity
+    public abstract class AsyncActivity : Activity
     {
         private CancellationTokenSource _cancellationTokenSource;
-
-        public Func<CancellationToken, Task<bool>> Func
-        {
-            private get;
-            set;
-        }
-
-        public AsyncActivity()
-        {
-        }
-
-        public AsyncActivity(Func<CancellationToken, Task<bool>> func)
-        {
-            Func = func;
-        }
 
         protected override void initialize()
         {
@@ -74,14 +59,25 @@ namespace WFLite.Activities
             if (Status.IsCreated())
             {
                 Status = ActivityStatus.Stopped;
-            }
-            else
-            {
-                Status = ActivityStatus.Stopping;
 
-                if (_cancellationTokenSource != null)
+                return;
+            }
+
+            Status = ActivityStatus.Stopping;
+
+            if (_cancellationTokenSource != null)
+            {
+                if (_cancellationTokenSource.Token.CanBeCanceled)
                 {
-                    _cancellationTokenSource.Cancel();
+                    try
+                    {
+                        _cancellationTokenSource.Cancel();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw ex;
+                    }
                 }
             }
         }
@@ -93,14 +89,6 @@ namespace WFLite.Activities
             Status = ActivityStatus.Created;
         }
 
-        protected virtual Task<bool> run(CancellationToken cancellationToken)
-        {
-            if (Func == null)
-            {
-                return Task.FromResult(false);
-            }
-
-            return Func(cancellationToken);
-        }
+        protected abstract Task<bool> run(CancellationToken cancellationToken);
     }
 }

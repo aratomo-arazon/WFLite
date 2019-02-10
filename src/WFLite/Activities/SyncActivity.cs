@@ -7,30 +7,14 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-using System;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
 
 namespace WFLite.Activities
 {
-    public class SyncActivity : Activity
+    public abstract class SyncActivity : Activity
     {
-        public Func<bool> Func
-        {
-            private get;
-            set;
-        }
-
-        public SyncActivity()
-        {
-        }
-
-        public SyncActivity(Func<bool> func)
-        {
-            Func = func;
-        }
-
         protected override void initialize()
         {
         }
@@ -61,14 +45,6 @@ namespace WFLite.Activities
             Status = ActivityStatus.Created;
         }
 
-        protected virtual bool run()
-        {
-            if (Func == null)
-            {
-                return false;
-            }
-
-            return Func();
-        }
+        protected abstract bool run();
     }
 }

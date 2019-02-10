@@ -6,14 +6,14 @@ using WFLite.Enums;
 namespace WFLite.Test.Activities
 {
     [TestClass]
-    public class SyncActivityTest
+    public class FuncSyncActivityTest
     {
         [TestMethod]
         public async Task Test___Method_Start___Status_Created()
         {
             var value = 0;
 
-            var testee = new SyncActivity()
+            var testee = new FuncSyncActivity()
             {
                 Func = () =>
                 {
@@ -33,7 +33,7 @@ namespace WFLite.Test.Activities
         {
             var value = 0;
 
-            var testee = new SyncActivity()
+            var testee = new FuncSyncActivity()
             {
                 Func = () =>
                 {
@@ -53,7 +53,7 @@ namespace WFLite.Test.Activities
         {
             var value = 0;
 
-            var testee = new SyncActivity()
+            var testee = new FuncSyncActivity()
             {
                 Func = () =>
                 {
@@ -77,7 +77,7 @@ namespace WFLite.Test.Activities
         {
             var value = 0;
 
-            var testee = new SyncActivity()
+            var testee = new FuncSyncActivity()
             {
                 Func = () =>
                 {

@@ -7,35 +7,13 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-using System;
-using System.Threading.Tasks;
-using WFLite.Bases;
-using WFLite.Enums;
-using WFLite.Interfaces;
-
 namespace WFLite.Activities
 {
-    public class ThrowActivity : Activity
+    public class ThrowActivity : SyncActivity
     {
-        protected override void initialize()
+        protected sealed override bool run()
         {
+            return false;
         }
-
-        protected sealed override async Task start()
-        {
-            await Task.CompletedTask;
-
-            Status = ActivityStatus.Stopped;
-        }
-
-        protected sealed override void stop()
-        {
-            Status = ActivityStatus.Stopped;
-        }
-
-        protected sealed override void reset()
-        {
-            Status = ActivityStatus.Created;
-        }
-    }
+   }
 }

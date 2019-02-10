@@ -52,12 +52,12 @@ namespace WFLite.Extensions
 
         public static IActivity ToActivity(this Func<bool> func)
         {
-            return new SyncActivity(func);
+            return new FuncSyncActivity(func);
         }
 
         public static IActivity ToActivity(this Func<CancellationToken, Task<bool>> func)
         {
-            return new AsyncActivity(func);
+            return new FuncAsyncActivity(func);
         }
     }
 }

@@ -6,12 +6,12 @@ using WFLite.Enums;
 namespace WFLite.Test.Activities
 {
     [TestClass]
-    public class AsyncActivityTest
+    public class FuncAsyncActivityTest
     {
         [TestMethod]
         public async Task Test___Method_Start___Status_Created()
         {
-            var testee = new AsyncActivity()
+            var testee = new FuncAsyncActivity()
             {
                 Func = async (cancellationToken) =>
                 {
@@ -28,7 +28,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Stop___Status_Created()
         {
-            var testee = new AsyncActivity()
+            var testee = new FuncAsyncActivity()
             {
                 Func = async (cancellationToken) =>
                 {
@@ -45,7 +45,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Stop___Status_Executing()
         {
-            var testee = new AsyncActivity()
+            var testee = new FuncAsyncActivity()
             {
                 Func = async (cancellationToken) =>
                 {
@@ -74,7 +74,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public async Task Test___Method_Reset___Status_Completed()
         {
-            var testee = new AsyncActivity()
+            var testee = new FuncAsyncActivity()
             {
                 Func = async (cancellationToken) =>
                 {
@@ -95,7 +95,7 @@ namespace WFLite.Test.Activities
         [TestMethod]
         public void Test___Method_Reset___Status_Stopped()
         {
-            var testee = new AsyncActivity()
+            var testee = new FuncAsyncActivity()
             {
                 Func = async (cancellationToken) =>
                 {
