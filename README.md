@@ -2,7 +2,7 @@ WFLite
 =====
 WFLite is a lightweight workflow library.
 
-![WFLite](https://github.com/aratomo-arazon/WFLite/blob/master/images/logo.png)
+<img src="https://github.com/aratomo-arazon/WFLite/blob/master/images/logo.png" width=192 />
 
 ## Why workflow?
 
