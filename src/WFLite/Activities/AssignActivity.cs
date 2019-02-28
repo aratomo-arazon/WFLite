@@ -7,6 +7,7 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities

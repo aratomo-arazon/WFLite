@@ -8,6 +8,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
@@ -66,20 +67,51 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            _activities.Add(Try);
-            _activities.Add(Finally);
-
-            await start(Try);
-
-            if (Try.Status.IsStopped())
+            if (!_activities.Any())
             {
-                _activities.Remove(Try);
-                _activities.Add(Catch);
+                _activities.Add(Try);
+                _activities.Add(Finally);
 
-                await start(Catch);
+                await start(Try);
+
+                if (Try.Status.IsSuspended())
+                {
+                    return;
+                }
+                else if (Try.Status.IsStopped())
+                {
+                    _activities.Remove(Try);
+                    _activities.Add(Catch);
+
+                    await start(Catch);
+
+                    if (Catch.Status.IsSuspended())
+                    {
+                        return;
+                    }
+                }
+
+                await start(Finally);
+
+                if (Finally.Status.IsSuspended())
+                {
+                    return;
+                }
             }
+            else
+            {
+                var task = _current.Start();
 
-            await start(Finally);
+                Status = _current.Status;
+
+                await task;
+
+                Status = _activities.GetStatus();
+
+               
+
+
+            }
         }
 
         protected sealed override void stop()

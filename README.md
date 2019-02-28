@@ -223,8 +223,7 @@ Control Activity expresses the control syntax by using the composite structure. 
 `ForEachActivity` implements foreach-loop syntax.
 <pre><code>new ForEachActivity()
 {
-    Collection = <</>Variable>,    // Required (List or Dictionary)
-    Key = <</>Variable>,           // Required (if Collection is Dictionary)
+    Enumerable = <</>Variable>,    // Required (IEnumerable)
     Value = <</>Variable>,         // Required
     Activity = <</>Activity>       // Required
 };

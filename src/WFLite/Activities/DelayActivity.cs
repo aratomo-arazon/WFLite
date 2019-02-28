@@ -9,6 +9,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities

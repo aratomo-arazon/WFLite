@@ -47,32 +47,62 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            if (Condition.Check())
+            if (_current == null)
             {
+                if (!Condition.Check())
+                {
+                    Status = ActivityStatus.Completed;
+
+                    return;
+                }
+
                 _current = Activity;
 
-                do
-                {
-                    _current.Reset();
-
-                    var task = _current.Start();
-
-                    Status = _current.Status;
-
-                    await task;
-
-                    if (_current.Status.IsStopped())
-                    {
-                        break;
-                    }
-                }
-                while (Condition.Check());
+                var task = _current.Start();
 
                 Status = _current.Status;
+
+                await task;
+
+                Status = _current.Status;
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    return;
+                }
             }
             else
             {
-                Status = ActivityStatus.Completed;
+                var task = _current.Start();
+
+                Status = _current.Status;
+
+                await task;
+
+                Status = _current.Status;
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    return;
+                }
+            }
+
+            while (Condition.Check())
+            {
+                _current.Reset();
+
+                var task = _current.Start();
+
+                Status = _current.Status;
+
+                await task;
+
+                Status = _current.Status;
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    break;
+                }
             }
         }
 

@@ -13,6 +13,7 @@ namespace WFLite.Enums
     {
         Created,
         Executing,
+        Suspended,
         Stopping,
         Completed,
         Stopped

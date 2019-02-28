@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
@@ -18,6 +19,8 @@ namespace WFLite.Activities
     public class LockActivity : Activity
     {
         public IActivity _current;
+
+        private SemaphoreSlim _lockObject;
 
         public IOutVariable<SemaphoreSlim> LockObject
         {
@@ -47,14 +50,17 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            var lockObject = LockObject.GetValue();
+            if (_current == null)
+            {
+                _lockObject = LockObject.GetValue();
 
-            await lockObject.WaitAsync().ConfigureAwait(false);
+                await _lockObject.WaitAsync().ConfigureAwait(false);
+
+                _current = Activity;
+            }
 
             try
             {
-                _current = Activity;
-
                 var task = _current.Start();
 
                 Status = _current.Status;
@@ -62,10 +68,27 @@ namespace WFLite.Activities
                 await task;
 
                 Status = _current.Status;
+
+                if (_current.Status.IsSuspended())
+                {
+                    return;
+                }
             }
-            finally
+            catch
             {
-                lockObject.Release();
+                if (_lockObject != null)
+                {
+                    _lockObject.Release();
+                    _lockObject = null;
+                }
+
+                throw;
+            }
+
+            if (_lockObject != null)
+            {
+                _lockObject.Release();
+                _lockObject = null;
             }
         }
 
@@ -81,6 +104,12 @@ namespace WFLite.Activities
             {
                 Status = ActivityStatus.Stopped;
             }
+
+            if (Status.IsFinished() && _lockObject != null)
+            {
+                _lockObject.Release();
+                _lockObject = null;
+            }
         }
 
         protected sealed override void reset()
@@ -91,7 +120,13 @@ namespace WFLite.Activities
                 _current = null;
             }
 
-            Status = Activity.Status;
+            if (_lockObject != null)
+            {
+                _lockObject.Release();
+                _lockObject = null;
+            }
+
+            Status = ActivityStatus.Created;
         }
     }
 }

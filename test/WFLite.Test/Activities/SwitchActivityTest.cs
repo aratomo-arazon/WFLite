@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using WFLite.Activities;
+using WFLite.Conditions;
 using WFLite.Enums;
 using WFLite.Interfaces;
 using WFLite.Variables;
@@ -14,7 +15,7 @@ namespace WFLite.Test.Activities
     public class SwitchActivityTest
     {
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Cases()
+        public async Task Test___Method_Start___Status_Created___Cases_Completed()
         {
             var to = new AnyVariable();
 
@@ -35,7 +36,25 @@ namespace WFLite.Test.Activities
         }
 
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Default()
+        public async Task Test___Method_Start___Status_Created___Cases_Suspended()
+        {
+            var testee = new SwitchActivity()
+            {
+                Value = new AnyVariable<int>() { Value = 1 },
+                Cases = new Dictionary<object, IActivity>()
+                {
+                    { 1, new SuspendActivity() { Until = new FalseCondition() } },
+                    { 2, new NullActivity() }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Created___Default_Completed()
         {
             var to = new AnyVariable();
 
@@ -54,6 +73,73 @@ namespace WFLite.Test.Activities
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
             Assert.AreEqual(10000, to.GetValue());
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Created___Default_Suspended()
+        {
+            var testee = new SwitchActivity()
+            {
+                Value = new AnyVariable<int>() { Value = 3 },
+                Cases = new Dictionary<object, IActivity>()
+                {
+                    { 1, new NullActivity() },
+                    { 2, new NullActivity() }
+                },
+                Default = new SuspendActivity() { Until = new FalseCondition() }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Suspended_to_Completed()
+        {
+            var value = new AnyVariable<bool>() { Value = false };
+
+            var testee = new SwitchActivity()
+            {
+                Value = new AnyVariable<int>() { Value = 1 },
+                Cases = new Dictionary<object, IActivity>()
+                {
+                    { 1, new SuspendActivity() { Until = new TrueCondition() { Value = value } } }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            value.SetValue<bool>(true);
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Completed, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Suspended_to_Suspended()
+        {
+            var value = new AnyVariable<bool>() { Value = false };
+
+            var testee = new SwitchActivity()
+            {
+                Value = new AnyVariable<int>() { Value = 1 },
+                Cases = new Dictionary<object, IActivity>()
+                {
+                    { 1, new SuspendActivity() { Until = new TrueCondition() { Value = value } } }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
         }
 
         [TestMethod]
@@ -99,6 +185,27 @@ namespace WFLite.Test.Activities
             testee.Stop();
 
             await task;
+
+            Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Stop___Status_Suspended()
+        {
+            var testee = new SwitchActivity()
+            {
+                Value = new AnyVariable<int>() { Value = 1 },
+                Cases = new Dictionary<object, IActivity>()
+                {
+                    { 1, new SuspendActivity() { Until = new FalseCondition() } }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
         }

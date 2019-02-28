@@ -22,6 +22,8 @@ namespace WFLite.Activities
 
         private IActivity _current;
 
+        private IEnumerator<IActivity> _enumerator;
+
         public IEnumerable<IActivity> Activities
         {
             private get;
@@ -48,9 +50,19 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            foreach (var activity in Activities)
+            if (_current == null)
             {
-                _current = activity;
+                _enumerator = Activities.GetEnumerator();
+
+                if (!_enumerator.MoveNext())
+                {
+                    Status = ActivityStatus.Completed;
+
+                    return;
+                }
+
+                _current = _enumerator.Current;
+
                 _activities.Add(_current);
 
                 var task = _current.Start();
@@ -59,9 +71,46 @@ namespace WFLite.Activities
 
                 await task;
 
-                if (_current.Status.IsStopped())
+                Status = Activities.GetStatus();
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
                 {
-                    break;
+                    return;
+                }
+            }
+            else
+            {
+                var task = _current.Start();
+
+                Status = Activities.GetStatus();
+
+                await task;
+
+                Status = Activities.GetStatus();
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    return;
+                }
+            }
+
+            while (_enumerator.MoveNext())
+            {
+                _current = _enumerator.Current;
+
+                _activities.Add(_current);
+
+                var task = _current.Start();
+
+                Status = Activities.GetStatus();
+
+                await task;
+
+                Status = Activities.GetStatus();
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    return;
                 }
             }
 
@@ -91,7 +140,7 @@ namespace WFLite.Activities
 
             _activities.Clear();
 
-            Status = Activities.GetStatus();
+            Status = ActivityStatus.Created;
         }
     }
 }

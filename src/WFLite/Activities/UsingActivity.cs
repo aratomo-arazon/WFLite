@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
@@ -18,6 +19,8 @@ namespace WFLite.Activities
     public class UsingActivity : Activity
     {
         public IActivity _current;
+
+        private IDisposable _disposable;
 
         public IOutVariable<IDisposable> Disposable
         {
@@ -47,10 +50,15 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            using (var disposable = Disposable.GetValue())
+            if (_current == null)
             {
-                _current = Activity;
+                _disposable = Disposable.GetValue();
 
+                _current = Activity;
+            }
+
+            try
+            {
                 var task = _current.Start();
 
                 Status = _current.Status;
@@ -58,6 +66,27 @@ namespace WFLite.Activities
                 await task;
 
                 Status = _current.Status;
+
+                if (_current.Status == ActivityStatus.Suspended)
+                {
+                    return;
+                }
+            }
+            catch
+            {
+                if (_disposable != null)
+                {
+                    _disposable.Dispose();
+                    _disposable = null;
+                }
+
+                throw;
+            }
+
+            if (_disposable != null)
+            {
+                _disposable.Dispose();
+                _disposable = null;
             }
         }
 
@@ -73,6 +102,12 @@ namespace WFLite.Activities
             {
                 Status = ActivityStatus.Stopped;
             }
+
+            if (Status.IsFinished() && _disposable != null)
+            {
+                _disposable.Dispose();
+                _disposable = null;
+            }
         }
 
         protected sealed override void reset()
@@ -83,7 +118,13 @@ namespace WFLite.Activities
                 _current = null;
             }
 
-            Status = Activity.Status;
+            if (_disposable != null)
+            {
+                _disposable.Dispose();
+                _disposable = null;
+            }
+
+            Status = ActivityStatus.Created;
         }
     }
 }

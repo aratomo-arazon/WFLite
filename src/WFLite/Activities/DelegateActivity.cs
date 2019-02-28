@@ -39,7 +39,10 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            _current = Activity;
+            if (_current == null)
+            {
+                _current = Activity;
+            }
 
             var task = _current.Start();
 

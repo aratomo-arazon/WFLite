@@ -27,7 +27,7 @@ namespace WFLite.Bases
 
         public async Task Start()
         {
-            if (!Status.IsCreated())
+            if (!Status.CanStart())
             {
                 return;
             }
@@ -44,7 +44,7 @@ namespace WFLite.Bases
 
         public void Stop()
         {
-            if (Status.IsFinished())
+            if (!Status.CanStop())
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace WFLite.Bases
 
         public void Reset()
         {
-            if (!Status.IsFinished())
+            if (!Status.CanReset())
             {
                 return;
             }

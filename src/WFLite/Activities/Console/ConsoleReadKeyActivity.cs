@@ -8,6 +8,7 @@
  */
 
 using System;
+using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.Console

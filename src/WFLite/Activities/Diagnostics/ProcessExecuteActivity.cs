@@ -9,6 +9,7 @@
  
 using System;
 using System.Diagnostics;
+using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.Diagnostics

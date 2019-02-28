@@ -101,11 +101,6 @@ namespace WFLite.Variables.Diagnostics
             private get;
             set;
         }
-        public IOutVariable<Encoding> StandardInputEncoding
-        {
-            private get;
-            set;
-        }
 
         public IOutVariable<Encoding> StandardOutputEncoding
         {
@@ -156,7 +151,6 @@ namespace WFLite.Variables.Diagnostics
             IOutVariable<IntPtr> errorDialogParentHandle = null,
             IOutVariable<bool> loadUserProfile = null,
             IOutVariable<string> passwordInClearText = null,
-            IOutVariable<Encoding> standardInputEncoding = null,
             IOutVariable<Encoding> standardOutputEncoding = null,
             IOutVariable<Encoding> standardErrorEncoding = null,
             IOutVariable<string> verb = null,
@@ -177,7 +171,6 @@ namespace WFLite.Variables.Diagnostics
             ErrorDialogParentHandle = errorDialogParentHandle;
             LoadUserProfile = loadUserProfile;
             PasswordInClearText = passwordInClearText;
-            StandardInputEncoding = standardInputEncoding;
             StandardOutputEncoding = standardOutputEncoding;
             StandardErrorEncoding = standardErrorEncoding;
             Verb = verb;
@@ -187,29 +180,104 @@ namespace WFLite.Variables.Diagnostics
 
         protected sealed override object getValue()
         {
-            return new ProcessStartInfo()
+            var processStartInfo = new ProcessStartInfo();
+
+            if (FileName != null)
             {
-                FileName = FileName == null ? default : FileName.GetValue(),
-                Arguments = Arguments == null ? default : Arguments.GetValue(),
-                CreateNoWindow = CreateNoWindow == null ? default : CreateNoWindow.GetValue(),
-                UseShellExecute = UseShellExecute == null ? default : UseShellExecute.GetValue(),
-                RedirectStandardInput = RedirectStandardInput == null ? default : RedirectStandardInput.GetValue(),
-                RedirectStandardOutput = RedirectStandardOutput == null ? default : RedirectStandardOutput.GetValue(),
-                RedirectStandardError = RedirectStandardError == null ? default : RedirectStandardError.GetValue(),
-                Domain = Domain == null ? default : Domain.GetValue(),
-                UserName = UserName == null ? default : UserName.GetValue(),
-                Password = Password == null ? default : Password.GetValue(),
-                ErrorDialog = ErrorDialog == null ? default : ErrorDialog.GetValue(),
-                ErrorDialogParentHandle = ErrorDialogParentHandle == null ? default : ErrorDialogParentHandle.GetValue(),
-                LoadUserProfile = LoadUserProfile == null ? default : LoadUserProfile.GetValue(),
-                PasswordInClearText = PasswordInClearText == null ? default : PasswordInClearText.GetValue(),
-                StandardInputEncoding = StandardInputEncoding == null ? default : StandardInputEncoding.GetValue(),
-                StandardOutputEncoding = StandardOutputEncoding == null ? default : StandardOutputEncoding.GetValue(),
-                StandardErrorEncoding = StandardErrorEncoding == null ? default : StandardErrorEncoding.GetValue(),
-                Verb = Verb == null ? default : Verb.GetValue(),
-                WindowStyle = WindowStyle == null ? default : WindowStyle.GetValue(),
-                WorkingDirectory = WorkingDirectory == null ? default : WorkingDirectory.GetValue()
-            };
+                processStartInfo.FileName = FileName.GetValue();
+            }
+
+            if (Arguments != null)
+            {
+                processStartInfo.Arguments = Arguments.GetValue();
+            }
+
+            if (CreateNoWindow != null)
+            {
+                processStartInfo.CreateNoWindow = CreateNoWindow.GetValue();
+            }
+
+            if (UseShellExecute != null)
+            {
+                processStartInfo.UseShellExecute = UseShellExecute.GetValue();
+            }
+
+            if (RedirectStandardInput != null)
+            {
+                processStartInfo.RedirectStandardInput = RedirectStandardInput.GetValue();
+            }
+
+            if (RedirectStandardOutput != null)
+            {
+                processStartInfo.RedirectStandardOutput = RedirectStandardOutput.GetValue();
+            }
+
+            if (RedirectStandardError != null)
+            {
+                processStartInfo.RedirectStandardError = RedirectStandardError.GetValue();
+            }
+
+            if (Domain != null)
+            {
+                processStartInfo.Domain = Domain.GetValue();
+            }
+
+            if (UserName != null)
+            {
+                processStartInfo.UserName = UserName.GetValue();
+            }
+
+            if (Password != null)
+            {
+                processStartInfo.Password = Password.GetValue();
+            }
+
+            if (ErrorDialog != null)
+            {
+                processStartInfo.ErrorDialog = ErrorDialog.GetValue();
+            }
+
+            if (ErrorDialogParentHandle != null)
+            {
+                processStartInfo.ErrorDialogParentHandle = ErrorDialogParentHandle.GetValue();
+            }
+
+            if (LoadUserProfile != null)
+            {
+                processStartInfo.LoadUserProfile = LoadUserProfile.GetValue();
+            }
+
+            if (PasswordInClearText != null)
+            {
+                processStartInfo.PasswordInClearText = PasswordInClearText.GetValue();
+            }
+
+            if (StandardOutputEncoding != null)
+            {
+                processStartInfo.StandardOutputEncoding = StandardOutputEncoding.GetValue();
+            }
+
+            if (StandardErrorEncoding != null)
+            {
+                processStartInfo.StandardErrorEncoding = StandardErrorEncoding.GetValue();
+            }
+
+            if (Verb != null)
+            {
+                processStartInfo.Verb = Verb.GetValue();
+            }
+
+            if (WindowStyle != null)
+            {
+                processStartInfo.WindowStyle = WindowStyle.GetValue();
+            }
+
+            if (WorkingDirectory != null)
+            {
+                processStartInfo.WorkingDirectory = WorkingDirectory.GetValue();
+            }
+
+            return processStartInfo;
         }
     }
 }

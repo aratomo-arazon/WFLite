@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using WFLite.Activities;
+using WFLite.Conditions;
 using WFLite.Enums;
 using WFLite.Variables;
 
@@ -11,7 +12,7 @@ namespace WFLite.Test.Activities
     public class DelegateActivityTest
     {
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created()
+        public async Task Test___Method_Start___Status_Created_to_Completed()
         {
             var testee = new DelegateActivity()
             {
@@ -24,6 +25,68 @@ namespace WFLite.Test.Activities
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Created_to_Suspended()
+        {
+            var testee = new DelegateActivity()
+            {
+                Activity = new SuspendActivity()
+                {
+                    Until = new FalseCondition()
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Suspended_to_Completed()
+        {
+            var value = new AnyVariable<bool>() { Value = false };
+
+            var testee = new DelegateActivity()
+            {
+                Activity = new SuspendActivity()
+                {
+                    Until = new TrueCondition() { Value = value }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            value.SetValue<bool>(true);
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Completed, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Suspended_to_Suspended()
+        {
+            var value = new AnyVariable<bool>() { Value = false };
+
+            var testee = new DelegateActivity()
+            {
+                Activity = new SuspendActivity()
+                {
+                    Until = new TrueCondition() { Value = value }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
         }
 
         [TestMethod]
@@ -62,6 +125,26 @@ namespace WFLite.Test.Activities
             testee.Stop();
 
             await task;
+
+            Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Stop___Status_Suspended()
+        {
+            var testee = new DelegateActivity()
+            {
+                Activity = new SuspendActivity()
+                {
+                    Until = new FalseCondition()
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
         }

@@ -62,13 +62,16 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            if (Condition.Check())
+            if (_current == null)
             {
-                _current = Then;
-            }
-            else
-            {
-                _current = Else;
+                if (Condition.Check())
+                {
+                    _current = Then;
+                }
+                else
+                {
+                    _current = Else;
+                }
             }
 
             var task = _current.Start();

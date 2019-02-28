@@ -26,6 +26,11 @@ namespace WFLite.Extensions
             return status == ActivityStatus.Executing;
         }
 
+        public static bool IsSuspended(this ActivityStatus status)
+        {
+            return status == ActivityStatus.Suspended;
+        }
+
         public static bool IsStopping(this ActivityStatus status)
         {
             return status == ActivityStatus.Stopping;
@@ -55,6 +60,23 @@ namespace WFLite.Extensions
                 status == ActivityStatus.Stopped;
         }
 
+        public static bool CanStart(this ActivityStatus status)
+        {
+            return
+                status == ActivityStatus.Created ||
+                status == ActivityStatus.Suspended;
+        }
+
+        public static bool CanStop(this ActivityStatus status)
+        {
+            return !status.IsFinished();
+        }
+
+        public static bool CanReset(this ActivityStatus status)
+        {
+            return status.IsFinished();
+        }
+
         public static ActivityStatus GetStatus(this IEnumerable<IActivity> activities)
         {
             if (activities.All(a => a.Status.IsCreated()))
@@ -77,6 +99,10 @@ namespace WFLite.Extensions
             if (activities.Any(a => a.Status.IsStopped() || a.Status.IsStopping()))
             {
                 return ActivityStatus.Stopping;
+            }
+            else if (activities.Any(a => a.Status.IsSuspended()))
+            {
+                return ActivityStatus.Suspended;
             }
             else
             {

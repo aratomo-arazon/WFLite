@@ -8,6 +8,7 @@
  */
 
 using System.IO;
+using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.IO

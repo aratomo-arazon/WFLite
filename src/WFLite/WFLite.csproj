@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Authors>aratomo-arazon</Authors>
     <Company />
@@ -10,9 +10,9 @@
     <PackageProjectUrl>https://github.com/aratomo-arazon/WFLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/aratomo-arazon/WFLite</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/aratomo-arazon/WFLite/blob/master/LICENSE</PackageLicenseUrl>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
     <FileVersion>1.1.1.0</FileVersion>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
   </PropertyGroup>
 
 </Project>

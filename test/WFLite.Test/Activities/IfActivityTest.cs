@@ -11,7 +11,7 @@ namespace WFLite.Test.Activities
     public class IfActivityTest
     {
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Then()
+        public async Task Test___Method_Start___Status_Created___Then_Completed()
         {
             var to = new AnyVariable<int>() { Value = 0 };
 
@@ -29,7 +29,25 @@ namespace WFLite.Test.Activities
         }
 
         [TestMethod]
-        public async Task Test___Method_Start___Status_Created___Else()
+        public async Task Test___Method_Start___Status_Created___Then_Suspended()
+        {
+            var testee = new IfActivity()
+            {
+                Condition = new TrueCondition(),
+                Then = new SuspendActivity()
+                {
+                    Until = new FalseCondition()
+                },
+                Else = new NullActivity()
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Created___Else_Completed()
         {
             var to = new AnyVariable<int>() { Value = 0 };
 
@@ -44,6 +62,72 @@ namespace WFLite.Test.Activities
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
             Assert.AreEqual(2, to.GetValueAsObject());
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Created___Else_Suspended()
+        {
+            var testee = new IfActivity()
+            {
+                Condition = new FalseCondition(),
+                Then = new NullActivity(),
+                Else = new SuspendActivity()
+                {
+                    Until = new FalseCondition()
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Suspended_to_Completed()
+        {
+            var value = new AnyVariable<bool>() { Value = false };
+
+            var testee = new IfActivity()
+            {
+                Condition = new TrueCondition(),
+                Then = new SuspendActivity()
+                {
+                    Until = new TrueCondition() { Value = value }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            value.SetValue<bool>(true);
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Completed, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Suspended_to_Suspended()
+        {
+            var value = new AnyVariable<bool>() { Value = false };
+
+            var testee = new IfActivity()
+            {
+                Condition = new TrueCondition(),
+                Then = new SuspendActivity()
+                {
+                    Until = new TrueCondition() { Value = value }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
         }
 
         [TestMethod]
@@ -83,6 +167,27 @@ namespace WFLite.Test.Activities
             testee.Stop();
 
             await task;
+
+            Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Stop___Status_Suspended()
+        {
+            var testee = new IfActivity()
+            {
+                Condition = new TrueCondition(),
+                Then = new SuspendActivity()
+                {
+                    Until = new FalseCondition()
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual(ActivityStatus.Suspended, testee.Status);
+
+            testee.Stop();
 
             Assert.AreEqual(ActivityStatus.Stopped, testee.Status);
         }

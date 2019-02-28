@@ -14,7 +14,7 @@ using WFLite.Bases;
 using WFLite.Enums;
 using WFLite.Extensions;
 
-namespace WFLite.Activities
+namespace WFLite.Bases
 {
     public abstract class AsyncActivity : Activity
     {

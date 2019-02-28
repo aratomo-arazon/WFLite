@@ -7,6 +7,7 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,28 +17,8 @@ using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
-    public class SwitchActivity : Activity
+    public class SwitchActivity : SwitchActivity<IOutVariable, object, IDictionary<object, IActivity>>
     {
-        private IActivity _current;
-
-        public IOutVariable Value
-        {
-            private get;
-            set;
-        }
-
-        public IDictionary<object, IActivity> Cases
-        {
-            private get;
-            set;
-        }
-
-        public IActivity Default
-        {
-            private get;
-            set;
-        }
-
         public SwitchActivity()
         {
         }
@@ -48,76 +29,35 @@ namespace WFLite.Activities
             Cases = cases;
             Default = default_;
         }
+    }
 
-        protected sealed override void initialize()
+    public class SwitchActivity<TValue> : SwitchActivity<IOutVariable<TValue>, TValue, IDictionary<TValue, IActivity>>
+    {
+        public SwitchActivity()
         {
-            if (Default == null)
-            {
-                Default = new NullActivity();
-            }
         }
 
-        protected sealed override async Task start()
+        public SwitchActivity(IOutVariable<TValue> value, IDictionary<TValue, IActivity> cases, IActivity default_ = null)
         {
-            var value = Value.GetValueAsObject();
-
-            var activity = Cases.FirstOrDefault(c => c.Key.Equals(value)).Value;
-
-            if (activity == null)
-            {
-                _current = Default;
-            }
-            else
-            {
-                _current = activity;
-            }
-
-            var task = _current.Start();
-
-            Status = _current.Status;
-
-            await task;
-
-            Status = _current.Status;
-        }
-
-        protected sealed override void stop()
-        {
-            if (_current != null)
-            {
-                _current.Stop();
-
-                Status = _current.Status;
-            }
-            else
-            {
-                Status = ActivityStatus.Stopped;
-            }
-        }
-
-        protected sealed override void reset()
-        {
-            if (_current != null)
-            {
-                _current.Reset();
-                _current = null;
-            }
-
-            Status = ActivityStatus.Created;
+            Value = value;
+            Cases = cases;
+            Default = default_;
         }
     }
 
-    public class SwitchActivity<TValue> : Activity
+    public abstract class SwitchActivity<TOutVariable, TValue, TDictionary>  : Activity
+        where TOutVariable : IOutVariable
+        where TDictionary : IEnumerable
     {
         private IActivity _current;
 
-        public IOutVariable<TValue> Value
+        public TOutVariable Value
         {
             private get;
             set;
         }
 
-        public IDictionary<TValue, IActivity> Cases
+        public TDictionary Cases
         {
             private get;
             set;
@@ -133,7 +73,7 @@ namespace WFLite.Activities
         {
         }
 
-        public SwitchActivity(IOutVariable<TValue> value, IDictionary<TValue, IActivity> cases, IActivity default_ = null)
+        public SwitchActivity(TOutVariable value, TDictionary cases, IActivity default_ = null)
         {
             Value = value;
             Cases = cases;
@@ -150,17 +90,21 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            var value = Value.GetValue();
-
-            var activity = Cases.FirstOrDefault(c => c.Key.Equals(value)).Value;
-
-            if (activity == null)
+            if (_current == null)
             {
-                _current = Default;
-            }
-            else
-            {
-                _current = activity;
+                var value = Value.GetValue<TValue>();
+                var cases = Cases as IDictionary<TValue, IActivity>;
+
+                var activity = cases.FirstOrDefault(p => p.Key.Equals(value)).Value;
+
+                if (activity == null)
+                {
+                    _current = Default;
+                }
+                else
+                {
+                    _current = activity;
+                }
             }
 
             var task = _current.Start();

@@ -47,11 +47,17 @@ namespace WFLite.Activities
 
         protected sealed override async Task start()
         {
-            _activities.AddRange(Activities);
+            if (!_activities.Any())
+            {
+                _activities.AddRange(Activities);
+            }
 
             var tasks = new List<Task>();
 
-            Parallel.ForEach(_activities, a => tasks.Add(a.Start()));
+            foreach (var activity in _activities)
+            {
+                tasks.Add(activity.Start());
+            }
 
             Status = _activities.GetStatus();
 
@@ -69,7 +75,7 @@ namespace WFLite.Activities
                     activity.Stop();
                 }
 
-                Status = Activities.GetStatus();
+                Status = _activities.GetStatus();
             }
             else
             {
@@ -86,7 +92,7 @@ namespace WFLite.Activities
 
             _activities.Clear();
 
-            Status = Activities.GetStatus();
+            Status = ActivityStatus.Created;
         }
     }
 }

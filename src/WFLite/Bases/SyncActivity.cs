@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
 
-namespace WFLite.Activities
+namespace WFLite.Bases
 {
     public abstract class SyncActivity : Activity
     {

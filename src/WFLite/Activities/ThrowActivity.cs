@@ -7,6 +7,8 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using WFLite.Bases;
+
 namespace WFLite.Activities
 {
     public class ThrowActivity : SyncActivity

@@ -9,6 +9,7 @@
 
 using System.IO;
 using System.Text;
+using WFLite.Bases;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.IO
