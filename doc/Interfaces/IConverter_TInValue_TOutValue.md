@@ -13,7 +13,7 @@ Converts the value.
 
 ### TOutValue Convert(object value)
 Converts the value.
-(Inherited from [IConverter&lt;TValue&gt;](https://github.com/aratomo-arazon/WFLite/tree/master/doc/IConverter_TValue.md))
+(Inherited from [IConverter&lt;TValue&gt;](https://github.com/aratomo-arazon/WFLite/tree/master/doc/Interfaces/IConverter_TValue.md))
 
 ### TOutValue Convert(TInValue value)
 Converts the value.
