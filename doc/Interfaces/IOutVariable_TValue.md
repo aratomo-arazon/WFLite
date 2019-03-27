@@ -1,6 +1,6 @@
-# IOutVariable&lt;out TValue&gt;
+# IOutVariable&lt;out TValue&gt; Interface
 
-IOutVariable&lt;out TValue&gt; provides methods to get a value.
+IOutVariable&lt;out TValue&gt; interface provides the methods to get a value from the variable.
 
 <pre><code>public interface IOutVariable&lt;out TValue&gt; : IOutVariable
 </code></pre>

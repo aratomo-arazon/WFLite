@@ -1,6 +1,6 @@
-# IConverter
+# IConverter Interface
 
-IConverter provides a method to convert a value.
+IConverter interface provides the method to convert the value.
 
 <pre><code>public interface IConverter
 </code></pre>

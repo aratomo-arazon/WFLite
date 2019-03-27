@@ -1,6 +1,6 @@
-# ICondition
+# ICondition Interface
 
-ICondition provides a method to check a condition.
+ICondition interface provides the method to check the condition.
 
 <pre><code>public interface ICondition
 </code></pre>

@@ -1,6 +1,6 @@
-# ActivityStatus
+# ActivityStatus Enum
 
-ActivityStatus represents the status of an activity.
+ActivityStatus enum provides the status of an activity.
 
 <pre><code>public enum ActivityStatus
 {

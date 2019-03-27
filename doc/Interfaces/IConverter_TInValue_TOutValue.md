@@ -1,6 +1,6 @@
-# IConverter&lt;TInValue,TOutValue&gt;
+# IConverter&lt;TInValue,TOutValue&gt; Interface
 
-IConverter&lt;TInValue,TOutValue&gt; provides methods to convert a value.
+IConverter&lt;TInValue,TOutValue&gt; interface provides the methods to convert the value.
 
 <pre><code>public interface IConverter&lt;TInValue,TOutValue&gt; : IConverter&lt;TOutValue&gt;
 </code></pre>

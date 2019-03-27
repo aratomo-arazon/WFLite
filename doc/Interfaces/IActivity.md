@@ -1,6 +1,6 @@
-# IActivity
+# IActivity Interface
 
-IActivity provides methods to operate an activity.
+IActivity interface provides the methods to operate the activity.
 
 <pre><code>public interface IActivity
 </code></pre>

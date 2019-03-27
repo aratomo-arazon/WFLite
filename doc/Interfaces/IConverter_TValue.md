@@ -1,6 +1,6 @@
-# IConverter&lt;TValue&gt;
+# IConverter&lt;TValue&gt; Interface
 
-IConverter&lt;TValue&gt; provides methods to convert a value.
+IConverter&lt;TValue&gt; interface provides the methods to convert the value.
 
 <pre><code>public interface IConverter&lt;TValue&gt; : IConverter
 </code></pre>

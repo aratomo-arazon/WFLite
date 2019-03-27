@@ -17,70 +17,19 @@ using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
-    public class ForEachActivity : ForEachActivity<IEnumerable, IEnumerator, IInVariable>
-    {
-        public ForEachActivity()
-        {
-        }
-
-        public ForEachActivity(IOutVariable<IEnumerable> enumerable, IInVariable value, IActivity activity)
-        {
-            Enumerable = enumerable;
-            Value = value;
-            Activity = activity;
-        }
-
-        protected sealed override IEnumerator getEnumerator(IEnumerable enumerable)
-        {
-            return enumerable.GetEnumerator();
-        }
-
-        protected sealed override void setValue(IInVariable variable, IEnumerator enumerator)
-        {
-            variable.SetValue(enumerator.Current);
-        }
-    }
-
-    public class ForEachActivity<TValue> : ForEachActivity<IEnumerable<TValue>, IEnumerator<TValue>, IInVariable<TValue>>
-    {
-        public ForEachActivity()
-        {
-        }
-
-        public ForEachActivity(IOutVariable<IEnumerable<TValue>> enumerable, IInVariable<TValue> value, IActivity activity)
-        {
-            Enumerable = enumerable;
-            Value = value;
-            Activity = activity;
-        }
-
-        protected sealed override IEnumerator<TValue> getEnumerator(IEnumerable<TValue> enumerable)
-        {
-            return enumerable.GetEnumerator();
-        }
-
-        protected sealed override void setValue(IInVariable<TValue> variable, IEnumerator<TValue> enumerator)
-        {
-            variable.SetValue<TValue>(enumerator.Current);
-        }
-    }
-
-    public abstract class ForEachActivity<TEnumerable, TEnumerator, TInVariable> : Activity
-        where TEnumerable : IEnumerable
-        where TEnumerator : class, IEnumerator
-        where TInVariable : IInVariable
+    public class ForEachActivity : Activity
     {
         private IActivity _current;
 
-        private TEnumerator _enumerator;
+        private IEnumerator _enumerator;
 
-        public IOutVariable<TEnumerable> Enumerable
+        public IOutVariable<IEnumerable> Enumerable
         {
             private get;
             set;
         }
 
-        public TInVariable Value
+        public IInVariable Value
         {
             private get;
             set;
@@ -96,7 +45,7 @@ namespace WFLite.Activities
         {
         }
 
-        public ForEachActivity(IOutVariable<TEnumerable> enumerable, TInVariable value, IActivity activity)
+        public ForEachActivity(IOutVariable<IEnumerable> enumerable, IInVariable value, IActivity activity)
         {
             Enumerable = enumerable;
             Value = value;
@@ -111,7 +60,7 @@ namespace WFLite.Activities
         {
             if (_current == null)
             {
-                _enumerator = getEnumerator(Enumerable.GetValue());
+                _enumerator = Enumerable.GetValue().GetEnumerator();
 
                 if (!_enumerator.MoveNext())
                 {
@@ -120,7 +69,7 @@ namespace WFLite.Activities
                     return;
                 }
 
-                setValue(Value, _enumerator);
+                Value.SetValue(_enumerator.Current);
 
                 _current = Activity;
 
@@ -200,9 +149,139 @@ namespace WFLite.Activities
 
             Status = ActivityStatus.Created;
         }
+    }
 
-        protected abstract TEnumerator getEnumerator(TEnumerable enumerable);
+    public class ForEachActivity<TValue> : Activity
+    {
+        private IActivity _current;
 
-        protected abstract void setValue(TInVariable variable, TEnumerator enumerator);
+        private IEnumerator<TValue> _enumerator;
+
+        public IOutVariable<IEnumerable<TValue>> Enumerable
+        {
+            private get;
+            set;
+        }
+
+        public IInVariable<TValue> Value
+        {
+            private get;
+            set;
+        }
+
+        public IActivity Activity
+        {
+            private get;
+            set;
+        }
+
+        public ForEachActivity()
+        {
+        }
+
+        public ForEachActivity(IOutVariable<IEnumerable<TValue>> enumerable, IInVariable<TValue> value, IActivity activity)
+        {
+            Enumerable = enumerable;
+            Value = value;
+            Activity = activity;
+        }
+
+        protected sealed override void initialize()
+        {
+        }
+
+        protected sealed override async Task start()
+        {
+            if (_current == null)
+            {
+                _enumerator = Enumerable.GetValue().GetEnumerator();
+
+                if (!_enumerator.MoveNext())
+                {
+                    Status = ActivityStatus.Completed;
+
+                    return;
+                }
+
+                Value.SetValue<TValue>(_enumerator.Current);
+
+                _current = Activity;
+
+                var task = _current.Start();
+
+                Status = _current.Status;
+
+                await task;
+
+                Status = _current.Status;
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    return;
+                }
+            }
+            else
+            {
+                var task = _current.Start();
+
+                Status = _current.Status;
+
+                await task;
+
+                Status = _current.Status;
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    return;
+                }
+            }
+
+            while (_enumerator.MoveNext())
+            {
+                Value.SetValue(_enumerator.Current);
+
+                _current.Reset();
+
+                var task = _current.Start();
+
+                Status = _current.Status;
+
+                await task;
+
+                Status = _current.Status;
+
+                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                {
+                    break;
+                }
+            }
+        }
+
+        protected sealed override void stop()
+        {
+            if (_current != null)
+            {
+                _current.Stop();
+
+                Status = _current.Status;
+            }
+            else
+            {
+                Status = ActivityStatus.Stopped;
+            }
+        }
+
+        protected sealed override void reset()
+        {
+            if (_current != null)
+            {
+                _current.Reset();
+                _current = null;
+            }
+
+            _enumerator = null;
+
+            Status = ActivityStatus.Created;
+        }
     }
 }

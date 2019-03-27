@@ -1,6 +1,6 @@
-# IInVariable
+# IInVariable Interface
 
-InVariable provides methods to store a value.
+InVariable interface provides the methods to store a value to the variable.
 
 <pre><code>public interface IInVariable
 </code></pre>
@@ -8,7 +8,7 @@ InVariable provides methods to store a value.
 ## Methods
 
 ### void SetValue(object value)
-Sets the value.
+Sets a value.
 
 ### void SetValue&lt;TValue&gt;(TValue value)
-Sets the value.
+Sets a value.
