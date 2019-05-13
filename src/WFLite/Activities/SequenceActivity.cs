@@ -8,6 +8,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
@@ -67,13 +68,20 @@ namespace WFLite.Activities
 
                 var task = _current.Start();
 
-                Status = Activities.GetStatus();
+                Status = _activities.GetStatus();
 
                 await task;
 
-                Status = Activities.GetStatus();
+                if (_current.Status.IsStopped())
+                {
+                    Status = ActivityStatus.Stopped;
+                }
+                else
+                {
+                    Status = _activities.GetStatus();
+                }
 
-                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                if (Status.IsStopped() || Status.IsSuspended())
                 {
                     return;
                 }
@@ -82,13 +90,20 @@ namespace WFLite.Activities
             {
                 var task = _current.Start();
 
-                Status = Activities.GetStatus();
+                Status = _activities.GetStatus();
 
                 await task;
 
-                Status = Activities.GetStatus();
+                if (_current.Status.IsStopped())
+                {
+                    Status = ActivityStatus.Stopped;
+                }
+                else
+                {
+                    Status = _activities.GetStatus();
+                }
 
-                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                if (Status.IsStopped() || Status.IsSuspended())
                 {
                     return;
                 }
@@ -102,13 +117,20 @@ namespace WFLite.Activities
 
                 var task = _current.Start();
 
-                Status = Activities.GetStatus();
+                Status = _activities.GetStatus();
 
                 await task;
 
-                Status = Activities.GetStatus();
+                if (_current.Status.IsStopped())
+                {
+                    Status = ActivityStatus.Stopped;
+                }
+                else
+                {
+                    Status = _activities.GetStatus();
+                }
 
-                if (_current.Status.IsStopped() || _current.Status.IsSuspended())
+                if (Status.IsStopped() || Status.IsSuspended())
                 {
                     return;
                 }

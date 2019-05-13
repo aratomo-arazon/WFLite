@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WFLite.Activities;
@@ -130,6 +131,61 @@ namespace WFLite.Test.Activities
             testee.Reset();
 
             Assert.AreEqual(ActivityStatus.Created, testee.Status);
+        }
+
+        [TestMethod]
+        public async Task Test___Method_Start___Status_Created___Issue_2()
+        {
+            var lastAct = string.Empty;
+
+            var testee = new SequenceActivity()
+            {
+                Activities = new List<IActivity>()
+                {
+                    new SequenceActivity()
+                    {
+                        Activities = new List<IActivity>()
+                        {
+                            new FuncSyncActivity()
+                            {
+                                Func = () =>
+                                {
+                                    lastAct = "Act1_1";
+                                    return true;
+                                }
+                            },
+                            new FuncSyncActivity()
+                            {
+                                Func = () => 
+                                {
+                                    lastAct = "Act1_2";
+                                    return false;   // stopped
+                                }
+                            },
+                            new FuncSyncActivity()
+                            {
+                                Func = () => 
+                                {
+                                    lastAct = "Act1_3";
+                                    return true;
+                                }
+                            }
+                        }
+                    },
+                    new FuncSyncActivity()
+                    {
+                        Func = () =>
+                        {
+                            lastAct = "Act2_1";
+                            return true;
+                        }
+                    }
+                }
+            };
+
+            await testee.Start();
+
+            Assert.AreEqual("Act1_2", lastAct);
         }
     }
 }
