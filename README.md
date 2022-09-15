@@ -4,8 +4,6 @@ WFLite is a lightweight workflow library.
 
 <img src="https://github.com/aratomo-arazon/WFLite/blob/master/images/logo.png" width=192 />
 
-- [Get WFLite T-shirt!](https://suzuri.jp/aratomo-arazon/1615875/t-shirt/s/white)
-
 ## Why workflow?
 
 As the scale of the program grows larger, the overall flow of the program becomes more difficult to understand. Parallel processing and asynchronous processing also reduce readability.
