@@ -8,13 +8,14 @@
  */
 
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.Console
 {
     public class ConsoleReadActivity : SyncActivity
     {
-        public IInVariable<int> Value
+        public IInVariable<int>? Value
         {
             private get;
             set;
@@ -29,14 +30,16 @@ namespace WFLite.Activities.Console
             Value = value;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Value, nameof(Value));
+        }
+
         protected sealed override bool run()
         {
             var value = System.Console.Read();
 
-            if (Value != null)
-            {
-                Value.SetValue(value);
-            }
+            Value!.SetValue(value);
 
             return true;
         }

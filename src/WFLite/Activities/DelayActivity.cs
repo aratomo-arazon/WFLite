@@ -10,13 +10,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
     public class DelayActivity : AsyncActivity
     {
-        public IOutVariable<int> Duration
+        public IOutVariable<int>? Duration
         {
             private get;
             set;
@@ -33,11 +34,12 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Duration, nameof(Duration));
         }
 
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
-            var duration = Duration.GetValue();
+            var duration = Duration!.GetValue();
 
             await Task.Delay(duration, cancellationToken);
 

@@ -10,27 +10,28 @@
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
     public class IfActivity : Activity
     {
-        private IActivity _current;
+        private IActivity? _current;
 
-        public ICondition Condition
+        public ICondition? Condition
         {
             private get;
             set;
         }
 
-        public IActivity Then
+        public IActivity? Then
         {
             private get;
             set;
         }
 
-        public IActivity Else
+        public IActivity? Else
         {
             private get;
             set;
@@ -40,7 +41,7 @@ namespace WFLite.Activities
         {
         }
 
-        public IfActivity(ICondition condition, IActivity then = null, IActivity else_ = null)
+        public IfActivity(ICondition condition, IActivity? then = null, IActivity? else_ = null)
         {
             Condition = condition;
             Then = then;
@@ -49,22 +50,16 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
-            if (Then == null)
-            {
-                Then = new NullActivity();
-            }
-
-            if (Else == null)
-            {
-                Else = new NullActivity();
-            }
+            this.Require(Condition, nameof(Condition));
+            Then = Then == null ? new NullActivity() : Then;
+            Else = Else == null ? new NullActivity() : Else;
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                if (Condition.Check())
+                if (Condition!.Check())
                 {
                     _current = Then;
                 }
@@ -74,7 +69,7 @@ namespace WFLite.Activities
                 }
             }
 
-            var task = _current.Start();
+            var task = _current!.Start();
 
             Status = _current.Status;
 

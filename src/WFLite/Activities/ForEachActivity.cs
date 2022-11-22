@@ -19,23 +19,23 @@ namespace WFLite.Activities
 {
     public class ForEachActivity : Activity
     {
-        private IActivity _current;
+        private IActivity? _current;
 
-        private IEnumerator _enumerator;
+        private IEnumerator? _enumerator;
 
-        public IOutVariable<IEnumerable> Enumerable
+        public IOutVariable<IEnumerable>? Enumerable
         {
             private get;
             set;
         }
 
-        public IInVariable Value
+        public IInVariable? Value
         {
             private get;
             set;
         }
 
-        public IActivity Activity
+        public IActivity? Activity
         {
             private get;
             set;
@@ -54,13 +54,16 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Enumerable, nameof(Enumerable));
+            this.Require(Value, nameof(Value));
+            this.Require(Activity, nameof(Activity));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                _enumerator = Enumerable.GetValue().GetEnumerator();
+                _enumerator = Enumerable!.GetValue()!.GetEnumerator();
 
                 if (!_enumerator.MoveNext())
                 {
@@ -69,11 +72,11 @@ namespace WFLite.Activities
                     return;
                 }
 
-                Value.SetValue(_enumerator.Current);
+                Value!.SetValue(_enumerator.Current);
 
                 _current = Activity;
 
-                var task = _current.Start();
+                var task = _current!.Start();
 
                 Status = _current.Status;
 
@@ -102,9 +105,9 @@ namespace WFLite.Activities
                 }
             }
 
-            while (_enumerator.MoveNext())
+            while (_enumerator!.MoveNext())
             {
-                Value.SetValue(_enumerator.Current);
+                Value!.SetValue(_enumerator.Current);
 
                 _current.Reset();
 
@@ -153,23 +156,23 @@ namespace WFLite.Activities
 
     public class ForEachActivity<TValue> : Activity
     {
-        private IActivity _current;
+        private IActivity? _current;
 
-        private IEnumerator<TValue> _enumerator;
+        private IEnumerator<TValue>? _enumerator;
 
-        public IOutVariable<IEnumerable<TValue>> Enumerable
+        public IOutVariable<IEnumerable<TValue>>? Enumerable
         {
             private get;
             set;
         }
 
-        public IInVariable<TValue> Value
+        public IInVariable<TValue>? Value
         {
             private get;
             set;
         }
 
-        public IActivity Activity
+        public IActivity? Activity
         {
             private get;
             set;
@@ -188,13 +191,16 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Enumerable, nameof(Enumerable));
+            this.Require(Value, nameof(Value));
+            this.Require(Activity, nameof(Activity));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                _enumerator = Enumerable.GetValue().GetEnumerator();
+                _enumerator = Enumerable!.GetValue()!.GetEnumerator();
 
                 if (!_enumerator.MoveNext())
                 {
@@ -203,11 +209,11 @@ namespace WFLite.Activities
                     return;
                 }
 
-                Value.SetValue<TValue>(_enumerator.Current);
+                Value!.SetValue<TValue>(_enumerator.Current);
 
                 _current = Activity;
 
-                var task = _current.Start();
+                var task = _current!.Start();
 
                 Status = _current.Status;
 
@@ -236,9 +242,9 @@ namespace WFLite.Activities
                 }
             }
 
-            while (_enumerator.MoveNext())
+            while (_enumerator!.MoveNext())
             {
-                Value.SetValue(_enumerator.Current);
+                Value!.SetValue(_enumerator.Current);
 
                 _current.Reset();
 

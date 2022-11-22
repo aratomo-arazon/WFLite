@@ -8,19 +8,20 @@
  */
 
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Conditions
 {
     public class EqualsCondition : Condition
     {
-        public IOutVariable Value1
+        public IOutVariable? Value1
         {
             private get;
             set;
         }
 
-        public IOutVariable Value2
+        public IOutVariable? Value2
         {
             private get;
             set;
@@ -36,21 +37,27 @@ namespace WFLite.Conditions
             Value2 = value2;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Value1, nameof(Value1));
+            this.Require(Value2, nameof(Value2));
+        }
+
         protected sealed override bool check()
         {
-            return Value1.GetValueAsObject().Equals(Value2.GetValueAsObject());
+            return Value1!.GetValueAsObject()!.Equals(Value2!.GetValueAsObject());
         }
     }
 
     public class EqualsCondition<TValue> : Condition
     {
-        public IOutVariable<TValue> Value1
+        public IOutVariable<TValue>? Value1
         {
             private get;
             set;
         }
 
-        public IOutVariable<TValue> Value2
+        public IOutVariable<TValue>? Value2
         {
             private get;
             set;
@@ -66,9 +73,15 @@ namespace WFLite.Conditions
             Value2 = value2;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Value1, nameof(Value1));
+            this.Require(Value2, nameof(Value2));
+        }
+
         protected sealed override bool check()
         {
-            return Value1.GetValueAsObject().Equals(Value2.GetValueAsObject());
+            return Value1!.GetValueAsObject()!.Equals(Value2!.GetValueAsObject());
         }
     }
 }

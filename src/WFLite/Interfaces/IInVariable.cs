@@ -9,16 +9,16 @@
 
 namespace WFLite.Interfaces
 {
-    public interface IInVariable
+    public interface IInVariable : IObject
     {
-        void SetValue(object value);
+        void SetValue(object? value);
 
-        void SetValue<TValue>(TValue value);
+        void SetValue<TValue>(TValue? value);
     }
 
     public interface IInVariable<in TValue> : IInVariable
     {
-        void SetValue(TValue value);
+        void SetValue(TValue? value);
     }
 }
 

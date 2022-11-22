@@ -10,13 +10,14 @@
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
     public class SuspendActivity : Activity
     {
-        public ICondition Until
+        public ICondition? Until
         {
             private get;
             set;
@@ -33,11 +34,12 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Until, nameof(Until));
         }
 
         protected sealed override async Task start()
         {
-            if (Until.Check())
+            if (Until!.Check())
             {
                 Status = ActivityStatus.Completed;
             }

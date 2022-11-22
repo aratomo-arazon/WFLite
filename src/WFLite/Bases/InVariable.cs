@@ -13,36 +13,49 @@ namespace WFLite.Bases
 {
     public abstract class InVariable : IInVariable
     {
-        public void SetValue(object value)
+        public void SetValue(object? value)
         {
+            initialize();
             setValue(value);
         }
 
-        public void SetValue<TValue>(TValue value)
+        public void SetValue<TValue>(TValue? value)
         {
+            initialize();
             setValue(value);
         }
 
-        protected abstract void setValue(object value);
+        protected virtual void initialize()
+        {
+        }
+
+        protected abstract void setValue(object? value);
     }
 
     public abstract class InVariable<TInValue> : IInVariable<TInValue>
     {
-        public void SetValue(object value)
+        public void SetValue(object? value)
         {
+            initialize();
             setValue(value);
         }
 
-        public void SetValue<TValue>(TValue value)
+        public void SetValue<TValue>(TValue? value)
         {
+            initialize();
             setValue(value);
         }
 
-        public void SetValue(TInValue value)
+        public void SetValue(TInValue? value)
         {
+            initialize();
             setValue(value);
         }
 
-        protected abstract void setValue(object value);
+        protected virtual void initialize()
+        {
+        }
+
+        protected abstract void setValue(object? value);
     }
 }

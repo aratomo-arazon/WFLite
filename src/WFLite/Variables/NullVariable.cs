@@ -13,7 +13,11 @@ namespace WFLite.Variables
 {
     public class NullVariable : OutVariable
     {
-        protected sealed override object getValue()
+        protected sealed override void initialize()
+        {
+        }
+
+        protected sealed override object? getValue()
         {
             return null;
         }
@@ -21,7 +25,11 @@ namespace WFLite.Variables
 
     public class NullVariable<TValue> : OutVariable<TValue>
     {
-        protected sealed override object getValue()
+        protected sealed override void initialize()
+        {
+        }
+
+        protected sealed override object? getValue()
         {
             return null;
         }

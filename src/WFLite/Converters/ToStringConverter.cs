@@ -11,9 +11,13 @@ namespace WFLite.Converters
 {
     public class ToStringConverter : Bases.Converter<string>
     {
-        protected sealed override string convert(object value)
+        protected sealed override void initialize()
         {
-            return value.ToString();
+        }
+
+        protected sealed override string? convert(object? value)
+        {
+            return value!.ToString();
         }
     }
 }

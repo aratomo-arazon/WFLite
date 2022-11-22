@@ -18,11 +18,7 @@ namespace WFLite.Bases
 {
     public abstract class AsyncActivity : Activity
     {
-        private CancellationTokenSource _cancellationTokenSource;
-
-        protected override void initialize()
-        {
-        }
+        private CancellationTokenSource? _cancellationTokenSource;
 
         protected sealed override async Task start()
         {
@@ -69,15 +65,7 @@ namespace WFLite.Bases
             {
                 if (_cancellationTokenSource.Token.CanBeCanceled)
                 {
-                    try
-                    {
-                        _cancellationTokenSource.Cancel();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        throw ex;
-                    }
+                    _cancellationTokenSource.Cancel();
                 }
             }
         }

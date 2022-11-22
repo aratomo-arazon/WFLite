@@ -18,17 +18,17 @@ namespace WFLite.Activities
 {
     public class LockActivity : Activity
     {
-        public IActivity _current;
+        public IActivity? _current;
 
-        private SemaphoreSlim _lockObject;
+        private SemaphoreSlim? _lockObject;
 
-        public IOutVariable<SemaphoreSlim> LockObject
+        public IOutVariable<SemaphoreSlim>? LockObject
         {
             private get;
             set;
         }
 
-        public IActivity Activity
+        public IActivity? Activity
         {
             private get;
             set;
@@ -46,22 +46,24 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(LockObject, nameof(LockObject));
+            this.Require(Activity, nameof(Activity));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                _lockObject = LockObject.GetValue();
+                _lockObject = LockObject!.GetValue();
 
-                await _lockObject.WaitAsync().ConfigureAwait(false);
+                await _lockObject!.WaitAsync().ConfigureAwait(false);
 
                 _current = Activity;
             }
 
             try
             {
-                var task = _current.Start();
+                var task = _current!.Start();
 
                 Status = _current.Status;
 

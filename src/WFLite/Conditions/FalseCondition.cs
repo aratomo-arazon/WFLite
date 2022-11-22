@@ -14,7 +14,7 @@ namespace WFLite.Conditions
 {
     public class FalseCondition : Condition
     {
-        public IOutVariable<bool> Value
+        public IOutVariable<bool>? Value
         {
             private get;
             set;
@@ -27,6 +27,10 @@ namespace WFLite.Conditions
         public FalseCondition(IOutVariable<bool> value)
         {
             Value = value;
+        }
+
+        protected sealed override void initialize()
+        {
         }
 
         protected sealed override bool check()

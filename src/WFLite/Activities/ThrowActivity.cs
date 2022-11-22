@@ -13,6 +13,10 @@ namespace WFLite.Activities
 {
     public class ThrowActivity : SyncActivity
     {
+        protected sealed override void initialize()
+        {
+        }
+
         protected sealed override bool run()
         {
             return false;

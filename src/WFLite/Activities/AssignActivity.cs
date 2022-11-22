@@ -8,25 +8,26 @@
  */
 
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
     public class AssignActivity : SyncActivity
     {
-        public IInVariable To
+        public IInVariable? To
         {
             private get;
             set;
         }
 
-        public IOutVariable Value
+        public IOutVariable? Value
         {
             private get;
             set;
         }
 
-        public IConverter Converter
+        public IConverter? Converter
         {
             private get;
             set;
@@ -36,7 +37,7 @@ namespace WFLite.Activities
         {
         }
 
-        public AssignActivity(IInVariable to, IOutVariable value, IConverter converter = null)
+        public AssignActivity(IInVariable to, IOutVariable value, IConverter? converter = null)
         {
             To = to;
             Value = value;
@@ -45,17 +46,19 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(To, nameof(To));
+            this.Require(Value, nameof(Value));
         }
 
         protected sealed override bool run()
         {
             if (Converter == null)
             {
-                To.SetValue(Value.GetValueAsObject());
+                To!.SetValue(Value!.GetValueAsObject());
             }
             else
             {
-                To.SetValue(Converter.ConvertToObject(Value.GetValueAsObject()));
+                To!.SetValue(Converter.ConvertToObject(Value!.GetValueAsObject()));
             }
 
             return true;
@@ -64,19 +67,19 @@ namespace WFLite.Activities
 
     public class AssignActivity<TValue> : SyncActivity
     {
-        public IInVariable<TValue> To
+        public IInVariable<TValue>? To
         {
             private get;
             set;
         }
 
-        public IOutVariable<TValue> Value
+        public IOutVariable<TValue>? Value
         {
             private get;
             set;
         }
 
-        public IConverter<TValue> Converter
+        public IConverter<TValue>? Converter
         {
             private get;
             set;
@@ -87,7 +90,7 @@ namespace WFLite.Activities
         }
 
 
-        public AssignActivity(IInVariable<TValue> to, IOutVariable<TValue> value, IConverter<TValue> converter = null)
+        public AssignActivity(IInVariable<TValue> to, IOutVariable<TValue> value, IConverter<TValue>? converter = null)
         {
             To = to;
             Value = value;
@@ -96,17 +99,19 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(To, nameof(To));
+            this.Require(Value, nameof(Value));
         }
 
         protected sealed override bool run()
         {
             if (Converter == null)
             {
-                To.SetValue(Value.GetValue());
+                To!.SetValue(Value!.GetValue());
             }
             else
             {
-                To.SetValue(Converter.Convert(Value.GetValueAsObject()));
+                To!.SetValue(Converter.Convert(Value!.GetValueAsObject()));
             }
 
             return true;
@@ -115,19 +120,19 @@ namespace WFLite.Activities
 
     public class AssignActivity<TTo, TValue> : SyncActivity
     {
-        public IInVariable<TTo> To
+        public IInVariable<TTo>? To
         {
             private get;
             set;
         }
 
-        public IOutVariable<TValue> Value
+        public IOutVariable<TValue>? Value
         {
             private get;
             set;
         }
 
-        public IConverter<TValue, TTo> Converter
+        public IConverter<TValue, TTo>? Converter
         {
             private get;
             set;
@@ -138,7 +143,7 @@ namespace WFLite.Activities
         }
 
 
-        public AssignActivity(IInVariable<TTo> to, IOutVariable<TValue> value, IConverter<TValue, TTo> converter)
+        public AssignActivity(IInVariable<TTo> to, IOutVariable<TValue> value, IConverter<TValue, TTo>? converter = null)
         {
             To = to;
             Value = value;
@@ -147,17 +152,19 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(To, nameof(To));
+            this.Require(Value, nameof(Value));
         }
 
         protected sealed override bool run()
         {
             if (Converter == null)
             {
-                To.SetValue(Value.GetValue());
+                To!.SetValue(Value!.GetValue());
             }
             else
             {
-                To.SetValue(Converter.Convert(Value.GetValue()));
+                To!.SetValue(Converter.Convert(Value!.GetValue()));
             }
 
             return true;

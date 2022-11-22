@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Variables.IO
 {
     public class PathCombineVariable : OutVariable<string>
     {
-        public IEnumerable<IOutVariable<string>> Paths
+        public IEnumerable<IOutVariable<string>>? Paths
         {
             private get;
             set;
@@ -37,9 +38,14 @@ namespace WFLite.Variables.IO
             Paths = paths;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Paths, nameof(Paths));
+        }
+
         protected sealed override object getValue()
         {
-            return Path.Combine(Paths.Select(p => p.GetValue()).ToArray());
+            return Path.Combine(Paths!.Select(p => p.GetValue()!).ToArray());
         }
     }
 }

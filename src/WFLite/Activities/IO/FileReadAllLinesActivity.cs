@@ -9,19 +9,20 @@
 
 using System.IO;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.IO
 {
     public class FileReadAllLinesActivity : SyncActivity
     {
-        public IOutVariable<string> Path
+        public IOutVariable<string>? Path
         {
             private get;
             set;
         }
 
-        public IInVariable<string[]> Contents
+        public IInVariable<string[]>? Contents
         {
             private get;
             set;
@@ -37,11 +38,21 @@ namespace WFLite.Activities.IO
             Contents = contents;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Path, nameof(Path));
+            this.Require(Contents, nameof(Contents));
+        }
+
         protected sealed override bool run()
         {
-            var path = Path.GetValue();
+            var path = Path!.GetValue();
+            if (path == null)
+            {
+                return false;
+            }
 
-            Contents.SetValue(File.ReadAllLines(path));
+            Contents!.SetValue(File.ReadAllLines(path));
 
             return true;
         }

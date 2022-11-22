@@ -21,11 +21,11 @@ namespace WFLite.Activities
     {
         private List<IActivity> _activities = new List<IActivity>();
 
-        private IActivity _current;
+        private IActivity? _current;
 
-        private IEnumerator<IActivity> _enumerator;
+        private IEnumerator<IActivity>? _enumerator;
 
-        public IEnumerable<IActivity> Activities
+        public IEnumerable<IActivity>? Activities
         {
             private get;
             set;
@@ -47,13 +47,14 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Activities, nameof(Activities));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                _enumerator = Activities.GetEnumerator();
+                _enumerator = Activities!.GetEnumerator();
 
                 if (!_enumerator.MoveNext())
                 {
@@ -64,7 +65,7 @@ namespace WFLite.Activities
 
                 _current = _enumerator.Current;
 
-                _activities.Add(_current);
+                _activities!.Add(_current);
 
                 var task = _current.Start();
 
@@ -90,7 +91,7 @@ namespace WFLite.Activities
             {
                 var task = _current.Start();
 
-                Status = _activities.GetStatus();
+                Status = _activities!.GetStatus();
 
                 await task;
 
@@ -100,7 +101,7 @@ namespace WFLite.Activities
                 }
                 else
                 {
-                    Status = _activities.GetStatus();
+                    Status = _activities!.GetStatus();
                 }
 
                 if (Status.IsStopped() || Status.IsSuspended())
@@ -109,11 +110,11 @@ namespace WFLite.Activities
                 }
             }
 
-            while (_enumerator.MoveNext())
+            while (_enumerator!.MoveNext())
             {
                 _current = _enumerator.Current;
 
-                _activities.Add(_current);
+                _activities!.Add(_current);
 
                 var task = _current.Start();
 
@@ -136,7 +137,7 @@ namespace WFLite.Activities
                 }
             }
 
-            Status = _activities.GetStatus();
+            Status = _activities!.GetStatus();
         }
 
         protected sealed override void stop()
@@ -145,7 +146,7 @@ namespace WFLite.Activities
             {
                 _current.Stop();
 
-                Status = _activities.GetStatus();
+                Status = _activities!.GetStatus();
             }
             else
             {
@@ -155,7 +156,7 @@ namespace WFLite.Activities
 
         protected sealed override void reset()
         {
-            foreach (var activity in _activities)
+            foreach (var activity in _activities!)
             {
                 activity.Reset();
             }

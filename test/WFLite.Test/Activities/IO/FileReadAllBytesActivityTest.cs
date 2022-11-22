@@ -51,7 +51,7 @@ namespace WFLite.Test.Activities.IO
 
             await testee.Start();
 
-            Assert.AreEqual("bar", Encoding.UTF8.GetString(bytes.GetValue()));
+            Assert.AreEqual("bar", Encoding.UTF8.GetString(bytes.GetValue()!));
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
         }
     }

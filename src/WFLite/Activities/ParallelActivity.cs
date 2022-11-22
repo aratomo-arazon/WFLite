@@ -21,7 +21,7 @@ namespace WFLite.Activities
     {
         private List<IActivity> _activities = new List<IActivity>();
 
-        public IEnumerable<IActivity> Activities
+        public IEnumerable<IActivity>? Activities
         {
             private get;
             set;
@@ -43,13 +43,14 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Activities, nameof(Activities));
         }
 
         protected sealed override async Task start()
         {
             if (!_activities.Any())
             {
-                _activities.AddRange(Activities);
+                _activities.AddRange(Activities!);
             }
 
             var tasks = new List<Task>();

@@ -14,7 +14,7 @@ namespace WFLite.Conditions
 {
     public class TrueCondition : Condition
     {
-        public IOutVariable<bool> Value
+        public IOutVariable<bool>? Value
         {
             private get;
             set;
@@ -24,9 +24,13 @@ namespace WFLite.Conditions
         {
         }
 
-        public TrueCondition(IOutVariable<bool> value)
+        public TrueCondition(IOutVariable<bool>? value)
         {
             Value = value;
+        }
+
+        protected sealed override void initialize()
+        {
         }
 
         protected sealed override bool check()

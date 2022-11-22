@@ -20,22 +20,22 @@ namespace WFLite.Extensions
 {
     public static class FuncExtension
     {
-        public static IOutVariable ToVariable(this Func<object> func, IConverter converter = null)
+        public static IOutVariable ToVariable(this Func<object> func, IConverter? converter = null)
         {
             return new FuncVariable(func, converter);
         }
 
-        public static IOutVariable<TValue> ToVariable<TValue>(this Func<TValue> func, IConverter<TValue> converter = null)
+        public static IOutVariable<TValue> ToVariable<TValue>(this Func<TValue> func, IConverter<TValue>? converter = null)
         {
             return new FuncVariable<TValue>(func, converter);
         }
 
-        public static IConverter ToConverter(this Func<object, object> func)
+        public static IConverter ToConverter(this Func<object?, object?> func)
         {
             return new FuncConverter(func);
         }
 
-        public static IConverter<TValue> ToConverter<TValue>(this Func<object, TValue> func)
+        public static IConverter<TValue> ToConverter<TValue>(this Func<object?, TValue> func)
         {
             return new FuncConverter<TValue>(func);
         }

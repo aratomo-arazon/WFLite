@@ -10,25 +10,26 @@
 using System.IO;
 using System.Text;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.IO
 {
     public class FileWriteAllTextActivity : SyncActivity
     {
-        public IOutVariable<string> Path
+        public IOutVariable<string>? Path
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> Contents
+        public IOutVariable<string>? Contents
         {
             private get;
             set;
         }
         
-        public IOutVariable<Encoding> Encoding
+        public IOutVariable<Encoding>? Encoding
         {
             private get;
             set;
@@ -38,17 +39,27 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public FileWriteAllTextActivity(IOutVariable<string> path, IOutVariable<string> contents, IOutVariable<Encoding> encoding = null)
+        public FileWriteAllTextActivity(IOutVariable<string> path, IOutVariable<string> contents, IOutVariable<Encoding>? encoding = null)
         {
             Path = path;
             Contents = contents;
             Encoding = encoding;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Path, nameof(Path));
+            this.Require(Contents, nameof(Contents));
+        }
+
         protected sealed override bool run()
         {
-            var path = Path.GetValue();
-            var contents = Contents.GetValue();
+            var path = Path!.GetValue();
+            var contents = Contents!.GetValue();
+            if (string.IsNullOrEmpty(path) || contents == null)
+            {
+                return false;
+            }
 
             if (Encoding == null)
             {
@@ -57,8 +68,14 @@ namespace WFLite.Activities.IO
             else
             {
                 var encoding = Encoding.GetValue();
-
-                File.WriteAllText(path, contents, encoding);
+                if (encoding == null)
+                {
+                    File.WriteAllText(path, contents);
+                }
+                else
+                {
+                    File.WriteAllText(path, contents, encoding);
+                }
             }
 
             return true;

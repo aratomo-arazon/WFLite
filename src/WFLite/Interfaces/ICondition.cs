@@ -9,7 +9,7 @@
 
 namespace WFLite.Interfaces
 {
-    public interface ICondition
+    public interface ICondition : IObject
     {
         bool Check();
     }

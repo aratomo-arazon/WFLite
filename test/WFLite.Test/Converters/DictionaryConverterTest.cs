@@ -12,7 +12,7 @@ namespace WFLite.Test.Converters
         {
             var testee = new DictionaryConverter()
             {
-                Dictionary = new Dictionary<object, object>()
+                Dictionary = new Dictionary<object, object?>()
                 {
                     { 1, "One" },
                     { 2, "Two" },

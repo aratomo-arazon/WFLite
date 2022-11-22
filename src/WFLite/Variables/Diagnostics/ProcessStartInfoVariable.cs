@@ -13,120 +13,121 @@ using System.Diagnostics;
 using WFLite.Bases;
 using WFLite.Interfaces;
 using System.Security;
+using WFLite.Extensions;
 
 namespace WFLite.Variables.Diagnostics
 {
     public class ProcessStartInfoVariable : OutVariable<ProcessStartInfo>
     {
-        public IOutVariable<string> FileName
+        public IOutVariable<string>? FileName
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> Arguments
+        public IOutVariable<string>? Arguments
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> CreateNoWindow
+        public IOutVariable<bool>? CreateNoWindow
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> UseShellExecute
+        public IOutVariable<bool>? UseShellExecute
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> RedirectStandardInput
+        public IOutVariable<bool>? RedirectStandardInput
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> RedirectStandardOutput
+        public IOutVariable<bool>? RedirectStandardOutput
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> RedirectStandardError
+        public IOutVariable<bool>? RedirectStandardError
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> Domain
+        public IOutVariable<string>? Domain
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> UserName
+        public IOutVariable<string>? UserName
         {
             private get;
             set;
         }
 
-        public IOutVariable<SecureString> Password
+        public IOutVariable<SecureString>? Password
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> ErrorDialog
+        public IOutVariable<bool>? ErrorDialog
         {
             private get;
             set;
         }
 
-        public IOutVariable<IntPtr> ErrorDialogParentHandle
+        public IOutVariable<IntPtr>? ErrorDialogParentHandle
         {
             private get;
             set;
         }
 
-        public IOutVariable<bool> LoadUserProfile
+        public IOutVariable<bool>? LoadUserProfile
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> PasswordInClearText
+        public IOutVariable<string>? PasswordInClearText
         {
             private get;
             set;
         }
 
-        public IOutVariable<Encoding> StandardOutputEncoding
+        public IOutVariable<Encoding>? StandardOutputEncoding
         {
             private get;
             set;
         }
 
-        public IOutVariable<Encoding> StandardErrorEncoding
+        public IOutVariable<Encoding>? StandardErrorEncoding
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> Verb
+        public IOutVariable<string>? Verb
         {
             private get;
             set;
         }
 
-        public IOutVariable<ProcessWindowStyle> WindowStyle
+        public IOutVariable<ProcessWindowStyle>? WindowStyle
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> WorkingDirectory
+        public IOutVariable<string>? WorkingDirectory
         {
             private get;
             set;
@@ -137,25 +138,25 @@ namespace WFLite.Variables.Diagnostics
         }
 
         public ProcessStartInfoVariable(
-            IOutVariable<string> fileName = null,
-            IOutVariable<string> arguments = null,
-            IOutVariable<bool> createNoWindow = null,
-            IOutVariable<bool> useShellExecute = null,
-            IOutVariable<bool> redirectStandardInput = null,
-            IOutVariable<bool> redirectStandardOutput = null,
-            IOutVariable<bool> redirectStandardError = null,
-            IOutVariable<string> domain = null,
-            IOutVariable<string> userName = null,
-            IOutVariable<SecureString> password = null,
-            IOutVariable<bool> errorDialog = null,
-            IOutVariable<IntPtr> errorDialogParentHandle = null,
-            IOutVariable<bool> loadUserProfile = null,
-            IOutVariable<string> passwordInClearText = null,
-            IOutVariable<Encoding> standardOutputEncoding = null,
-            IOutVariable<Encoding> standardErrorEncoding = null,
-            IOutVariable<string> verb = null,
-            IOutVariable<ProcessWindowStyle> windowStyle = null,
-            IOutVariable<string> workingDirectory = null)
+            IOutVariable<string> fileName,
+            IOutVariable<string>? arguments = null,
+            IOutVariable<bool>? createNoWindow = null,
+            IOutVariable<bool>? useShellExecute = null,
+            IOutVariable<bool>? redirectStandardInput = null,
+            IOutVariable<bool>? redirectStandardOutput = null,
+            IOutVariable<bool>? redirectStandardError = null,
+            IOutVariable<string>? domain = null,
+            IOutVariable<string>? userName = null,
+            IOutVariable<SecureString>? password = null,
+            IOutVariable<bool>? errorDialog = null,
+            IOutVariable<IntPtr>? errorDialogParentHandle = null,
+            IOutVariable<bool>? loadUserProfile = null,
+            IOutVariable<string>? passwordInClearText = null,
+            IOutVariable<Encoding>? standardOutputEncoding = null,
+            IOutVariable<Encoding>? standardErrorEncoding = null,
+            IOutVariable<string>? verb = null,
+            IOutVariable<ProcessWindowStyle>? windowStyle = null,
+            IOutVariable<string>? workingDirectory = null)
         {
             FileName = fileName;
             Arguments = arguments;
@@ -176,6 +177,11 @@ namespace WFLite.Variables.Diagnostics
             Verb = verb;
             WindowStyle = windowStyle;
             WorkingDirectory = workingDirectory;
+        }
+
+        protected sealed override void initialize()
+        {
+            this.Require(FileName, nameof(FileName));
         }
 
         protected sealed override object getValue()

@@ -9,13 +9,14 @@
 
 using System;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
     public class ConditionVariable : OutVariable<bool>
     {
-        public ICondition Condition
+        public ICondition? Condition
         {
             private get;
             set;
@@ -30,9 +31,14 @@ namespace WFLite.Variables
             Condition = condition;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Condition, nameof(Condition));
+        }
+
         protected sealed override object getValue()
         {
-            return Condition.Check();
+            return Condition!.Check();
         }
     }
 }

@@ -100,7 +100,9 @@ namespace WFLite.Bases
             action();
         }
 
-        protected abstract void initialize();
+        protected virtual void initialize()
+        {
+        }
 
         protected abstract Task start();
 

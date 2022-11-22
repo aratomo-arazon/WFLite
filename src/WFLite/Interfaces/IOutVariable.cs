@@ -9,16 +9,16 @@
 
 namespace WFLite.Interfaces
 {
-    public interface IOutVariable
+    public interface IOutVariable : IObject
     {
-        object GetValueAsObject();
+        object? GetValueAsObject();
 
-        TValue GetValue<TValue>();
+        TValue? GetValue<TValue>();
     }
 
     public interface IOutVariable<out TValue> : IOutVariable
     {
-        TValue GetValue();
+        TValue? GetValue();
     }
 }
 

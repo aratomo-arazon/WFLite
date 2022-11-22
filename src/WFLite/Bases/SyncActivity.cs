@@ -15,10 +15,6 @@ namespace WFLite.Bases
 {
     public abstract class SyncActivity : Activity
     {
-        protected override void initialize()
-        {
-        }
-
         protected sealed override async Task start()
         {
             await Task.CompletedTask;

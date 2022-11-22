@@ -14,7 +14,7 @@ namespace WFLite.Bases
 {
     public abstract class InOutVariable : IInVariable, IOutVariable
     {
-        public IConverter Converter
+        public IConverter? Converter
         {
             private get;
             set;
@@ -24,12 +24,12 @@ namespace WFLite.Bases
         {
         }
 
-        public InOutVariable(IConverter converter = null)
+        public InOutVariable(IConverter? converter = null)
         {
             Converter = converter;
         }
 
-        public object GetValueAsObject()
+        public object? GetValueAsObject()
         {
             if (Converter == null)
             {
@@ -41,7 +41,7 @@ namespace WFLite.Bases
             }
         }
 
-        public object GetValue()
+        public object? GetValue()
         {
             if (Converter == null)
             {
@@ -53,7 +53,7 @@ namespace WFLite.Bases
             }
         }
 
-        public TOutValue GetValue<TOutValue>()
+        public TOutValue? GetValue<TOutValue>()
         {
             var castConverter = new CastConverter<TOutValue>();
 
@@ -67,24 +67,24 @@ namespace WFLite.Bases
             }
         }
 
-        public void SetValue(object value)
+        public void SetValue(object? value)
         {
             setValue(value);
         }
 
-        public void SetValue<TInValue>(TInValue value)
+        public void SetValue<TInValue>(TInValue? value)
         {
             setValue(value);
         }
 
-        protected abstract object getValue();
+        protected abstract object? getValue();
 
-        protected abstract void setValue(object value);
+        protected abstract void setValue(object? value);
     }
 
     public abstract class InOutVariable<TValue> : IInVariable<TValue>, IOutVariable<TValue>
     {
-        public IConverter<TValue> Converter
+        public IConverter<TValue>? Converter
         {
             private get;
             set;
@@ -94,12 +94,12 @@ namespace WFLite.Bases
         {
         }
 
-        public InOutVariable(IConverter<TValue> converter = null)
+        public InOutVariable(IConverter<TValue>? converter = null)
         {
             Converter = converter;
         }
 
-        public object GetValueAsObject()
+        public object? GetValueAsObject()
         {
             if (Converter == null)
             {
@@ -111,7 +111,7 @@ namespace WFLite.Bases
             }
         }
 
-        public TOutValue GetValue<TOutValue>()
+        public TOutValue? GetValue<TOutValue>()
         {
             var castConverter = new CastConverter<TOutValue>();
 
@@ -125,7 +125,7 @@ namespace WFLite.Bases
             }
         }
 
-        public TValue GetValue()
+        public TValue? GetValue()
         {
             var castConverter = new CastConverter<TValue>();
 
@@ -139,29 +139,29 @@ namespace WFLite.Bases
             }
         }
 
-        public void SetValue(object value)
+        public void SetValue(object? value)
         {
             setValue(value);
         }
 
-        public void SetValue<TInValue>(TInValue value)
+        public void SetValue<TInValue>(TInValue? value)
         {
             setValue(value);
         }
 
-        public void SetValue(TValue value)
+        public void SetValue(TValue? value)
         {
             setValue(value);
         }
 
-        protected abstract object getValue();
+        protected abstract object? getValue();
 
-        protected abstract void setValue(object value);
+        protected abstract void setValue(object? value);
     }
 
     public abstract class InOutVariable<TInValue, TOutValue> : IInVariable<TInValue>, IOutVariable<TOutValue>
     {
-        public IConverter<TOutValue> Converter
+        public IConverter<TOutValue>? Converter
         {
             private get;
             set;
@@ -171,12 +171,12 @@ namespace WFLite.Bases
         {
         }
 
-        public InOutVariable(IConverter<TOutValue> converter = null)
+        public InOutVariable(IConverter<TOutValue>? converter = null)
         {
             Converter = converter;
         }
 
-        public object GetValueAsObject()
+        public object? GetValueAsObject()
         {
             if (Converter == null)
             {
@@ -188,7 +188,7 @@ namespace WFLite.Bases
             }
         }
 
-        public TValue GetValue<TValue>()
+        public TValue? GetValue<TValue>()
         {
             var castConverter = new CastConverter<TValue>();
 
@@ -202,7 +202,7 @@ namespace WFLite.Bases
             }
         }
 
-        public TOutValue GetValue()
+        public TOutValue? GetValue()
         {
             var castConverter = new CastConverter<TOutValue>();
 
@@ -216,23 +216,23 @@ namespace WFLite.Bases
             }
         }
 
-        public void SetValue(object value)
+        public void SetValue(object? value)
         {
             setValue(value);
         }
 
-        public void SetValue<TValue>(TValue value)
+        public void SetValue<TValue>(TValue? value)
         {
             setValue(value);
         }
 
-        public void SetValue(TInValue value)
+        public void SetValue(TInValue? value)
         {
             setValue(value);
         }
 
-        protected abstract object getValue();
+        protected abstract object? getValue();
 
-        protected abstract void setValue(object value);
+        protected abstract void setValue(object? value);
     }
 }

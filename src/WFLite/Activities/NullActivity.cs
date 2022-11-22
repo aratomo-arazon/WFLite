@@ -13,6 +13,10 @@ namespace WFLite.Activities
 {
     public class NullActivity : SyncActivity
     {
+        protected sealed override void initialize()
+        {
+        }
+
         protected sealed override bool run()
         {
             return true;

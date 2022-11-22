@@ -24,11 +24,11 @@ namespace WFLite.Test.Variables.Diagnostics
 
             var processStartInfo = testee.GetValue();
 
-            Assert.AreEqual("foo.exe", processStartInfo.FileName);
-            Assert.AreEqual("bar baz", processStartInfo.Arguments);
-            Assert.IsTrue(processStartInfo.UseShellExecute);
-            Assert.IsTrue(processStartInfo.CreateNoWindow);
-            Assert.AreEqual("C:\\Program Files\\WFLite", processStartInfo.WorkingDirectory);
+            Assert.AreEqual("foo.exe", processStartInfo!.FileName);
+            Assert.AreEqual("bar baz", processStartInfo!.Arguments);
+            Assert.IsTrue(processStartInfo!.UseShellExecute);
+            Assert.IsTrue(processStartInfo!.CreateNoWindow);
+            Assert.AreEqual("C:\\Program Files\\WFLite", processStartInfo!.WorkingDirectory);
         }
     }
 }

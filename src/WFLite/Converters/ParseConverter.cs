@@ -14,7 +14,7 @@ namespace WFLite.Converters
 {
     public class ParseConverter<TOutValue> : Bases.Converter<string, TOutValue>
     {
-        private static readonly IDictionary<Type, Func<string, object>> _funcs = new Dictionary<Type, Func<string, object>>()
+        private static readonly IDictionary<Type, Func<string, object?>> _funcs = new Dictionary<Type, Func<string, object?>>()
         {
             { typeof(bool), (value) => bool.Parse(value) },
             { typeof(char), (value) => char.Parse(value) },
@@ -32,13 +32,17 @@ namespace WFLite.Converters
             { typeof(DateTime), (value) => DateTime.Parse(value) },
         };
 
-        protected sealed override TOutValue convert(string value)
+        protected sealed override void initialize()
+        {
+        }
+
+        protected sealed override TOutValue? convert(string? value)
         {
             var type = typeof(TOutValue);
 
             if (_funcs.ContainsKey(type))
             {
-                return (TOutValue)_funcs[type](value);
+                return (TOutValue?)_funcs[type](value!);
             }
 
             return default;

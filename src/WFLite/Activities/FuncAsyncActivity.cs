@@ -11,12 +11,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using WFLite.Bases;
+using WFLite.Extensions;
 
 namespace WFLite.Activities
 {
     public class FuncAsyncActivity : AsyncActivity
     {
-        public Func<CancellationToken, Task<bool>> Func
+        public Func<CancellationToken, Task<bool>>? Func
         {
             private get;
             set;
@@ -31,9 +32,14 @@ namespace WFLite.Activities
             Func = func;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Func, nameof(Func));
+        }
+
         protected sealed override async Task<bool> run(CancellationToken cancellationToken)
         {
-            return await Func(cancellationToken);
+            return await Func!(cancellationToken);
         }
     }
 }

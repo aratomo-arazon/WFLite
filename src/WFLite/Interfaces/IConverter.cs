@@ -9,18 +9,18 @@
 
 namespace WFLite.Interfaces
 {
-    public interface IConverter
+    public interface IConverter : IObject
     {
-        object ConvertToObject(object value);
+        object? ConvertToObject(object? value);
     }
 
     public interface IConverter<TValue> : IConverter
     {
-        TValue Convert(object value);
+        TValue? Convert(object? value);
     }
 
     public interface IConverter<TInValue, TOutValue> : IConverter<TOutValue>
     {
-        TOutValue Convert(TInValue value);
+        TOutValue? Convert(TInValue? value);
     }
 }

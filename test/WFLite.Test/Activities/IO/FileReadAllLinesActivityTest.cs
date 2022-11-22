@@ -51,8 +51,8 @@ namespace WFLite.Test.Activities.IO
             await testee.Start();
 
             Assert.AreEqual(ActivityStatus.Completed, testee.Status);
-            Assert.AreEqual("bar", contents.GetValue()[0]);
-            Assert.AreEqual("baz", contents.GetValue()[1]);
+            Assert.AreEqual("bar", contents.GetValue()![0]);
+            Assert.AreEqual("baz", contents.GetValue()![1]);
         }
     }
 }

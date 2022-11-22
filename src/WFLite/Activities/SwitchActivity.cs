@@ -13,27 +13,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
     public class SwitchActivity : Activity
     {
-        private IActivity _current;
+        private IActivity? _current;
 
-        public IOutVariable Value
+        public IOutVariable? Value
         {
             private get;
             set;
         }
 
-        public IDictionary<object, IActivity> Cases
+        public IDictionary<object, IActivity>? Cases
         {
             private get;
             set;
         }
 
-        public IActivity Default
+        public IActivity? Default
         {
             private get;
             set;
@@ -43,7 +44,7 @@ namespace WFLite.Activities
         {
         }
 
-        public SwitchActivity(IOutVariable value, IDictionary<object, IActivity> cases, IActivity default_ = null)
+        public SwitchActivity(IOutVariable value, IDictionary<object, IActivity> cases, IActivity default_)
         {
             Value = value;
             Cases = cases;
@@ -52,18 +53,17 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
-            if (Default == null)
-            {
-                Default = new NullActivity();
-            }
+            this.Require(Value, nameof(Value));
+            this.Require(Cases, nameof(Cases));
+            this.Require(Default, nameof(Default));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                var value = Value.GetValueAsObject();
-                var activity = Cases.FirstOrDefault(p => p.Key.Equals(value)).Value;
+                var value = Value!.GetValueAsObject();
+                var activity = Cases!.FirstOrDefault(p => p.Key.Equals(value)).Value;
 
                 if (activity == null)
                 {
@@ -75,7 +75,7 @@ namespace WFLite.Activities
                 }
             }
 
-            var task = _current.Start();
+            var task = _current!.Start();
 
             Status = _current.Status;
 
@@ -113,21 +113,21 @@ namespace WFLite.Activities
 
     public class SwitchActivity<TValue> : Activity
     {
-        private IActivity _current;
+        private IActivity? _current;
 
-        public IOutVariable<TValue> Value
+        public IOutVariable<TValue>? Value
         {
             private get;
             set;
         }
 
-        public IDictionary<TValue, IActivity> Cases
+        public IDictionary<TValue, IActivity>? Cases
         {
             private get;
             set;
         }
 
-        public IActivity Default
+        public IActivity? Default
         {
             private get;
             set;
@@ -137,7 +137,7 @@ namespace WFLite.Activities
         {
         }
 
-        public SwitchActivity(IOutVariable<TValue> value, IDictionary<TValue, IActivity> cases, IActivity default_ = null)
+        public SwitchActivity(IOutVariable<TValue> value, IDictionary<TValue, IActivity> cases, IActivity default_)
         {
             Value = value;
             Cases = cases;
@@ -146,18 +146,17 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
-            if (Default == null)
-            {
-                Default = new NullActivity();
-            }
+            this.Require(Value, nameof(Value));
+            this.Require(Cases, nameof(Cases));
+            this.Require(Default, nameof(Default));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                var value = Value.GetValue<TValue>();
-                var activity = Cases.FirstOrDefault(p => p.Key.Equals(value)).Value;
+                var value = Value!.GetValue<TValue>();
+                var activity = Cases!.FirstOrDefault(p => p.Key!.Equals(value)).Value;
 
                 if (activity == null)
                 {
@@ -169,7 +168,7 @@ namespace WFLite.Activities
                 }
             }
 
-            var task = _current.Start();
+            var task = _current!.Start();
 
             Status = _current.Status;
 

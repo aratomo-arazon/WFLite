@@ -17,6 +17,10 @@ namespace WFLite.Variables
     {
         private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
+        protected sealed override void initialize()
+        {
+        }
+
         protected sealed override object getValue()
         {
             return _semaphoreSlim;

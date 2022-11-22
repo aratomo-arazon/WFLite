@@ -26,7 +26,8 @@ namespace WFLite.Test.Activities
                 {
                     { 1, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 100 } } },
                     { 2, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 1000 } } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();
@@ -45,7 +46,8 @@ namespace WFLite.Test.Activities
                 {
                     { 1, new SuspendActivity() { Until = new FalseCondition() } },
                     { 2, new NullActivity() }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();
@@ -105,7 +107,8 @@ namespace WFLite.Test.Activities
                 Cases = new Dictionary<object, IActivity>()
                 {
                     { 1, new SuspendActivity() { Until = new TrueCondition() { Value = value } } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();
@@ -130,7 +133,8 @@ namespace WFLite.Test.Activities
                 Cases = new Dictionary<object, IActivity>()
                 {
                     { 1, new SuspendActivity() { Until = new TrueCondition() { Value = value } } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();
@@ -175,7 +179,8 @@ namespace WFLite.Test.Activities
                 {
                     { 1, new DelayActivity() { Duration = new AnyVariable<int>() { Value = 1000 } } },
                     { 2, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 1000 } } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             var task = testee.Start();
@@ -198,7 +203,8 @@ namespace WFLite.Test.Activities
                 Cases = new Dictionary<object, IActivity>()
                 {
                     { 1, new SuspendActivity() { Until = new FalseCondition() } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();
@@ -222,7 +228,8 @@ namespace WFLite.Test.Activities
                 {
                     { 1, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 100 } } },
                     { 2, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 1000 } } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();
@@ -272,7 +279,8 @@ namespace WFLite.Test.Activities
                 {
                     { 1, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 100 } } },
                     { 2, new AssignActivity() { To = to, Value = new AnyVariable() { Value = 1000 } } }
-                }
+                },
+                Default = new NullActivity()
             };
 
             await testee.Start();

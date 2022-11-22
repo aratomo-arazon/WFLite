@@ -8,13 +8,14 @@
  */
 
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Conditions
 {
     public class NotNullCondition : Condition
     {
-        public IOutVariable Value
+        public IOutVariable? Value
         {
             private get;
             set;
@@ -29,9 +30,14 @@ namespace WFLite.Conditions
             Value = value;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Value, nameof(Value));
+        }
+
         protected sealed override bool check()
         {
-            return Value.GetValueAsObject() != null;
+            return Value!.GetValueAsObject() != null;
         }
     }
 }

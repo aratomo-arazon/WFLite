@@ -10,15 +10,16 @@
 using System.Threading.Tasks;
 using WFLite.Bases;
 using WFLite.Enums;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities
 {
     public class DelegateActivity : Activity
     {
-        public IActivity _current;
+        public IActivity? _current;
 
-        public IActivity Activity
+        public IActivity? Activity
         {
             private get;
             set;
@@ -35,6 +36,7 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Activity, nameof(Activity));
         }
 
         protected sealed override async Task start()
@@ -44,7 +46,7 @@ namespace WFLite.Activities
                 _current = Activity;
             }
 
-            var task = _current.Start();
+            var task = _current!.Start();
 
             Status = _current.Status;
 
@@ -75,7 +77,7 @@ namespace WFLite.Activities
                 _current = null;
             }
 
-            Status = Activity.Status;
+            Status = Activity!.Status;
         }
     }
 }

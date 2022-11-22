@@ -32,7 +32,7 @@ namespace WFLite.Test.Extensions
         [TestMethod]
         public void Test___Method_ToConverter___object_to_object()
         {
-            var testee = new Func<object, object>(value => value);
+            var testee = new Func<object?, object?>(value => value);
 
             Assert.AreEqual(10, testee.ToConverter().ConvertToObject(10));
         }
@@ -40,7 +40,7 @@ namespace WFLite.Test.Extensions
         [TestMethod]
         public void Test___Method_ToConverter___object_to_generic()
         {
-            var testee = new Func<object, int>(value => Convert.ToInt32(value));
+            var testee = new Func<object?, int>(value => Convert.ToInt32(value));
 
             Assert.AreEqual(10, testee.ToConverter<int>().Convert(10));
         }

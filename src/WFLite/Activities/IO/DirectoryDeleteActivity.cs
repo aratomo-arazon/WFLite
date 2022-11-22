@@ -9,19 +9,20 @@
 
 using System.IO;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.IO
 {
     public class DirectoryDeleteActivity : SyncActivity
     {
-        public IOutVariable<string> Path
+        public IOutVariable<string>? Path
         {
             private get;
             set;
         }
 
-        public ICondition Recursive
+        public ICondition? Recursive
         {
             private get;
             set;
@@ -31,15 +32,24 @@ namespace WFLite.Activities.IO
         {
         }
 
-        public DirectoryDeleteActivity(IOutVariable<string> path, ICondition recursive = null)
+        public DirectoryDeleteActivity(IOutVariable<string> path, ICondition? recursive = null)
         {
             Path = path;
             Recursive = recursive;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Path, nameof(Path));
+        }
+
         protected sealed override bool run()
         {
-            var path = Path.GetValue();
+            var path = Path!.GetValue();
+            if (path == null)
+            {
+                return false;
+            }
 
             if (Recursive == null)
             {

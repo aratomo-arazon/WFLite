@@ -7,6 +7,8 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
+using System;
+using System.Data;
 using WFLite.Interfaces;
 
 namespace WFLite.Bases
@@ -15,7 +17,12 @@ namespace WFLite.Bases
     {
         public bool Check()
         {
+            initialize();
             return check();
+        }
+
+        protected virtual void initialize()
+        {
         }
 
         protected abstract bool check();

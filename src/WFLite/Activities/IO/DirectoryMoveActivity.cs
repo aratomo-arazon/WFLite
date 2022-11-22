@@ -9,19 +9,20 @@
 
 using System.IO;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Activities.IO
 {
     public class DirectoryMoveActivity : SyncActivity
     {
-        public IOutVariable<string> SourceDirName
+        public IOutVariable<string>? SourceDirName
         {
             private get;
             set;
         }
 
-        public IOutVariable<string> DestDirName
+        public IOutVariable<string>? DestDirName
         {
             private get;
             set;
@@ -37,10 +38,20 @@ namespace WFLite.Activities.IO
             DestDirName = destDirName;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(SourceDirName, nameof(SourceDirName));
+            this.Require(DestDirName, nameof(DestDirName));
+        }
+
         protected sealed override bool run()
         {
-            var sourceDirName = SourceDirName.GetValue();
-            var destDirName = DestDirName.GetValue();
+            var sourceDirName = SourceDirName!.GetValue();
+            var destDirName = DestDirName!.GetValue();
+            if (string.IsNullOrEmpty(sourceDirName) || string.IsNullOrEmpty(destDirName))
+            {
+                return false;
+            }
 
             Directory.Move(sourceDirName, destDirName);
 

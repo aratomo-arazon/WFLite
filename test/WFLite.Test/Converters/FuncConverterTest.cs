@@ -14,7 +14,7 @@ namespace WFLite.Test.Converters
         {
             var testee = new FuncConverter()
             {
-                Func = (value) => value.ToString()
+                Func = (value) => value!.ToString()
             };
 
             Assert.AreEqual("10", testee.ConvertToObject(10));
@@ -25,7 +25,7 @@ namespace WFLite.Test.Converters
         {
             var testee = new FuncConverter<string>()
             {
-                Func = (value) => value.ToString()
+                Func = (value) => value!.ToString()!
             };
 
             Assert.AreEqual("10", testee.Convert(10));
@@ -36,7 +36,7 @@ namespace WFLite.Test.Converters
         {
             var testee = new FuncConverter<int, string>()
             {
-                Func = (value) => value.ToString()
+                Func = (value) => value!.ToString()
             };
 
             Assert.AreEqual("10", testee.Convert(10));

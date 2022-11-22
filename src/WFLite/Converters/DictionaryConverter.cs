@@ -9,18 +9,19 @@
 
 using System.Collections.Generic;
 using WFLite.Bases;
+using WFLite.Extensions;
 
 namespace WFLite.Converters
 {
     public class DictionaryConverter : Converter
     {
-        public IDictionary<object, object> Dictionary
+        public IDictionary<object, object?>? Dictionary
         {
             private get;
             set;
         }
 
-        public object Default
+        public object? Default
         {
             private get;
             set;
@@ -30,15 +31,26 @@ namespace WFLite.Converters
         {
         }
 
-        public DictionaryConverter(IDictionary<object, object> dictionary, object default_ = null)
+        public DictionaryConverter(IDictionary<object, object?> dictionary, object? default_)
         {
             Dictionary = dictionary;
             Default = default_;
         }
 
-        protected sealed override object convert(object value)
+        protected sealed override void initialize()
         {
-            if (Dictionary.ContainsKey(value))
+            this.Require(Dictionary, nameof(Dictionary));
+            this.Require(Default, nameof(Default));
+        }
+
+        protected sealed override object? convert(object? value)
+        {
+            if (value == null)
+            {
+                return Default;
+            }
+
+            if (Dictionary!.ContainsKey(value))
             {
                 return Dictionary[value];
             }
@@ -49,13 +61,13 @@ namespace WFLite.Converters
 
     public class DictionaryConverter<TValue> : Converter<TValue>
     {
-        public IDictionary<object, TValue> Dictionary
+        public IDictionary<object, TValue>? Dictionary
         {
             private get;
             set;
         }
 
-        public TValue Default
+        public TValue? Default
         {
             private get;
             set;
@@ -65,15 +77,26 @@ namespace WFLite.Converters
         {
         }
 
-        public DictionaryConverter(IDictionary<object, TValue> dictionary, TValue default_ = default)
+        public DictionaryConverter(IDictionary<object, TValue> dictionary, TValue? default_)
         {
             Dictionary = dictionary;
             Default = default_;
         }
 
-        protected sealed override TValue convert(object value)
+        protected sealed override void initialize()
         {
-            if (Dictionary.ContainsKey(value))
+            this.Require(Dictionary, nameof(Dictionary));
+            this.Require(Default, nameof(Default));
+        }
+
+        protected sealed override TValue? convert(object? value)
+        {
+            if (value == null)
+            {
+                return Default;
+            }
+
+            if (Dictionary!.ContainsKey(value))
             {
                 return Dictionary[value];
             }
@@ -84,13 +107,13 @@ namespace WFLite.Converters
 
     public class DictionaryConverter<TInValue, TOutValue> : Converter<TInValue, TOutValue>
     {
-        public IDictionary<TInValue, TOutValue> Dictionary
+        public IDictionary<TInValue, TOutValue>? Dictionary
         {
             private get;
             set;
         }
 
-        public TOutValue Default
+        public TOutValue? Default
         {
             private get;
             set;
@@ -100,17 +123,28 @@ namespace WFLite.Converters
         {
         }
 
-        public DictionaryConverter(IDictionary<TInValue, TOutValue> dictionary, TOutValue default_ = default)
+        public DictionaryConverter(IDictionary<TInValue, TOutValue> dictionary, TOutValue default_)
         {
             Dictionary = dictionary;
             Default = default_;
         }
 
-        protected sealed override TOutValue convert(TInValue value)
+        protected sealed override void initialize()
         {
-            if (Dictionary.ContainsKey(value))
+            this.Require(Dictionary, nameof(Dictionary));
+            this.Require(Default, nameof(Default));
+        }
+
+        protected sealed override TOutValue? convert(TInValue? value)
+        {
+            if (value == null)
             {
-                return Dictionary[value];
+                return Default;
+            }
+
+            if (Dictionary!.ContainsKey(value!))
+            {
+                return Dictionary[value!];
             }
 
             return Default;

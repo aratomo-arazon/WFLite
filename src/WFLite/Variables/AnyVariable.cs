@@ -14,7 +14,7 @@ namespace WFLite.Variables
 {
     public class AnyVariable : InOutVariable
     {
-        public object Value
+        public object? Value
         {
             private get;
             set;
@@ -24,18 +24,18 @@ namespace WFLite.Variables
         {
         }
 
-        public AnyVariable(object value, IConverter converter = null)
+        public AnyVariable(object value, IConverter? converter = null)
             : base(converter)
         {
             Value = value;
         }
 
-        protected sealed override object getValue()
+        protected sealed override object? getValue()
         {
              return Value;
         }
 
-        protected sealed override void setValue(object value)
+        protected sealed override void setValue(object? value)
         {
             Value = value;
         }
@@ -43,7 +43,7 @@ namespace WFLite.Variables
 
     public class AnyVariable<TValue> : InOutVariable<TValue>
     {
-        private object _value;
+        private object? _value;
 
         public TValue Value
         {
@@ -57,7 +57,7 @@ namespace WFLite.Variables
         {
         }
 
-        public AnyVariable(TValue value, IConverter<TValue> converter = null)
+        public AnyVariable(TValue value, IConverter<TValue>? converter = null)
             : base(converter)
         {
             Value = value;
@@ -69,12 +69,12 @@ namespace WFLite.Variables
             _value = value;
         }
 
-        protected sealed override object getValue()
+        protected sealed override object? getValue()
         {
             return _value;
         }
 
-        protected sealed override void setValue(object value)
+        protected sealed override void setValue(object? value)
         {
             _value = value;
         }
@@ -82,7 +82,7 @@ namespace WFLite.Variables
 
     public class AnyVariable<TInValue, TOutValue> : InOutVariable<TInValue, TOutValue>
     {
-        private object _value;
+        private object? _value;
 
         public TInValue Value
         {
@@ -102,12 +102,12 @@ namespace WFLite.Variables
             Value = value;
         }
 
-        protected sealed override object getValue()
+        protected sealed override object? getValue()
         {
             return _value;
         }
 
-        protected sealed override void setValue(object value)
+        protected sealed override void setValue(object? value)
         {
             _value = value;
         }

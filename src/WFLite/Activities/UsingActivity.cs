@@ -18,17 +18,17 @@ namespace WFLite.Activities
 {
     public class UsingActivity : Activity
     {
-        public IActivity _current;
+        public IActivity? _current;
 
-        private IDisposable _disposable;
+        private IDisposable? _disposable;
 
-        public IOutVariable<IDisposable> Disposable
+        public IOutVariable<IDisposable>? Disposable
         {
             private get;
             set;
         }
 
-        public IActivity Activity
+        public IActivity? Activity
         {
             private get;
             set;
@@ -46,20 +46,22 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Disposable, nameof(Disposable));
+            this.Require(Activity, nameof(Activity));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                _disposable = Disposable.GetValue();
+                _disposable = Disposable!.GetValue();
 
                 _current = Activity;
             }
 
             try
             {
-                var task = _current.Start();
+                var task = _current!.Start();
 
                 Status = _current.Status;
 

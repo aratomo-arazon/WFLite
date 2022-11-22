@@ -17,15 +17,15 @@ namespace WFLite.Activities
 {
     public class WhileActivity : Activity
     {
-        private IActivity _current;
+        private IActivity? _current;
 
-        public ICondition Condition
+        public ICondition? Condition
         {
             private get;
             set;
         }
 
-        public IActivity Activity
+        public IActivity? Activity
         {
             private get;
             set;
@@ -43,13 +43,15 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
+            this.Require(Condition, nameof(Condition));
+            this.Require(Activity, nameof(Activity));
         }
 
         protected sealed override async Task start()
         {
             if (_current == null)
             {
-                if (!Condition.Check())
+                if (!Condition!.Check())
                 {
                     Status = ActivityStatus.Completed;
 
@@ -58,7 +60,7 @@ namespace WFLite.Activities
 
                 _current = Activity;
 
-                var task = _current.Start();
+                var task = _current!.Start();
 
                 Status = _current.Status;
 
@@ -87,7 +89,7 @@ namespace WFLite.Activities
                 }
             }
 
-            while (Condition.Check())
+            while (Condition!.Check())
             {
                 _current.Reset();
 
@@ -128,7 +130,7 @@ namespace WFLite.Activities
                 _current = null;
             }
 
-            Status = Activity.Status;
+            Status = Activity!.Status;
         }
     }
 }

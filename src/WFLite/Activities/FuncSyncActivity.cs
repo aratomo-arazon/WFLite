@@ -9,12 +9,13 @@
 
 using System;
 using WFLite.Bases;
+using WFLite.Extensions;
 
 namespace WFLite.Activities
 {
     public class FuncSyncActivity : SyncActivity
     {
-        public Func<bool> Func
+        public Func<bool>? Func
         {
             private get;
             set;
@@ -29,9 +30,14 @@ namespace WFLite.Activities
             Func = func;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Func, nameof(Func));
+        }
+
         protected sealed override bool run()
         {
-            return Func();
+            return Func!();
         }
     }
 }

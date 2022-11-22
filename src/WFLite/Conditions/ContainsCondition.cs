@@ -10,19 +10,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Conditions
 {
     public class ContainsCondition : Condition
     {
-        public IOutVariable<IEnumerable> Enumerable
+        public IOutVariable<IEnumerable>? Enumerable
         {
             private get;
             set;
         }
 
-        public IOutVariable Value
+        public IOutVariable? Value
         {
             private get;
             set;
@@ -38,11 +39,21 @@ namespace WFLite.Conditions
             Value = value;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Enumerable, nameof(Enumerable));
+            this.Require(Value, nameof(Value));
+        }
+
         protected sealed override bool check()
         {
-            var value = Value.GetValueAsObject();
+            var value = Value!.GetValueAsObject();
+            if (value == null)
+            {
+                return false;
+            }
 
-            foreach (var item in Enumerable.GetValue())
+            foreach (var item in Enumerable!.GetValue()!)
             {
                 if (value.Equals(item))
                 {
@@ -56,13 +67,13 @@ namespace WFLite.Conditions
 
     public class ContainsCondition<TValue> : Condition
     {
-        public IOutVariable<IEnumerable<TValue>> Enumerable
+        public IOutVariable<IEnumerable<TValue>>? Enumerable
         {
             private get;
             set;
         }
 
-        public IOutVariable<TValue> Value
+        public IOutVariable<TValue>? Value
         {
             private get;
             set;
@@ -78,13 +89,19 @@ namespace WFLite.Conditions
             Value = value;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Enumerable, nameof(Enumerable));
+            this.Require(Value, nameof(Value));
+        }
+
         protected sealed override bool check()
         {
-            var value = Value.GetValueAsObject();
+            var value = Value!.GetValueAsObject();
 
-            foreach (var item in Enumerable.GetValue())
+            foreach (var item in Enumerable!.GetValue()!)
             {
-                if (value.Equals(item))
+                if (value!.Equals(item))
                 {
                     return true;
                 }

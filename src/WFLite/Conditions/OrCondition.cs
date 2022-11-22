@@ -9,14 +9,16 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Conditions
 {
     public class OrCondition : Condition
     {
-        public IEnumerable<ICondition> Conditions
+        public IEnumerable<ICondition>? Conditions
         {
             private get;
             set;
@@ -36,9 +38,14 @@ namespace WFLite.Conditions
             Conditions = conditions;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Conditions, nameof(Conditions));
+        }
+
         protected sealed override bool check()
         {
-            return Conditions.Any(c => c.Check());
+            return Conditions!.Any(c => c.Check());
         }
     }
 }

@@ -9,13 +9,14 @@
 
 using System;
 using WFLite.Bases;
+using WFLite.Extensions;
 using WFLite.Interfaces;
 
 namespace WFLite.Variables
 {
     public class FuncVariable : OutVariable
     {
-        public Func<object> Func
+        public Func<object>? Func
         {
             private get;
             set;
@@ -25,27 +26,36 @@ namespace WFLite.Variables
         {
         }
 
-        public FuncVariable(Func<object> func, IConverter converter = null)
+        public FuncVariable(Func<object> func, IConverter? converter = null)
             : base(converter)
         {
             Func = func;
         }
 
+        protected sealed override void initialize()
+        {
+            this.Require(Func, nameof(Func));
+        }
+
         protected sealed override object getValue()
         {
-            return Func?.Invoke();
+            return Func!.Invoke();
         }
     }
 
     public class FuncVariable<TValue> : OutVariable<TValue>
     {
-        private Func<object> _func;
+        private Func<object?>? _func;
 
-        public Func<TValue> Func
+        public Func<TValue?>? Func
         {
+            get
+            {
+                return new Func<TValue?>(() => (TValue?)_func!());
+            }
             set
             {
-                _func = () => value();
+                _func = () => value!();
             }
         }
 
@@ -53,20 +63,25 @@ namespace WFLite.Variables
         {
         }
 
-        public FuncVariable(Func<TValue> func, IConverter<TValue> converter = null)
+        public FuncVariable(Func<TValue?> func, IConverter<TValue>? converter = null)
             : base(converter)
         {
             Func = func;
         }
 
-        public FuncVariable(Func<object> func, IConverter<TValue> converter)
+        public FuncVariable(Func<object?> func, IConverter<TValue> converter)
         {
             _func = func;
         }
 
-        protected sealed override object getValue()
+        protected sealed override void initialize()
         {
-            return _func == null ? default : _func();
+            this.Require(Func, nameof(Func));
+        }
+
+        protected sealed override object? getValue()
+        {
+            return _func!();
         }
     }
 }

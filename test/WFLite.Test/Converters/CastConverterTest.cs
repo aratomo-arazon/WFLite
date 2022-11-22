@@ -13,7 +13,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<bool>();
 
             var result = testee.ConvertToObject("True");
-            Assert.AreEqual(typeof(bool), result.GetType());
+            Assert.AreEqual(typeof(bool), result!.GetType());
             Assert.AreEqual(true, result);
         }
 
@@ -23,7 +23,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<char>();
 
             var result = testee.ConvertToObject(10);
-            Assert.AreEqual(typeof(char), result.GetType());
+            Assert.AreEqual(typeof(char), result!.GetType());
             Assert.AreEqual((char)10, result);
         }
 
@@ -33,7 +33,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<byte>();
 
             var result = testee.ConvertToObject(10);
-            Assert.AreEqual(typeof(byte), result.GetType());
+            Assert.AreEqual(typeof(byte), result!.GetType());
             Assert.AreEqual((byte)10, result);
         }
 
@@ -43,7 +43,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<short>();
 
             var result = testee.ConvertToObject(10);
-            Assert.AreEqual(typeof(short), result.GetType());
+            Assert.AreEqual(typeof(short), result!.GetType());
             Assert.AreEqual((short)10, result);
         }
 
@@ -53,7 +53,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<ushort>();
 
             var result = testee.ConvertToObject(10);
-            Assert.AreEqual(typeof(ushort), result.GetType());
+            Assert.AreEqual(typeof(ushort), result!.GetType());
             Assert.AreEqual((ushort)10, result);
         }
 
@@ -63,7 +63,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<int>();
 
             var result = testee.ConvertToObject(10.2);
-            Assert.AreEqual(typeof(int), result.GetType());
+            Assert.AreEqual(typeof(int), result!.GetType());
             Assert.AreEqual(10, result);
         }
 
@@ -73,7 +73,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<uint>();
 
             var result = testee.ConvertToObject(10.2);
-            Assert.AreEqual(typeof(uint), result.GetType());
+            Assert.AreEqual(typeof(uint), result!.GetType());
             Assert.AreEqual(10U, result);
         }
 
@@ -83,7 +83,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<long>();
 
             var result = testee.ConvertToObject(10.2);
-            Assert.AreEqual(typeof(long), result.GetType());
+            Assert.AreEqual(typeof(long), result!.GetType());
             Assert.AreEqual(10L, result);
         }
 
@@ -93,7 +93,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<ulong>();
 
             var result = testee.ConvertToObject(10.2);
-            Assert.AreEqual(typeof(ulong), result.GetType());
+            Assert.AreEqual(typeof(ulong), result!.GetType());
             Assert.AreEqual(10UL, result);
         }
 
@@ -103,7 +103,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<float>();
 
             var result = testee.ConvertToObject(10.2);
-            Assert.AreEqual(typeof(float), result.GetType());
+            Assert.AreEqual(typeof(float), result!.GetType());
             Assert.AreEqual(10.2F, result);
         }
 
@@ -113,7 +113,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<double>();
 
             var result = testee.ConvertToObject(10.0F);
-            Assert.AreEqual(typeof(double), result.GetType());
+            Assert.AreEqual(typeof(double), result!.GetType());
             Assert.AreEqual(10.0, result);
         }
 
@@ -123,7 +123,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<decimal>();
 
             var result = testee.ConvertToObject(10.2);
-            Assert.AreEqual(typeof(decimal), result.GetType());
+            Assert.AreEqual(typeof(decimal), result!.GetType());
             Assert.AreEqual((decimal)10.2, result);
         }
 
@@ -133,7 +133,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<string>();
 
             var result = testee.ConvertToObject(10);
-            Assert.AreEqual(typeof(string), result.GetType());
+            Assert.AreEqual(typeof(string), result!.GetType());
             Assert.AreEqual("10", result);
         }
 
@@ -143,7 +143,7 @@ namespace WFLite.Test.Converters
             var testee = new CastConverter<DateTime>();
 
             var result = testee.ConvertToObject("2019-01-01 00:00:00");
-            Assert.AreEqual(typeof(DateTime), result.GetType());
+            Assert.AreEqual(typeof(DateTime), result!.GetType());
             Assert.AreEqual(DateTime.Parse("2019-01-01 00:00:00"), result);
         }
     }

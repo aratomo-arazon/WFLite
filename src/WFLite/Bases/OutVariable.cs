@@ -14,7 +14,7 @@ namespace WFLite.Bases
 {
     public abstract class OutVariable : IOutVariable
     {
-        public IConverter Converter
+        public IConverter? Converter
         {
             private get;
             set;
@@ -24,13 +24,14 @@ namespace WFLite.Bases
         {
         }
 
-        public OutVariable(IConverter converter = null)
+        public OutVariable(IConverter? converter = null)
         {
             Converter = converter;
         }
 
-        public object GetValueAsObject()
+        public object? GetValueAsObject()
         {
+            initialize();
             if (Converter == null)
             {
                 return getValue();
@@ -41,8 +42,9 @@ namespace WFLite.Bases
             }
         }
 
-        public TValue GetValue<TValue>()
+        public TValue? GetValue<TValue>()
         {
+            initialize();
             var castConverter = new CastConverter<TValue>();
 
             if (Converter == null)
@@ -55,12 +57,16 @@ namespace WFLite.Bases
             }
         }
 
-        protected abstract object getValue();
+        protected virtual void initialize()
+        {
+        }
+
+        protected abstract object? getValue();
     }
 
     public abstract class OutVariable<TOutValue> : IOutVariable<TOutValue>
     {
-        public IConverter<TOutValue> Converter
+        public IConverter<TOutValue>? Converter
         {
             private get;
             set;
@@ -70,13 +76,15 @@ namespace WFLite.Bases
         {
         }
 
-        public OutVariable(IConverter<TOutValue> converter = null)
+        public OutVariable(IConverter<TOutValue>? converter = null)
         {
             Converter = converter;
         }
 
-        public object GetValueAsObject()
+        public object? GetValueAsObject()
         {
+            initialize();
+
             if (Converter == null)
             {
                 return getValue();
@@ -87,8 +95,10 @@ namespace WFLite.Bases
             }
         }
 
-        public TValue GetValue<TValue>()
+        public TValue? GetValue<TValue>()
         {
+            initialize();
+
             var castConverter = new CastConverter<TValue>();
 
             if (Converter == null)
@@ -101,8 +111,10 @@ namespace WFLite.Bases
             }
         }
 
-        public TOutValue GetValue()
+        public TOutValue? GetValue()
         {
+            initialize();
+
             var castConverter = new CastConverter<TOutValue>();
 
             if (Converter == null)
@@ -115,6 +127,10 @@ namespace WFLite.Bases
             }
         }
 
-        protected abstract object getValue();
+        protected virtual void initialize()
+        {
+        }
+
+        protected abstract object? getValue();
     }
 }

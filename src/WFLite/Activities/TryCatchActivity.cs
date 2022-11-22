@@ -21,21 +21,21 @@ namespace WFLite.Activities
     {
         private IList<IActivity> _activities = new List<IActivity>();
 
-        private IActivity _current;
+        private IActivity? _current;
 
-        public IActivity Try
+        public IActivity? Try
         {
             private get;
             set;
         }
 
-        public IActivity Catch
+        public IActivity? Catch
         {
             private get;
             set;
         }
 
-        public IActivity Finally
+        public IActivity? Finally
         {
             private get;
             set;
@@ -45,7 +45,7 @@ namespace WFLite.Activities
         {
         }
 
-        public TryCatchActivity(IActivity try_, IActivity catch_ = null, IActivity finally_ = null)
+        public TryCatchActivity(IActivity try_, IActivity? catch_ = null, IActivity? finally_ = null)
         {
             Try = try_;
             Catch = catch_;
@@ -54,63 +54,53 @@ namespace WFLite.Activities
 
         protected sealed override void initialize()
         {
-            if (Catch == null)
-            {
-                Catch = new NullActivity();
-            }
-
-            if (Finally == null)
-            {
-                Finally = new NullActivity();
-            }
+            this.Require(Try, nameof(Try));
+            Catch = Catch == null ? new NullActivity() : Catch;
+            Finally = Finally == null ? new NullActivity() : Finally;
         }
 
         protected sealed override async Task start()
         {
             if (!_activities.Any())
             {
-                _activities.Add(Try);
-                _activities.Add(Finally);
+                _activities.Add(Try!);
+                _activities.Add(Finally!);
 
-                await start(Try);
+                await start(Try!);
 
-                if (Try.Status.IsSuspended())
+                if (Try!.Status.IsSuspended())
                 {
                     return;
                 }
-                else if (Try.Status.IsStopped())
+                else if (Try!.Status.IsStopped())
                 {
-                    _activities.Remove(Try);
-                    _activities.Add(Catch);
+                    _activities.Remove(Try!);
+                    _activities.Add(Catch!);
 
-                    await start(Catch);
+                    await start(Catch!);
 
-                    if (Catch.Status.IsSuspended())
+                    if (Catch!.Status.IsSuspended())
                     {
                         return;
                     }
                 }
 
-                await start(Finally);
+                await start(Finally!);
 
-                if (Finally.Status.IsSuspended())
+                if (Finally!.Status.IsSuspended())
                 {
                     return;
                 }
             }
             else
             {
-                var task = _current.Start();
+                var task = _current!.Start();
 
                 Status = _current.Status;
 
                 await task;
 
                 Status = _activities.GetStatus();
-
-               
-
-
             }
         }
 
@@ -130,9 +120,9 @@ namespace WFLite.Activities
 
         protected sealed override void reset()
         {
-            if (!_activities.Contains(Try))
+            if (!_activities.Contains(Try!))
             {
-                _activities.Add(Try);
+                _activities.Add(Try!);
             }
 
             foreach (var activity in _activities)

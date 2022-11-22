@@ -14,7 +14,7 @@ using WFLite.Enums;
 
 namespace WFLite.Interfaces
 {
-    public interface IActivity
+    public interface IActivity : IObject
     {
         ActivityStatus Status { get; }
 
